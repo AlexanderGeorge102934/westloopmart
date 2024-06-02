@@ -7,7 +7,7 @@ class TTexts {
   //Authentication Headings Texts
   static const String loginTitle = "Welcome,";
   static const String loginSubTitle = "Discover your local trades."; //Change to something better
-  static const String signUpTitle = "Create an account";
+  static const String signUpTitle = "Create an Account";
   static const String appName = "App Name";
 
 
@@ -27,10 +27,11 @@ class TTexts {
   static const String orSignUpWith = "or sign up with";
   static const String iAgreeTo = "I agree to";
   static const String privacyPolicy = "Privacy Policy";
-  static const String termsOfUse = "Terms of use";
+  static const String termsOfUse = "Terms of Use";
   static const String verificationCode = "verificationCode";
   static const String resendEmail = "Resend Email";
   static const String resendEmailIn = "Resend email in";
+  static const String createAccountHeader = "create an account";
 
 
 
