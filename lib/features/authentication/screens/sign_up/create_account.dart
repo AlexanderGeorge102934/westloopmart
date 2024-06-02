@@ -10,6 +10,7 @@ import 'package:startup_app/utils/constants/sizes.dart';
 import 'package:startup_app/utils/constants/texts.dart';
 
 import '../../../../common/widgets/social_buttons.dart';
+import 'Widgets/create_account_form.dart';
 
 class CreateAccountScreen extends StatelessWidget {
   const CreateAccountScreen({super.key});
@@ -28,91 +29,17 @@ class CreateAccountScreen extends StatelessWidget {
               const TCreateAccountHeader(),
 
               ///Form
-              Form(child:Column(
-                children: [
+              TCreateAccountForm(dark: dark),
+              const SizedBox(height: TSizes.spaceBtwSections,),
 
-                  ///First and Last Name
-                  Row(
-                    children: [
-                      ///First Name
-                      Expanded(
-                        child: TextFormField(
-                          expands: false,
-                          decoration: const InputDecoration(labelText: TTexts.firstName),
+              ///Divider
+              TFormDivider(dividerText: TTexts.orSignInWith.capitalize!),
+              const SizedBox(height: TSizes.spaceBtwSections,),
 
-                        ),
-                      ),
-                      const SizedBox(width: TSizes.spaceBtwInputFields),
-                      ///Last Name
-                      Expanded(
-                        child: TextFormField(
-                          expands: false,
-                          decoration: const InputDecoration(labelText: TTexts.lastName),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: TSizes.spaceBtwInputFields),
-
-                  ///Username
-                  TextFormField(
-                    decoration: const InputDecoration(labelText: TTexts.userName),
-                  ),
-                  const SizedBox(height: TSizes.spaceBtwInputFields),
-
-                  /// Email
-                  TextFormField(
-                    decoration: const InputDecoration(labelText: TTexts.email),
-                  ),
-                  const SizedBox(height: TSizes.spaceBtwInputFields),
-
-                  ///Phone Number
-                  TextFormField(
-                    decoration: const InputDecoration(labelText: TTexts.phoneNumber),
-                  ),
-                  const SizedBox(height: TSizes.spaceBtwInputFields),
-
-                  ///Password
-                  TextFormField(
-                    decoration: const InputDecoration(labelText: TTexts.password),
-                  ),
-                  const SizedBox(height: TSizes.spaceBtwSections),
-
-                  Row(
-
-                    children: [
-                      SizedBox(width: 24, height: 24, child: Checkbox(value: true, onChanged: (value){},)),
-                      const SizedBox(width: TSizes.spaceBtwItems),
-                      Text.rich(TextSpan(
-                          children: [
-                            ///I agree to
-                            TextSpan(text: '${TTexts.iAgreeTo} ', style: Theme.of(context).textTheme.bodySmall),
-                            ///Privacy Policy
-                            TextSpan(text: '${TTexts.privacyPolicy}', style: Theme.of(context).textTheme.bodyMedium!.apply(
-                                color: dark ? TColors.white: TColors.black, decoration: TextDecoration.underline, decorationColor: dark ? TColors.white: TColors.primary),
-                            ),
-                            /// and
-                            TextSpan(text: ' and ', style: Theme.of(context).textTheme.bodySmall),
-                            ///Terms of Use
-                            TextSpan(text: '${TTexts.termsOfUse}', style: Theme.of(context).textTheme.bodyMedium!.apply(
-                                color: dark ? TColors.white: TColors.black, decoration: TextDecoration.underline, decorationColor: dark ? TColors.white: TColors.primary),
-                            ),
-                          ]
-                      ),
-                      ),
-                    ],
-                  ),
-
-                  const SizedBox(height: TSizes.spaceBtwSections),
-
-                  ///Create Account Button
-                  SizedBox(width: double.infinity, child: OutlinedButton(onPressed: (){}, child: Text(TTexts.createAccount))),
-                ],
+              ///Footer
+              const TSocialButtons()
 
 
-              ),
-
-              )
             ],
           ),
         ),
@@ -120,6 +47,8 @@ class CreateAccountScreen extends StatelessWidget {
     );
   }
 }
+
+
 
 
 
