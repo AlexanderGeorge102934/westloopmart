@@ -8,6 +8,7 @@ class TTexts {
   static const String loginTitle = "Welcome,";
   static const String loginSubTitle = "Discover your local trades."; //Change to something better
   static const String signUpTitle = "Create an account";
+  static const String appName = "App Name";
 
 
   //Authentication Form Text
@@ -22,7 +23,7 @@ class TTexts {
   static const String forgotPassword = "Forgot Password";
   static const String signIn = "Sign In";
   static const String createAccount = "Create Account";
-  static const String orSignInWith = "or sign in with";
+  static const String orSignInWith = "OR";
   static const String orSignUpWith = "or sign up with";
   static const String iAgreeTo = "I agree to";
   static const String privacyPolicy = "Privacy Policy";

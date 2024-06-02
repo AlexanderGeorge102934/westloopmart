@@ -12,15 +12,11 @@ class TLoginHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        // Image(
-        //   height: 150,
-        //   image: AssetImage(dark ? TImages.lightAppLogo : TImages.darkAppLogo),
-        // ),
-        Text(TTexts.loginTitle, style: Theme.of(context).textTheme.headlineMedium),
+        Text(TTexts.appName, style: Theme.of(context).textTheme.headlineLarge),
         const SizedBox(height: TSizes.sm),
-        Text(TTexts.loginSubTitle, style: Theme.of(context).textTheme.bodyMedium),
+        // Text(TTexts.loginSubTitle, style: Theme.of(context).textTheme.bodyMedium),
       ],
     );
   }
