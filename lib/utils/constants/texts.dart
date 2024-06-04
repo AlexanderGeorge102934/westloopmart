@@ -24,16 +24,20 @@ class TTexts {
   static const String signIn = "Sign In";
   static const String createAccount = "Create Account";
   static const String orSignInWith = "OR";
+  static const String tContinue = "Continue";
   static const String orSignUpWith = "or sign up with";
   static const String iAgreeTo = "I agree to";
   static const String privacyPolicy = "Privacy Policy";
   static const String termsOfUse = "Terms of Use";
-  static const String verificationCode = "verificationCode";
+  static const String verificationCode = "Verification Code";
   static const String resendEmail = "Resend Email";
   static const String resendEmailIn = "Resend email in";
   static const String createAccountHeader = "create an account";
+  static const String verifyEmail = "Verify your email address!";
+  static const String confirmEmailSubTitle = "Congratulations! Your Account Awaits: Verify Your Email to Start Trading.";
 
-
+  static const String yourAccountCreatedTitle = "Your account was successfully created!";
+  static const String yourAccountCreatedSubTitle = "Please log in to continue blah blah blah";
 
   // OnBoarding Texts
   static const String onBoardingTitle1 = "Choose your product";

@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:startup_app/features/authentication/screens/sign_up/verify_email.dart';
 
 import '../../../../../utils/constants/colors.dart';
 import '../../../../../utils/constants/sizes.dart';
@@ -93,7 +96,7 @@ class TCreateAccountForm extends StatelessWidget {
         const SizedBox(height: TSizes.spaceBtwSections),
 
         ///Create Account Button
-        SizedBox(width: double.infinity, child: OutlinedButton(onPressed: (){}, child: const Text(TTexts.createAccount))),
+        SizedBox(width: double.infinity, child: OutlinedButton(onPressed: () => Get.to(()=> const VerifyEmailScreen()), child: const Text(TTexts.createAccount))), // TODO Implement on pressed
       ],
     ),
     );

@@ -19,7 +19,10 @@ class CreateAccountScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(iconTheme: IconThemeData(
+        color: dark ? Colors.white : Colors.black, // Change color based on dark mode
+        ),
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(TSizes.defaultSpace),
