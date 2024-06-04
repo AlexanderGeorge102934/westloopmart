@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:startup_app/common/widgets/success_screen/success_screen.dart';
 import 'package:startup_app/features/authentication/screens/login/login.dart';
+import 'package:startup_app/utils/constants/image_strings.dart';
 import 'package:startup_app/utils/constants/sizes.dart';
 import 'package:startup_app/utils/constants/texts.dart';
 
@@ -34,7 +35,12 @@ class VerifyEmailScreen extends StatelessWidget {
               const SizedBox(height: TSizes.spaceBtwSections),
               ///Buttons
               ///
-              SizedBox(width: double.infinity, child: ElevatedButton(onPressed: ()=> Get.to(()=> const SuccessScreen()), child: const Text(TTexts.tContinue))), // TODO Implement on pressed
+              SizedBox(width: double.infinity, child:
+                ElevatedButton(onPressed: ()=> Get.to(()=> SuccessScreen(
+                  title: TTexts.yourAccountCreatedTitle,
+                  subTitle: TTexts.yourAccountCreatedSubTitle,
+                  onPressed: () => Get.to(()=> const LoginScreen()))),
+                    child: const Text(TTexts.tContinue))), // TODO Implement on pressed
               const SizedBox(height: TSizes.spaceBtwItems),
               SizedBox(width: double.infinity, child: TextButton(onPressed: (){}, child: const Text(TTexts.resendEmail))), // TODO Implement on pressed
 

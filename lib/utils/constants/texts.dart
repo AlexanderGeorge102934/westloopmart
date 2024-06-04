@@ -21,7 +21,9 @@ class TTexts {
   static const String phoneNumber = "Phone Number";
   static const String rememberMe = "Remember Me";
   static const String forgotPassword = "Forgot Password";
+  static const String forgotPasswordSubtitle = "Enter the email address associated with your account.";
   static const String signIn = "Sign In";
+  static const String submit = "Submit";
   static const String createAccount = "Create Account";
   static const String orSignInWith = "OR";
   static const String tContinue = "Continue";
@@ -32,12 +34,16 @@ class TTexts {
   static const String verificationCode = "Verification Code";
   static const String resendEmail = "Resend Email";
   static const String resendEmailIn = "Resend email in";
+  static const String done = "Done";
   static const String createAccountHeader = "create an account";
   static const String verifyEmail = "Verify your email address!";
   static const String confirmEmailSubTitle = "Congratulations! Your Account Awaits: Verify Your Email to Start Trading.";
 
   static const String yourAccountCreatedTitle = "Your account was successfully created!";
   static const String yourAccountCreatedSubTitle = "Please log in to continue blah blah blah";
+  static const String passwordEmailSentTitle = "Email Sent";
+  static const String passwordEmailSentSubTitle = "An email has been sent to you with instructions on how to reset your password.";
+
 
   // OnBoarding Texts
   static const String onBoardingTitle1 = "Choose your product";

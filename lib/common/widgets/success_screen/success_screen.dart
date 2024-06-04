@@ -8,7 +8,10 @@ import '../../../utils/constants/sizes.dart';
 import '../../../utils/constants/texts.dart';
 
 class SuccessScreen extends StatelessWidget {
-  const SuccessScreen({super.key});
+  const SuccessScreen({super.key, required this.title, required this.subTitle, required this.onPressed});
+
+  final String title,subTitle;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -18,14 +21,14 @@ class SuccessScreen extends StatelessWidget {
           padding: TSpacingStyle.paddingWithAppBarHeight * 2,
           child: Column(
             children: [
-              ///TItle & SubTitle
-              Text(TTexts.yourAccountCreatedTitle, style: Theme.of(context).textTheme.headlineMedium, textAlign: TextAlign.center,),
+              ///Title & SubTitle
+              Text(title, style: Theme.of(context).textTheme.headlineMedium, textAlign: TextAlign.center,),
               const SizedBox(height: TSizes.spaceBtwItems),
-              Text(TTexts.yourAccountCreatedSubTitle, style: Theme.of(context).textTheme.labelMedium, textAlign: TextAlign.center,),
+              Text(subTitle, style: Theme.of(context).textTheme.labelMedium, textAlign: TextAlign.center,),
               const SizedBox(height: TSizes.spaceBtwSections),
               ///Buttons
               ///
-              SizedBox(width: double.infinity, child: ElevatedButton(onPressed: ()=> Get.to(()=> const LoginScreen()), child: const Text(TTexts.tContinue))), // TODO Implement on pressed
+              SizedBox(width: double.infinity, child: ElevatedButton(onPressed: onPressed, child: const Text(TTexts.tContinue))), // TODO Implement on pressed
 
             ],
           ),
