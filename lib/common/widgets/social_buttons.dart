@@ -28,7 +28,7 @@ class TSocialButtons extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(width: TSizes.spaceBtwItems,),
+        SizedBox(width: TSizes.spaceBtwItems(context),),
         Container(
           decoration: BoxDecoration(border: Border.all(color: TColors.grey), borderRadius: BorderRadius.circular(100), color: Colors.white),
           child: IconButton(

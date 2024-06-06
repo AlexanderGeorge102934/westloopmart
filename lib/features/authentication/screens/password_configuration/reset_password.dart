@@ -18,18 +18,18 @@ class ResetPassword extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Padding(
-            padding: const EdgeInsets.all(TSizes.defaultSpace),
+            padding: EdgeInsets.all(TSizes.defaultSpace(context)),
             child: Column(
               children: [
                 ///Title & SubTitle
                 Text(TTexts.passwordEmailSentTitle, style: Theme.of(context).textTheme.headlineMedium, textAlign: TextAlign.center,),
-                const SizedBox(height: TSizes.spaceBtwItems),
+                SizedBox(height: TSizes.spaceBtwItems(context)),
                 Text(TTexts.passwordEmailSentSubTitle, style: Theme.of(context).textTheme.labelMedium, textAlign: TextAlign.center,),
-                const SizedBox(height: TSizes.spaceBtwSections),
+                SizedBox(height: TSizes.spaceBtwSections(context)),
                 ///Buttons
                 ///
                 SizedBox(width: double.infinity, child: ElevatedButton(onPressed: () => Get.to(()=> const LoginScreen()), child: const Text(TTexts.done))),
-                const SizedBox(height: TSizes.spaceBtwItems),
+                SizedBox(height: TSizes.spaceBtwItems(context)),
                 TextButton(onPressed: (){}, child: const Text(TTexts.resendEmail),)// TODO Implement on pressed to send an email
 
               ],

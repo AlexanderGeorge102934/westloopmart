@@ -20,7 +20,7 @@ class VerifyEmailScreen extends StatelessWidget {
         ],
       ),
       body: SingleChildScrollView(
-        child: Padding(padding: const EdgeInsets.all(TSizes.defaultSpace),
+        child: Padding(padding: EdgeInsets.all(TSizes.defaultSpace(context)),
           child: Column(
             children: [
 
@@ -28,11 +28,12 @@ class VerifyEmailScreen extends StatelessWidget {
 
               ///TItle & SubTitle
               Text(TTexts.verifyEmail, style: Theme.of(context).textTheme.headlineMedium, textAlign: TextAlign.center,),
-              const SizedBox(height: TSizes.spaceBtwItems),
+              SizedBox(height: TSizes.spaceBtwItems(context)),
               Text('support@whatever.com', style: Theme.of(context).textTheme.labelLarge, textAlign: TextAlign.center,),
-              const SizedBox(height: TSizes.spaceBtwItems),
+              SizedBox(height: TSizes.spaceBtwItems(context)),
               Text(TTexts.confirmEmailSubTitle, style: Theme.of(context).textTheme.labelMedium, textAlign: TextAlign.center,),
-              const SizedBox(height: TSizes.spaceBtwSections),
+              SizedBox(height: TSizes.spaceBtwSections(context)),
+
               ///Buttons
               ///
               SizedBox(width: double.infinity, child:
@@ -41,7 +42,7 @@ class VerifyEmailScreen extends StatelessWidget {
                   subTitle: TTexts.yourAccountCreatedSubTitle,
                   onPressed: () => Get.to(()=> const LoginScreen()))),
                     child: const Text(TTexts.tContinue))), // TODO Implement on pressed
-              const SizedBox(height: TSizes.spaceBtwItems),
+              SizedBox(height: TSizes.spaceBtwItems(context)),
               SizedBox(width: double.infinity, child: TextButton(onPressed: (){}, child: const Text(TTexts.resendEmail))), // TODO Implement on pressed
 
 

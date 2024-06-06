@@ -20,20 +20,20 @@ class ForgetPassword extends StatelessWidget {
       appBar: AppBar(iconTheme: IconThemeData(
         color: dark ? Colors.white : Colors.black, // Change color based on dark mode
       ),),
-      body: Padding(padding: const EdgeInsets.all(TSizes.defaultSpace),
+      body: Padding(padding:EdgeInsets.all(TSizes.defaultSpace(context)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ///Heading
               Text(TTexts.forgotPassword, style: Theme.of(context).textTheme.headlineMedium),
-              const SizedBox(height: TSizes.spaceBtwItems),
+              SizedBox(height: TSizes.spaceBtwItems(context)),
               Text(TTexts.forgotPasswordSubtitle, style: Theme.of(context).textTheme.labelMedium),
-              const SizedBox(height: TSizes.spaceBtwSections),
+              SizedBox(height: TSizes.spaceBtwSections(context)),
               /// Email
               TextFormField(
                 decoration: const InputDecoration(labelText: TTexts.email),
               ),
-              const SizedBox(height: TSizes.spaceBtwInputFields),
+              SizedBox(height: TSizes.spaceBtwInputFields(context)),
               ///Submit button
               SizedBox(width: double.infinity, child: ElevatedButton(onPressed: () => Get.to(()=> const ResetPassword()), child: const Text(TTexts.submit))), //TODO Have the button send an email
 

@@ -15,7 +15,7 @@ class TCreateAccountHeader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(TTexts.signUpTitle, style: Theme.of(context).textTheme.headlineMedium,),
-        const SizedBox(height: TSizes.md),
+        SizedBox(height: TSizes.md(context)),
       ],
     );
   }

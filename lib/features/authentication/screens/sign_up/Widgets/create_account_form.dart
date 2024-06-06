@@ -32,7 +32,7 @@ class TCreateAccountForm extends StatelessWidget {
 
               ),
             ),
-            const SizedBox(width: TSizes.spaceBtwInputFields),
+            SizedBox(width: TSizes.spaceBtwInputFields(context)),
             ///Last Name
             Expanded(
               child: TextFormField(
@@ -42,37 +42,37 @@ class TCreateAccountForm extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: TSizes.spaceBtwInputFields),
+        SizedBox(height: TSizes.spaceBtwInputFields(context)),
 
         ///Username
         TextFormField(
           decoration: const InputDecoration(labelText: TTexts.userName),
         ),
-        const SizedBox(height: TSizes.spaceBtwInputFields),
+        SizedBox(height: TSizes.spaceBtwInputFields(context)),
 
         /// Email
         TextFormField(
           decoration: const InputDecoration(labelText: TTexts.email),
         ),
-        const SizedBox(height: TSizes.spaceBtwInputFields),
+        SizedBox(height: TSizes.spaceBtwInputFields(context)),
 
         ///Phone Number
         TextFormField(
           decoration: const InputDecoration(labelText: TTexts.phoneNumber),
         ),
-        const SizedBox(height: TSizes.spaceBtwInputFields),
+        SizedBox(height: TSizes.spaceBtwInputFields(context)),
 
         ///Password
         TextFormField(
           decoration: const InputDecoration(labelText: TTexts.password),
         ),
-        const SizedBox(height: TSizes.spaceBtwSections),
+        SizedBox(height: TSizes.defaultSpace(context)),
 
         Row(
 
           children: [
             SizedBox(width: 24, height: 24, child: Checkbox(value: true, onChanged: (value){},)),
-            const SizedBox(width: TSizes.spaceBtwItems),
+            SizedBox(width: TSizes.spaceBtwItems(context)),
             Text.rich(TextSpan(
                 children: [
                   ///I agree to
@@ -93,7 +93,7 @@ class TCreateAccountForm extends StatelessWidget {
           ],
         ),
 
-        const SizedBox(height: TSizes.spaceBtwSections),
+        SizedBox(height: TSizes.defaultSpace(context)),
 
         ///Create Account Button
         SizedBox(width: double.infinity, child: OutlinedButton(onPressed: () => Get.to(()=> const VerifyEmailScreen()), child: const Text(TTexts.createAccount))), // TODO Implement on pressed

@@ -16,20 +16,20 @@ class TLoginForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Form(child: Padding(
-      padding: const EdgeInsets.symmetric(vertical: TSizes.spaceBtwSections),
+      padding: EdgeInsets.symmetric(vertical: TSizes.spaceBtwSections(context)),
       child: Column(
         children: [
           /// Email
           TextFormField(
             decoration: const InputDecoration(labelText: TTexts.email),
           ),
-          const SizedBox(height: TSizes.spaceBtwInputFields),
+          SizedBox(height: TSizes.spaceBtwInputFields(context)),
 
           ///Password
           TextFormField(
             decoration: const InputDecoration(labelText: TTexts.password),
           ),
-          const SizedBox(height: TSizes.spaceBtwInputFields/2),
+          SizedBox(height: TSizes.spaceBtwInputFields(context)/2),
 
           /// Remember Me and Forget Password
           Row(
@@ -47,13 +47,13 @@ class TLoginForm extends StatelessWidget {
               TextButton(onPressed: ()=> Get.to(()=> const ForgetPassword()), child: const Text(TTexts.forgotPassword),)
             ],
           ),
-          const SizedBox(height: TSizes.spaceBtwSections),
+          SizedBox(height: TSizes.spaceBtwItems(context)),
 
           ///Sign In Button
-          SizedBox(width: double.infinity, child: ElevatedButton(onPressed: (){}, child: Text(TTexts.signIn))),
-          const SizedBox(height: TSizes.spaceBtwItems),
+          SizedBox(width: double.infinity, child: ElevatedButton(onPressed: (){}, child: const Text(TTexts.signIn))),
+          SizedBox(height: TSizes.spaceBtwItems(context)),
           ///Create Account Button
-          SizedBox(width: double.infinity, child: OutlinedButton(onPressed: ()=> Get.to(()=> const CreateAccountScreen()), child: Text(TTexts.createAccount))),
+          SizedBox(width: double.infinity, child: OutlinedButton(onPressed: ()=> Get.to(()=> const CreateAccountScreen()), child: const Text(TTexts.createAccount))),
 
         ],
       ),

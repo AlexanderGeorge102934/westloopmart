@@ -25,7 +25,7 @@ class CreateAccountScreen extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(TSizes.defaultSpace),
+          padding: EdgeInsets.all(TSizes.defaultSpace(context)),
           child: Column(
             children: [
               ///Title
@@ -33,15 +33,7 @@ class CreateAccountScreen extends StatelessWidget {
 
               ///Form
               TCreateAccountForm(dark: dark),
-              const SizedBox(height: TSizes.spaceBtwSections,),
-
-              ///Divider
-              TFormDivider(dividerText: TTexts.orSignInWith.capitalize!),
-              const SizedBox(height: TSizes.spaceBtwSections,),
-
-              ///Footer
-              const TSocialButtons()
-
+              SizedBox(height: TSizes.spaceBtwSections(context),),
 
             ],
           ),
