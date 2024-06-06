@@ -1,33 +1,45 @@
 import 'package:flutter/material.dart';
 
+import '../../utils/constants/sizes.dart';
+
 class TOutlinedButtonTheme {
   TOutlinedButtonTheme._(); //Avoid creating instance
 
   /// Light Theme
-  static final lightOutlinedButtonTheme = OutlinedButtonThemeData(
-    style: OutlinedButton.styleFrom(
-      elevation: 0,
-      foregroundColor: Colors.black,
-      side: const BorderSide(color: Colors.blue),
-      textStyle: const TextStyle(
-          fontSize: 16, color: Colors.black, fontWeight: FontWeight.w600),
-      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-    ),
-  );
+  static lightOutlinedButtonTheme (BuildContext context) {
+    return OutlinedButtonThemeData(
+      style: OutlinedButton.styleFrom(
+        elevation: 0,
+        foregroundColor: Colors.black,
+        side: const BorderSide(color: Colors.blue),
+        textStyle: TextStyle(
+            fontSize: TSizes.fontSizeMd(context),
+            color: Colors.black,
+            fontWeight: FontWeight.w600),
+        padding: EdgeInsets.symmetric(
+          vertical: MediaQuery.of(context).size.height * 0.02,
+          horizontal: MediaQuery.of(context).size.width * 0.05),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(TSizes.borderRadiusCircTextField(context))),
+      ),
+    );
+  }
 
 
   /// Dark Theme
-  static final darkOutlinedButtonTheme = OutlinedButtonThemeData(
-    style: OutlinedButton.styleFrom(
-      elevation: 0,
-      foregroundColor: Colors.white,
-      side: const BorderSide(color: Colors.blueAccent),
-      textStyle: const TextStyle(
-          fontSize: 16, color: Colors.white, fontWeight: FontWeight.w600),
-      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-    ),
-  );
+  static darkOutlinedButtonTheme (BuildContext context) {
+    return OutlinedButtonThemeData(
+      style: OutlinedButton.styleFrom(
+        elevation: 0,
+        foregroundColor: Colors.white,
+        side: const BorderSide(color: Colors.blueAccent),
+        textStyle: TextStyle(
+            fontSize: TSizes.fontSizeMd(context), color: Colors.white, fontWeight: FontWeight.w600),
+        padding: EdgeInsets.symmetric(
+          vertical: MediaQuery.of(context).size.height * 0.02,
+          horizontal: MediaQuery.of(context).size.width * 0.05,),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(TSizes.borderRadiusCircTextField(context))),
+      ),
+    );
+  }
 
 }

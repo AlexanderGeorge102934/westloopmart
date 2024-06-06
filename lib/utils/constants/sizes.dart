@@ -11,21 +11,24 @@ class TSizes {
   static double xl(BuildContext context) => MediaQuery.of(context).size.width * 0.08;
 
   //Icon sizes
-  static const double iconXs = 12.0;
-  static const double iconSm = 16.0;
-  static const double iconMd = 24.0;
-  static const double iconLg = 32.0;
+  static double iconXs(BuildContext context) => MediaQuery.of(context).size.width * 0.03;
+  static double iconSm(BuildContext context) => MediaQuery.of(context).size.width * 0.04;
+  static double iconMd(BuildContext context) => MediaQuery.of(context).size.width * 0.06;
+  static double iconLg(BuildContext context) => MediaQuery.of(context).size.width * 0.08;
 
   //Font sizes
-  static const double fontSizeSm = 14.0;
-  static const double fontSizeMd = 16.0;
-  static const double fontSizeLg = 18.0;
+  static double fontSizeSm(BuildContext context) => MediaQuery.of(context).size.width * 0.035;
+  static double fontSizeMd(BuildContext context) => MediaQuery.of(context).size.width * 0.04;
+  static double fontSizeLg(BuildContext context) => MediaQuery.of(context).size.width * 0.045;
+  static double fontSizeXl(BuildContext context) => MediaQuery.of(context).size.width * 0.05; //18
+  static double fontSizeXXl(BuildContext context) => MediaQuery.of(context).size.width * 0.065; //24
+  static double fontSizeXXXl(BuildContext context) => MediaQuery.of(context).size.width * 0.085; //32
 
   //Button sizes
-  static const double buttonHeight = 18.0;
-  static const double buttonRadius = 12.0;
+  static double buttonHeight(BuildContext context) => MediaQuery.of(context).size.height * 0.05;
+  static double buttonRadius(BuildContext context) => MediaQuery.of(context).size.width * 0.03;
   static double buttonWidth(BuildContext context) => MediaQuery.of(context).size.width * 0.4;
-  static const double buttonElevation = 4.0;
+  static double buttonElevation(BuildContext context) => MediaQuery.of(context).size.height * 0.01;
 
   //Image sizes
   static const double imageThumbSize = 80.0;
@@ -37,9 +40,10 @@ class TSizes {
 
 
   //Border radius
-  static const double borderRadiusSm = 4.0;
-  static const double borderRadiusMd = 8.0;
-  static const double borderRadiusLg = 12.0;
+  static double borderRadiusSm(BuildContext context) => MediaQuery.of(context).size.width * 0.01;
+  static double borderRadiusMd(BuildContext context) => MediaQuery.of(context).size.width * 0.02;
+  static double borderRadiusLg(BuildContext context) => MediaQuery.of(context).size.width * 0.03;
+
 
   //divider height
   static double dividerHeight(BuildContext context) => MediaQuery.of(context).size.height * 0.001;
@@ -54,11 +58,11 @@ class TSizes {
   static double spaceBtwInputFields(BuildContext context) => MediaQuery.of(context).size.height * 0.02;
 
   //Card sizes
-  static const double cardRadiusLg = 16.0;
-  static const double cardRadiusMd = 12.0;
-  static const double cardRadiusSm = 10.0;
-  static const double cardRadiusXs = 6.0;
-  static const double cardElevation = 2.0;
+  static double cardRadiusLg(BuildContext context) => MediaQuery.of(context).size.width * 0.04;
+  static double cardRadiusMd(BuildContext context) => MediaQuery.of(context).size.width * 0.03;
+  static double cardRadiusSm(BuildContext context) => MediaQuery.of(context).size.width * 0.025;
+  static double cardRadiusXs(BuildContext context) => MediaQuery.of(context).size.width * 0.015;
+  static double cardElevation(BuildContext context) => MediaQuery.of(context).size.height * 0.005;
 
   //loading
   static const double loadingIndicatorHeight = 200.0;
@@ -67,6 +71,12 @@ class TSizes {
   static double gridViewSpacing(BuildContext context) => MediaQuery.of(context).size.height * 0.02;
 
   // AppBar height
-  static const double appBarHeight = 56.0;
+  static double appBarHeight(BuildContext context) => MediaQuery.of(context).size.height * 0.07;
+
+  //Border
+  static double borderRadiusCircTextField(BuildContext context) => MediaQuery.of(context).size.width * 0.035;
+  static double borderWidth(BuildContext context) => MediaQuery.of(context).size.width * 0.003;
+
+
 
 }

@@ -18,8 +18,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       themeMode: ThemeMode.system,
-      theme: TAppTheme.lightTheme,
-      darkTheme: TAppTheme.darkTheme,
+      theme: TAppTheme.lightTheme(context),
+      darkTheme: TAppTheme.darkTheme(context),
       home: const LoginScreen(),
     );
   }

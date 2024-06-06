@@ -21,10 +21,10 @@ class TSocialButtons extends StatelessWidget {
           decoration: BoxDecoration(border: Border.all(color: TColors.grey), borderRadius: BorderRadius.circular(100), color: Colors.white),
           child: IconButton(
             onPressed: (){},
-            icon: const Image(
-              width: TSizes.iconMd,
-              height: TSizes.iconMd,
-              image: AssetImage(TImages.google),
+            icon: Image(
+              width: TSizes.iconMd(context),
+              height: TSizes.iconMd(context),
+              image: const AssetImage(TImages.google),
             ),
           ),
         ),
@@ -33,10 +33,10 @@ class TSocialButtons extends StatelessWidget {
           decoration: BoxDecoration(border: Border.all(color: TColors.grey), borderRadius: BorderRadius.circular(100), color: Colors.white),
           child: IconButton(
             onPressed: (){},
-            icon: const Image(
-              width: TSizes.iconMd,
-              height: TSizes.iconMd,
-              image: AssetImage(TImages.facebook)
+            icon: Image(
+              width: TSizes.iconMd(context),
+              height: TSizes.iconMd(context),
+              image: const AssetImage(TImages.facebook)
             ),
           ),
         ),
