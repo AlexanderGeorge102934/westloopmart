@@ -38,6 +38,7 @@ class TAppTheme{
       //Puts in light mode
       primaryColor: Colors.blue,
       scaffoldBackgroundColor: Colors.black,
+
       //Scaffold is treated as a different screen
       textTheme: TTextTheme.darkTextTheme(context),
       elevatedButtonTheme: TElevatedButtonTheme.darkElevatedButtonTheme(context),

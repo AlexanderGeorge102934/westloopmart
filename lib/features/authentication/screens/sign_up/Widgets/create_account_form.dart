@@ -71,24 +71,35 @@ class TCreateAccountForm extends StatelessWidget {
         Row(
 
           children: [
-            SizedBox(width: 24, height: 24, child: Checkbox(value: true, onChanged: (value){},)),
+            SizedBox(
+                width: MediaQuery.of(context).size.width * 0.06,
+                height: MediaQuery.of(context).size.height * 0.03,
+                child: Checkbox(value: true, onChanged: (value){},)),
             SizedBox(width: TSizes.spaceBtwItems(context)),
-            Text.rich(TextSpan(
-                children: [
-                  ///I agree to
-                  TextSpan(text: '${TTexts.iAgreeTo} ', style: Theme.of(context).textTheme.bodySmall),
-                  ///Privacy Policy
-                  TextSpan(text: '${TTexts.privacyPolicy}', style: Theme.of(context).textTheme.bodyMedium!.apply(
-                      color: dark ? TColors.white: TColors.black, decoration: TextDecoration.underline, decorationColor: dark ? TColors.white: TColors.primary),
-                  ),
-                  /// and
-                  TextSpan(text: ' and ', style: Theme.of(context).textTheme.bodySmall),
-                  ///Terms of Use
-                  TextSpan(text: TTexts.termsOfUse, style: Theme.of(context).textTheme.bodyMedium!.apply(
-                      color: dark ? TColors.white: TColors.black, decoration: TextDecoration.underline, decorationColor: dark ? TColors.white: TColors.primary),
-                  ),
-                ]
-            ),
+
+            Expanded(
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                alignment: Alignment.centerLeft,
+                child: Text.rich(
+                  TextSpan(
+                    children: [
+                      ///I agree to
+                      TextSpan(text: '${TTexts.iAgreeTo} ', style: Theme.of(context).textTheme.bodySmall),
+                      ///Privacy Policy
+                      TextSpan(text: '${TTexts.privacyPolicy}', style: Theme.of(context).textTheme.bodyMedium!.apply(
+                          color: dark ? TColors.white: TColors.black, decoration: TextDecoration.underline, decorationColor: dark ? TColors.white: TColors.primary),
+                      ),
+                      /// and
+                      TextSpan(text: ' and ', style: Theme.of(context).textTheme.bodySmall),
+                      ///Terms of Use
+                      TextSpan(text: TTexts.termsOfUse, style: Theme.of(context).textTheme.bodyMedium!.apply(
+                          color: dark ? TColors.white: TColors.black, decoration: TextDecoration.underline, decorationColor: dark ? TColors.white: TColors.primary),
+                      ),
+                    ]
+                ),
+                ),
+              ),
             ),
           ],
         ),
