@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:startup_app/utils/constants/colors.dart';
 
-import '../features/authentication/screens/login/login.dart';
+import '../bindings/general_bindings.dart';
 import '../theme/theme.dart';
 
 class App extends StatelessWidget {
@@ -16,7 +17,9 @@ class App extends StatelessWidget {
       themeMode: ThemeMode.system,
       theme: TAppTheme.lightTheme(context),
       darkTheme: TAppTheme.darkTheme(context),
-      home: const LoginScreen(),
+      initialBinding: GeneralBindings(),
+      home: const Scaffold(backgroundColor: TColors.primary, body: Center(child: CircularProgressIndicator(color: Colors.white))),
+      // home: const LoginScreen(),
     );
   }
 }

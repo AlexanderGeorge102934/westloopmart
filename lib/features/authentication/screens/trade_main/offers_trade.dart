@@ -15,7 +15,7 @@ class OffersScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(
-        color: dark ? Colors.white : Colors.black, // Change color based on dark mode
+        color: dark ? TColors.white : TColors.black, // Change color based on dark mode
         ),
       ),
 

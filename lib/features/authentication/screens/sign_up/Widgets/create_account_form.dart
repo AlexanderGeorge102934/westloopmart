@@ -1,12 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:startup_app/features/authentication/controllers/sign_up/create_account_controller.dart';
+import 'package:startup_app/features/authentication/screens/sign_up/Widgets/terms_and_conditions.dart';
 import 'package:startup_app/features/authentication/screens/sign_up/verify_email.dart';
+import 'package:startup_app/validators/validation.dart';
 
 import '../../../../../utils/constants/colors.dart';
 import '../../../../../utils/constants/sizes.dart';
 import '../../../../../utils/constants/texts.dart';
+import '../../../../../utils/formatters/phone_number_input_formatter.dart';
 
 class TCreateAccountForm extends StatelessWidget {
   const TCreateAccountForm({
@@ -18,7 +24,10 @@ class TCreateAccountForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Form(child:Column(
+    final controller = Get.put(CreateAccountController()); // Create instance
+    return Form(
+      key: controller.signupFormKey,
+      child:Column(
       children: [
 
         ///First and Last Name
@@ -27,6 +36,8 @@ class TCreateAccountForm extends StatelessWidget {
             ///First Name
             Expanded(
               child: TextFormField(
+                controller: controller.firstName,
+                validator: (value) => TValidator.validateEmptyText('First name', value),
                 expands: false,
                 decoration: const InputDecoration(labelText: TTexts.firstName),
 
@@ -36,6 +47,8 @@ class TCreateAccountForm extends StatelessWidget {
             ///Last Name
             Expanded(
               child: TextFormField(
+                controller: controller.lastName,
+                validator: (value) => TValidator.validateEmptyText('Last name', value),
                 expands: false,
                 decoration: const InputDecoration(labelText: TTexts.lastName),
               ),
@@ -46,70 +59,59 @@ class TCreateAccountForm extends StatelessWidget {
 
         ///Username
         TextFormField(
+          controller: controller.username,
+          validator: (value) => TValidator.validateEmptyText('Username', value),
           decoration: const InputDecoration(labelText: TTexts.userName),
         ),
         SizedBox(height: TSizes.spaceBtwInputFields(context)),
 
         /// Email
         TextFormField(
+          controller: controller.email,
+          validator: (value) => TValidator.validateEmail(value),
           decoration: const InputDecoration(labelText: TTexts.email),
         ),
         SizedBox(height: TSizes.spaceBtwInputFields(context)),
 
         ///Phone Number
         TextFormField(
+          controller: controller.phoneNumber,
+          validator: (value) => TValidator.validatePhoneNumber(value),
+          keyboardType: TextInputType.phone,
           decoration: const InputDecoration(labelText: TTexts.phoneNumber),
+          inputFormatters: [PhoneNumberFormatter()],
+
         ),
         SizedBox(height: TSizes.spaceBtwInputFields(context)),
 
         ///Password
-        TextFormField(
-          decoration: const InputDecoration(labelText: TTexts.password),
+        Obx( //Observer that only observes this widget and can change it even though in a stlss widget
+          () => TextFormField(
+            controller: controller.password,
+            validator: (value) => TValidator.validatePassword(value),
+            obscureText: controller.hidePassword.value,
+            decoration: InputDecoration(
+                labelText: TTexts.password,
+                suffixIcon: IconButton(
+                  onPressed: () => controller.hidePassword.value = !controller.hidePassword.value,
+                  icon: Icon(controller.hidePassword.value ? Iconsax.eye_slash : Iconsax.eye)
+                )
+            ),
+          ),
         ),
         SizedBox(height: TSizes.defaultSpace(context)),
 
-        Row(
-
-          children: [
-            SizedBox(
-                width: MediaQuery.of(context).size.width * 0.06,
-                height: MediaQuery.of(context).size.height * 0.03,
-                child: Checkbox(value: true, onChanged: (value){},)),
-            SizedBox(width: TSizes.spaceBtwItems(context)),
-
-            Expanded(
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
-                alignment: Alignment.centerLeft,
-                child: Text.rich(
-                  TextSpan(
-                    children: [
-                      ///I agree to
-                      TextSpan(text: '${TTexts.iAgreeTo} ', style: Theme.of(context).textTheme.bodySmall),
-                      ///Privacy Policy
-                      TextSpan(text: '${TTexts.privacyPolicy}', style: Theme.of(context).textTheme.bodyMedium!.apply(
-                          color: dark ? TColors.white: TColors.black, decoration: TextDecoration.underline, decorationColor: dark ? TColors.white: TColors.primary),
-                      ),
-                      /// and
-                      TextSpan(text: ' and ', style: Theme.of(context).textTheme.bodySmall),
-                      ///Terms of Use
-                      TextSpan(text: TTexts.termsOfUse, style: Theme.of(context).textTheme.bodyMedium!.apply(
-                          color: dark ? TColors.white: TColors.black, decoration: TextDecoration.underline, decorationColor: dark ? TColors.white: TColors.primary),
-                      ),
-                    ]
-                ),
-                ),
-              ),
-            ),
-          ],
-        ),
+        TermsConditions(dark: dark),
 
         SizedBox(height: TSizes.defaultSpace(context)),
 
         ///Create Account Button
-        SizedBox(width: double.infinity, child: OutlinedButton(onPressed: () => Get.to(()=> const VerifyEmailScreen()), child: const Text(TTexts.createAccount))), // TODO Implement on pressed
+        SizedBox(width: double.infinity, child: OutlinedButton(
+            onPressed: () => controller.createAccount(context),
+            child: const Text(TTexts.createAccount))), // TODO Implement on pressed
       ],
     ),
     );
   }
 }
+
