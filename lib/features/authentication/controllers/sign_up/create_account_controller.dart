@@ -29,19 +29,19 @@ class CreateAccountController extends GetxController{
 
       // TODO load splash screen
 
-      // Check Internet Connectivity
+      /// Check Internet Connectivity
       final isConnected = await NetworkManager.instance.isConnected();
       if(!isConnected) return;
       
       
-      // Form Validation
+      /// Form Validation
       if (!signupFormKey.currentState!.validate()) {
         signupFormKey.currentState!.save();
         return;
       }
 
 
-      // Privacy Policy CHeck
+      /// Privacy Policy Check
       if(!checkBox.value){
         if (context.mounted){
           TLoader.warningSnackBar(context: context, title: 'Accept Privacy Policy'); // TODO change how privacy policy is set up
@@ -49,10 +49,10 @@ class CreateAccountController extends GetxController{
         return;
       }
       
-      // Register user in the Firebase Authentication & Save user data in Firebase
+      /// Register user in the Firebase Authentication & Save user data in Firebase
       final userCredential = await AuthenticationRepository.instance.registerWithEmailAndPassword(email.text.trim(), password.text.trim()); 
       
-      // Save Authenticated user data in the Firebase Firestore
+      /// Save Authenticated user data in the Firebase Firestore
       final newUser = UserModel(
         id: userCredential.user!.uid,
         firstName: firstName.text.trim(),
@@ -67,13 +67,13 @@ class CreateAccountController extends GetxController{
       await userRepository.saveUserRecord(newUser);
 
       if (context.mounted) {
-        Get.to(() => const OffersScreen()); // Navigate to offers screen
+        Get.to(() => const OffersScreen()); /// Navigate to offers screen
       }
 
     }
     catch (e){
       if (context.mounted) {
-        TLoader.errorSnackBar(context: context, title: "Oh Snap!", message: e.toString());
+        TLoader.errorSnackBar(context: context, title: "Oh Snap!", message: e.toString()); // TODO get rid of context on snack bars and also
       }
     }finally{
       // TODO stop loading splash screen

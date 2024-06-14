@@ -24,9 +24,9 @@ class OffersScreen extends StatelessWidget {
             padding: EdgeInsets.all(11),
 
             /// Image, Subtitle
-            child: Container(
+            child: SizedBox(
                 height: 430,
-                color: TColors.primary,
+
 
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,9 +65,6 @@ class OffersScreen extends StatelessWidget {
                         Text("Offered by Blank",
                           style: Theme.of(context).textTheme.bodySmall,
                         )
-
-
-
                       ],
                     ),
                   )
