@@ -1,7 +1,6 @@
 import 'dart:core';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:startup_app/features/authentication/controllers/sign_up/create_account_controller.dart';
 import 'package:startup_app/utils/formatters/formatter.dart';
 
 class UserModel {

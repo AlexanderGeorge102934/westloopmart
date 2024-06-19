@@ -1,5 +1,6 @@
 
 /// This class contains all the app text in string formats
+library;
 
 //TODO Need to implement
 class TTexts {
@@ -34,6 +35,7 @@ class TTexts {
   static const String verificationCode = "Verification Code";
   static const String resendEmail = "Resend Email";
   static const String resendEmailIn = "Resend email in";
+  static const String Incorrect = "Resend email in";
   static const String done = "Done";
   static const String createAccountHeader = "create an account";
   static const String verifyEmail = "Verify your email address!";

@@ -1,3 +1,4 @@
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -25,10 +26,16 @@ Future<void> main() async {
 
 
   /// Initialize Firebase & Authentication Repository
-  //Will redirect user to any screen i.e if they're logged in send em here if they're not send em here, etc.
+  /// Will redirect user to any screen i.e if they're logged in send em here if they're not send em here, etc.
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform).then(
           (FirebaseApp value) => Get.put(AuthenticationRepository())
   );
+
+  // await FirebaseAppCheck.instance.activate(
+  //   webProvider: ReCaptchaV3Provider('recaptcha-v3-site-key'),
+  //   androidProvider: AndroidProvider.debug,
+  //   appleProvider: AppleProvider.appAttest,
+  // );
 
 
   runApp(const App());

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:startup_app/utils/constants/colors.dart';
 import 'package:startup_app/utils/constants/image_strings.dart';
@@ -21,7 +20,7 @@ class OffersScreen extends StatelessWidget {
 
       body: ListView.builder(itemBuilder: (context,index){
           return Padding(
-            padding: EdgeInsets.all(11),
+            padding: const EdgeInsets.all(11),
 
             /// Image, Subtitle
             child: SizedBox(

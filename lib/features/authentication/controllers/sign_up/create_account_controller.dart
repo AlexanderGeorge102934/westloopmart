@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:startup_app/data/repositories/user/user_repository.dart';
+import 'package:startup_app/features/authentication/screens/profile/test_profile.dart';
 import 'package:startup_app/utils/ui/loader.dart';
 
 import '../../../../data/repositories/authentication/authentication_repository.dart';
 import '../../../../helpers/network_manager.dart';
 import '../../../personalization/models/user_model.dart';
-import '../../screens/trade_main/offers_trade.dart';
 
 class CreateAccountController extends GetxController{
   static CreateAccountController get instance => Get.find(); //Saves memory when creating instances
@@ -23,7 +23,7 @@ class CreateAccountController extends GetxController{
   GlobalKey<FormState> signupFormKey = GlobalKey<FormState>();
 
 
-  void createAccount(BuildContext context) async{
+  void createAccount() async{
 
     try{
 
@@ -43,9 +43,7 @@ class CreateAccountController extends GetxController{
 
       /// Privacy Policy Check
       if(!checkBox.value){
-        if (context.mounted){
-          TLoader.warningSnackBar(context: context, title: 'Accept Privacy Policy'); // TODO change how privacy policy is set up
-        }
+        TLoader.errorSnackBar(title: 'Accept Privacy Policy', message: 'Please accept our Privacy Policy and Terms of Use to continue.'); // TODO change how privacy policy is set up
         return;
       }
       
@@ -66,15 +64,13 @@ class CreateAccountController extends GetxController{
       final userRepository = Get.put(UserRepository());
       await userRepository.saveUserRecord(newUser);
 
-      if (context.mounted) {
-        Get.to(() => const OffersScreen()); /// Navigate to offers screen
-      }
+      /// Navigate to offers screen
+      Get.offAll(() => const TestScreen());
+
 
     }
     catch (e){
-      if (context.mounted) {
-        TLoader.errorSnackBar(context: context, title: "Oh Snap!", message: e.toString()); // TODO get rid of context on snack bars and also
-      }
+      TLoader.errorSnackBar(title: "Oh Snap!", message: e.toString()); // TODO get rid of context on snack bars and also
     }finally{
       // TODO stop loading splash screen
     }

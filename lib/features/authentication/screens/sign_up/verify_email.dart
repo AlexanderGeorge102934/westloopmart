@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:startup_app/common/widgets/success_screen/success_screen.dart';
 import 'package:startup_app/features/authentication/screens/login/login.dart';
-import 'package:startup_app/utils/constants/image_strings.dart';
 import 'package:startup_app/utils/constants/sizes.dart';
 import 'package:startup_app/utils/constants/texts.dart';
 

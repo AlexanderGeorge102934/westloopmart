@@ -1,80 +1,36 @@
 class TFirebaseAuthException implements Exception {
-
-  /// The error associated with the exception
   final String code;
 
   TFirebaseAuthException(this.code);
 
   String get message {
-
-    // TODO Make messages uniform
     switch (code) {
-    // signInWithEmailAndPassword
       case 'wrong-password':
-        return 'Invalid password, please try again.';
+        return 'The password you entered is incorrect. Please try again.';
       case 'invalid-email':
-        return 'Invalid email, please try again.';
+        return 'The email address you entered is invalid. Please check and try again.';
       case 'user-disabled':
-        return 'The account corresponding to the given email has been disabled.';
+        return 'Your account has been disabled. Please contact support.';
       case 'user-not-found':
-        return 'No account has been found.';
-
-    // createUserWithEmailAndPassword
+        return 'No account found with this email. Please sign up first.';
       case 'email-already-in-use':
-        return 'An account with this email address already exists';
-      case 'invalid-email':
-        return 'Invalid email, please try again.';
+        return 'This email is already in use. Please use a different email.';
       case 'weak-password':
-        return 'Password is not strong enough.';
-
-    // signInWithCredential
+        return 'The password is too weak. Please use a stronger password.';
       case 'account-exists-with-different-credential':
-        return 'Account already exists under a different sign-in method.';
+        return 'An account already exists with a different credential.';
       case 'invalid-credential':
-        return 'The credential is malformed or has expired.';
-      // case 'operation-not-allowed':
-      //   return 'The type of account corresponding to the credential is not enabled. Enable the account type in the Firebase Console, under the Auth tab.';
-      case 'user-disabled':
-        return 'This account has been disabled.';
-      case 'user-not-found':
-        return 'There is no user corresponding to the given email.';
-      case 'wrong-password':
-        return 'The password is invalid for the given email, or the account corresponding to the email doesn\'t have a password set.';
+        return 'The credential you provided is invalid or expired.';
       case 'invalid-verification-code':
-        return 'The verification code of the credential is not valid.';
+        return 'The verification code is invalid. Please try again.';
       case 'invalid-verification-id':
-        return 'The verification ID of the credential is not valid.';
-
-    // reauthenticateWithCredential
+        return 'The verification ID is invalid. Please try again.';
       case 'user-mismatch':
-        return 'The credential given does not correspond to the user.';
-      case 'invalid-credential':
-        return 'The provider\'s credential is not valid. This can happen if it has already expired when calling link, or if it used invalid token(s).';
-      case 'invalid-email':
-        return 'The email address used in the credential is invalid.';
-      case 'wrong-password':
-        return 'The password used in the credential is incorrect, or the user associated with the email does not have a password.';
-      case 'invalid-verification-code':
-        return 'The verification code of the credential is not valid.';
-      case 'invalid-verification-id':
-        return 'The verification ID of the credential is not valid.';
-
-    // signInWithAuthProvider
-      case 'user-disabled':
-        return 'The user corresponding to the given email has been disabled.';
-
-    // signInAnonymously
+        return 'The provided credential does not match the user.';
       case 'operation-not-allowed':
-        return 'Anonymous accounts are not enabled. Enable anonymous accounts in the Firebase Console, under the Auth tab.';
-
-    // signInWithEmailLink
+        return 'This operation is not allowed. Please contact support.';
       case 'expired-action-code':
-        return 'The OTP in the email link has expired.';
-      case 'invalid-email':
-        return 'The email address is not valid.';
-      case 'user-disabled':
-        return 'The user corresponding to the given email has been disabled.';
-
+        return 'The action code has expired. Please try again.';
       default:
         return 'An unknown error occurred. Please try again.';
     }

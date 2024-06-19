@@ -1,12 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:startup_app/features/authentication/screens/login/login.dart';
-import 'package:startup_app/features/authentication/screens/password_configuration/reset_password.dart';
+import 'package:startup_app/features/authentication/controllers/forgot_password/forgot_password_controller.dart';
 import 'package:startup_app/helpers/helpers.dart';
 import 'package:startup_app/utils/constants/texts.dart';
+import 'package:startup_app/validators/validation.dart';
 
 import '../../../../utils/constants/sizes.dart';
 
@@ -15,6 +12,7 @@ class ForgetPassword extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(ForgotPasswordController());
     final dark = THelperFunctions.isDarkMode(context);
     return Scaffold(
       appBar: AppBar(iconTheme: IconThemeData(
@@ -30,12 +28,17 @@ class ForgetPassword extends StatelessWidget {
               Text(TTexts.forgotPasswordSubtitle, style: Theme.of(context).textTheme.labelMedium),
               SizedBox(height: TSizes.spaceBtwSections(context)),
               /// Email
-              TextFormField(
-                decoration: const InputDecoration(labelText: TTexts.email),
+              Form(
+                key: controller.forgetPasswordFormKey,
+                child: TextFormField(
+                  controller: controller.email,
+                  decoration: const InputDecoration(labelText: TTexts.email),
+                  validator: TValidator.validateEmail,
+                ),
               ),
               SizedBox(height: TSizes.spaceBtwInputFields(context)),
               ///Submit button
-              SizedBox(width: double.infinity, child: ElevatedButton(onPressed: () => Get.to(()=> const ResetPassword()), child: const Text(TTexts.submit))), //TODO Have the button send an email
+              SizedBox(width: double.infinity, child: ElevatedButton(onPressed: () => controller.sendPasswordResetEmail(), child: const Text(TTexts.submit))), //TODO Have the button send an email
 
             ],
           )),

@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:startup_app/common/styles/spacing_styles.dart';
-import 'package:startup_app/features/authentication/screens/login/login.dart';
 
 import '../../../utils/constants/sizes.dart';
 import '../../../utils/constants/texts.dart';

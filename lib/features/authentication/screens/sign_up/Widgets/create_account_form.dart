@@ -1,15 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:startup_app/features/authentication/controllers/sign_up/create_account_controller.dart';
 import 'package:startup_app/features/authentication/screens/sign_up/Widgets/terms_and_conditions.dart';
-import 'package:startup_app/features/authentication/screens/sign_up/verify_email.dart';
 import 'package:startup_app/validators/validation.dart';
 
-import '../../../../../utils/constants/colors.dart';
 import '../../../../../utils/constants/sizes.dart';
 import '../../../../../utils/constants/texts.dart';
 import '../../../../../utils/formatters/phone_number_input_formatter.dart';
@@ -107,8 +102,8 @@ class TCreateAccountForm extends StatelessWidget {
 
         ///Create Account Button
         SizedBox(width: double.infinity, child: OutlinedButton(
-            onPressed: () => controller.createAccount(context),
-            child: const Text(TTexts.createAccount))), // TODO Implement on pressed
+            onPressed: () => controller.createAccount(),
+            child: const Text(TTexts.createAccount))),
       ],
     ),
     );

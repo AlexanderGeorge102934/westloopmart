@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../helpers/helpers.dart';
@@ -13,7 +12,7 @@ class TSocialButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dark = THelperFunctions.isDarkMode(context);
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [

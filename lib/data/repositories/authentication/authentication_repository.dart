@@ -1,12 +1,13 @@
 
 
+import 'package:camera/camera.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+
+import 'package:startup_app/features/authentication/screens/camera/camera_screen.dart';
 import 'package:startup_app/features/authentication/screens/login/login.dart';
-import 'package:startup_app/features/authentication/screens/trade_main/offers_trade.dart';
 import 'package:startup_app/utils/exceptions/format_exception.dart';
 import 'package:startup_app/utils/exceptions/platform_exception.dart';
 
@@ -32,10 +33,11 @@ class AuthenticationRepository extends GetxController{
   screenRedirect() async{
 
     final user = _auth.currentUser;
+    final cameras = await availableCameras();
 
     if (user != null){
       /// If user is logged in
-      Get.offAll(()=> const OffersScreen());
+      Get.offAll(()=>  CameraView(cameras: cameras));
     }
     else {
       /// Local Storage
@@ -85,6 +87,23 @@ class AuthenticationRepository extends GetxController{
       throw 'Something went wrong. Please try again';
     }
   }
+
+  Future<void> sendPasswordResetEmail(String email) async {
+    try{
+      await _auth.sendPasswordResetEmail(email: email);
+    } on FirebaseAuthException catch (e){
+      throw TFirebaseAuthException(e.code).message;
+    } on FirebaseException catch (e){
+      throw TFirebaseException(e.code).message; //TODO make sure all messages are checked and good (Didn't take time checking)
+    } on FormatException catch (_){
+      throw const TFormatException(); //TODO make sure all messages are checked and good (Didn't take time checking)
+    } on PlatformException catch (e) {
+      throw TPlatformException(e.code).message; //TODO make sure all messages are checked and good (Didn't take time checking)
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
+
 
 
 

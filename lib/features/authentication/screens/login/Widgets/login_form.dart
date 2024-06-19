@@ -1,12 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:startup_app/features/authentication/controllers/login/login_controller.dart';
 import 'package:startup_app/features/authentication/screens/password_configuration/forget_password.dart';
 import 'package:startup_app/features/authentication/screens/sign_up/create_account.dart';
-import 'package:startup_app/features/authentication/screens/trade_main/offers_trade.dart';
 
 import '../../../../../utils/constants/sizes.dart';
 import '../../../../../utils/constants/texts.dart';
@@ -20,8 +17,9 @@ class TLoginForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(LoginController());
-    return Form(child: Padding(
+    return Form(
       key: controller.loginFormKey,
+      child: Padding(
       padding: EdgeInsets.symmetric(vertical: TSizes.spaceBtwSections(context)),
       child: Column(
         children: [
@@ -36,24 +34,42 @@ class TLoginForm extends StatelessWidget {
 
           /// Password
           Obx(
-            () => TextFormField(
-              controller: controller.password,
-              validator: (value) => TValidator.validateEmptyText('Password' , value),
-              obscureText: controller.hidePassword.value,
-              decoration: InputDecoration(
-                  labelText: TTexts.password,
-                  suffixIcon: IconButton(
-                      onPressed: () => controller.hidePassword.value = !controller.hidePassword.value,
-                      icon: Icon(controller.hidePassword.value ? Iconsax.eye_slash : Iconsax.eye)
-                  )
-              ),
+            () => Column(
+              children: [
+                TextFormField(
+                  controller: controller.password,
+                  validator: (value) => TValidator.validateEmptyText('Password' , value),
+                  obscureText: controller.hidePassword.value,
+                  decoration: InputDecoration(
+                      labelText: TTexts.password,
+                      suffixIcon: IconButton(
+                          onPressed: () => controller.hidePassword.value = !controller.hidePassword.value,
+                          icon: Icon(controller.hidePassword.value ? Iconsax.eye_slash : Iconsax.eye)
+                      )
+                  ),
+                ),
+
+                if (controller.errorMessage.value.isNotEmpty)
+                   Column(
+                     children: [
+                       SizedBox(height: TSizes.spaceBtwItems(context)),
+                       Text(
+                          controller.errorMessage.value,
+                          style: const TextStyle(color: Colors.redAccent),
+                        ),
+                       SizedBox(height: TSizes.spaceBtwItems(context)),
+                     ],
+                   ),
+                if (controller.errorMessage.value.isEmpty)
+                  SizedBox(height: TSizes.spaceBtwSections(context)),
+              ],
             ),
+
           ),
-          SizedBox(height: TSizes.spaceBtwSections(context)),
 
 
           ///Sign In Button
-          SizedBox(width: double.infinity, child: ElevatedButton(onPressed: ()=> controller.emailAndPasswordSignIn(context), child: const Text(TTexts.signIn))),
+          SizedBox(width: double.infinity, child: ElevatedButton(onPressed: ()=> controller.emailAndPasswordSignIn(), child: const Text(TTexts.signIn))),
           SizedBox(height: TSizes.spaceBtwItems(context)),
 
 

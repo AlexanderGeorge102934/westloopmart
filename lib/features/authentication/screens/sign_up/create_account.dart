@@ -1,15 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:startup_app/common/styles/spacing_styles.dart';
-import 'package:startup_app/common/widgets/form_divider.dart';
 import 'package:startup_app/features/authentication/screens/sign_up/Widgets/create_account_header.dart';
 import 'package:startup_app/helpers/helpers.dart';
-import 'package:startup_app/utils/constants/colors.dart';
-import 'package:startup_app/utils/constants/image_strings.dart';
 import 'package:startup_app/utils/constants/sizes.dart';
-import 'package:startup_app/utils/constants/texts.dart';
 
-import '../../../../common/widgets/social_buttons.dart';
 import 'Widgets/create_account_form.dart';
 
 class CreateAccountScreen extends StatelessWidget {

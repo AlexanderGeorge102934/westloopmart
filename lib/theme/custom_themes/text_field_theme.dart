@@ -33,7 +33,7 @@ class TTextFormFieldTheme{
       ),
       focusedErrorBorder: const OutlineInputBorder().copyWith(
           borderRadius: BorderRadius.circular(TSizes.borderRadiusCircTextField(context)),
-          borderSide: BorderSide(width: TSizes.borderWidth(context) + 0.002, color: Colors.orange)
+          borderSide: BorderSide(width: TSizes.borderWidth(context) + 0.002, color: Colors.red)
       ),
     );
   }
@@ -67,7 +67,7 @@ class TTextFormFieldTheme{
       ),
       focusedErrorBorder: const OutlineInputBorder().copyWith(
           borderRadius: BorderRadius.circular(TSizes.borderRadiusCircTextField(context)),
-          borderSide: BorderSide(width: TSizes.borderWidth(context) + 0.002, color: Colors.orange)
+          borderSide: BorderSide(width: TSizes.borderWidth(context) + 0.002, color: Colors.red)
       ),
     );
   }

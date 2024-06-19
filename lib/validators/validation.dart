@@ -1,6 +1,9 @@
-//Lot of useful helper functions in the video but too much to implement
-
-//Mastering Flutter Essential Utilities helper functions constants and much more
+///
+///
+/// Used to Validate Text Inputs for Various Text Boxes
+///
+///
+library;
 
 class TValidator{
 
@@ -54,6 +57,7 @@ class TValidator{
   }
 
 
+  /// Validate Phone Number
   static String? validatePhoneNumber(String? value){
     if (value == null || value.isEmpty) {
       return 'Phone number is required.';
@@ -69,11 +73,4 @@ class TValidator{
     return null;
 
   }
-
-
-
-
-
-
-
 }

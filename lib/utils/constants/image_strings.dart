@@ -4,6 +4,7 @@
 /// practice to just do it all at once
 /// Not fully implemented just here to help get the idea
 ///
+library;
 
 class TImages{
   // App Logos
