@@ -5,7 +5,8 @@ import 'package:get/get.dart';
 import 'package:media_scanner/media_scanner.dart';
 
 class CustomCameraController extends GetxController {
-  late CameraController cameraController;
+  late CameraController cameraController; //Todo Fix instantiation
+  //static ForgotPasswordController get instance => Get.find();
   late Future<void> cameraValue;
   var imagesList = <File>[].obs;
   var isFlashOn = false.obs;

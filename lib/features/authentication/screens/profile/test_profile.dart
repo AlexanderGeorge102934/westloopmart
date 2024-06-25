@@ -1,11 +1,19 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../bottom_navigation_bar.dart';
+import '../../../../utils/constants/sizes.dart';
 import '../login/login.dart';
 
 class TestScreen extends StatelessWidget {
   const TestScreen({super.key});
+
+  void addOffer(String title, String description){
+    // write the title under
+    // FirebaseFirestore.instance.collection("User Posts").doc(widget.postId).collection("Offers").add({})
+  }
 
   @override
   Widget build(BuildContext context) {
