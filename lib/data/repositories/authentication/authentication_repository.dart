@@ -1,20 +1,11 @@
-
-
-import 'package:camera/camera.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-
-import 'package:startup_app/features/authentication/screens/camera/camera_screen.dart';
 import 'package:startup_app/features/authentication/screens/login/login.dart';
 import 'package:startup_app/features/authentication/screens/main_screen/main_screen.dart';
-import 'package:startup_app/features/authentication/screens/offers/offers_trade.dart';
-import 'package:startup_app/features/authentication/screens/trade_main/home_screen.dart';
 import 'package:startup_app/utils/exceptions/format_exception.dart';
 import 'package:startup_app/utils/exceptions/platform_exception.dart';
-
-import '../../../features/authentication/screens/profile/test_profile.dart';
 import '../../../utils/exceptions/firebase_auth_exceptions.dart';
 import '../../../utils/exceptions/firebase_exception.dart';
 
@@ -41,7 +32,6 @@ class AuthenticationRepository extends GetxController{
 
     if (user != null){
       /// If user is logged in
-      // Get.offAll(()=>  CameraView(cameras: cameras));
       Get.offAll(()=> MainScreen());
     }
     else {

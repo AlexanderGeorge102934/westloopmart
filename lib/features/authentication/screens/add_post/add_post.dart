@@ -8,11 +8,15 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../../common/styles/spacing_styles.dart';
+import '../../../../utils/constants/sizes.dart';
+import '../../controllers/add_post/add_post_controller.dart';
 
 
 class AddPostScreen extends StatelessWidget {
-   AddPostScreen({super.key});
+  AddPostScreen({super.key});
   final ImageController imageController = Get.put(ImageController());
+
+
 
   Widget _buildImageGrid() {
     return Obx(() {
@@ -52,34 +56,55 @@ class AddPostScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(PostController());
     return Scaffold(
 
       body: Padding(
         padding: TSpacingStyle.paddingWithAppBarHeight(context),
-        child: Column(
+        child: Form(
+          key: controller.postKey,
+          child: Column(
 
-          children: [
-            /// Title
-            TextFormField(
-              decoration: const InputDecoration(labelText: "Title"),
-            ),
-
-            /// Image Grid
-            Expanded(
-              child: SingleChildScrollView(
-                child: _buildImageGrid(),
+            children: [
+              /// Title
+              TextFormField(
+                controller: controller.title,
+                decoration: const InputDecoration(labelText: "Title"),
               ),
-            ),
+
+              /// Image Grid
+              // Expanded(
+              //   child: SingleChildScrollView(
+              //     child: _buildImageGrid(),
+              //   ),
+              // ),
+
+              /// Description
+              TextFormField(
+                controller: controller.description,
+                decoration: const InputDecoration(labelText: "Description"),
+              ),
+
+              /// Category
+              TextFormField(
+                controller: controller.category,
+                decoration: const InputDecoration(labelText: "Category"),
+              ),
+
+              SizedBox(width: double.infinity, child: ElevatedButton(onPressed: ()=> controller.postOffer(), child: const Text('Post Offer'))),
+              SizedBox(height: TSizes.spaceBtwItems(context)),
+            ],
 
 
-          ],
 
 
+          ),
         ),
       ),
     );
   }
 }
+
 
 
 

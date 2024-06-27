@@ -5,7 +5,8 @@ import 'package:startup_app/features/authentication/screens/profile/test_profile
 import 'package:startup_app/helpers/helpers.dart';
 import 'package:startup_app/utils/constants/colors.dart';
 import '../../controllers/bottom_navigation_controller/bottom_nav_controller.dart';
-import '../trade_main/home_screen.dart';
+import '../home_screen/home_screen.dart';
+
 
 class MainScreen extends StatelessWidget {
   final bottomNavController = Get.put(BottomNavController());

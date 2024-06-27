@@ -5,10 +5,10 @@ import '../utils/constants/image_strings.dart';
 import '../utils/constants/sizes.dart';
 
 class Offer extends StatelessWidget {
-  const Offer({super.key, required this.user, required this.time, required this.description, required this.title});
+  const Offer({super.key, required this.user, required this.description, required this.title});
 
   final String user;
-  final String time;
+  // final String time;
   final String description;
   final String title;
 
@@ -19,9 +19,7 @@ class Offer extends StatelessWidget {
 
       /// Image, Subtitle
       child: SizedBox(
-        height: 430,
-
-
+        height: MediaQuery.of(context).size.height * 0.5,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
 
@@ -35,7 +33,7 @@ class Offer extends StatelessWidget {
               ),
               child: Image.asset(
                 TImages.google,
-                height: 350, // Adjust height as needed
+                height: MediaQuery.of(context).size.height * 0.4,
                 width: double.infinity,
                 fit: BoxFit.cover,
               ),
@@ -67,6 +65,6 @@ class Offer extends StatelessWidget {
         ),
       ),
 
-    );;
+    );
   }
 }
