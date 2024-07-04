@@ -19,7 +19,8 @@ class CameraView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Initialize the custom camera controller with the list of available cameras
-    final controller = Get.put(CustomCameraController(cameras));
+
+    final controller = Get.find<CustomCameraController>();
     final size = MediaQuery.of(context).size;
 
     return Scaffold(

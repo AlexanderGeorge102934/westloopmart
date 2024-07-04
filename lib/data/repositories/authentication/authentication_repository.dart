@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:camera/camera.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -8,6 +11,7 @@ import 'package:startup_app/utils/exceptions/format_exception.dart';
 import 'package:startup_app/utils/exceptions/platform_exception.dart';
 import '../../../utils/exceptions/firebase_auth_exceptions.dart';
 import '../../../utils/exceptions/firebase_exception.dart';
+
 
 
 class AuthenticationRepository extends GetxController{
@@ -83,6 +87,7 @@ class AuthenticationRepository extends GetxController{
     }
   }
 
+  /// Send Password Reset
   Future<void> sendPasswordResetEmail(String email) async {
     try{
       await _auth.sendPasswordResetEmail(email: email);
@@ -98,10 +103,4 @@ class AuthenticationRepository extends GetxController{
       throw 'Something went wrong. Please try again';
     }
   }
-
-
-
-
-
-
 }

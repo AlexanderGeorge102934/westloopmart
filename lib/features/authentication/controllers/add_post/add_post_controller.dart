@@ -1,54 +1,114 @@
+import 'dart:io';
+
+import 'package:camera/camera.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:firebase_storage/firebase_storage.dart'; // Add this import
+import 'package:startup_app/data/repositories/initial_posts/initial_posts_repository.dart';
 
 import '../../../../helpers/network_manager.dart';
 import '../../../../utils/ui/loader.dart';
+import '../../../personalization/models/initial_post_model.dart';
+import '../images/image_controller.dart';
+import 'package:path/path.dart';
 
-class PostController extends GetxController{
+
+class PostController extends GetxController {
   static PostController get instance => Get.find();
-  final _auth = FirebaseAuth.instance; /// TODO not sure if this is the best practice for getting current user. Might need to use local storage class
+  final _auth = FirebaseAuth.instance;
+  final _storage = FirebaseStorage.instance;
 
 
   final title = TextEditingController();
   final description = TextEditingController();
   final category = TextEditingController();
-  /// Might need location,
   GlobalKey<FormState> postKey = GlobalKey<FormState>();
 
-  void postOffer() async{
+  // Add ImageController instance
+  final ImageController imageController = Get.find<ImageController>();
+
+
+  /// Todo make it so once you try opening the add button you're prompted to login or sign up
+  Future<void> postOffer() async {
     final user = _auth.currentUser;
-    try{
+    if (user == null) {
+      TLoader.errorSnackBar(title: "User not logged in", message: "Please log in to post an offer."); /// TODO redirect to login or sign up
+      return;
+    }
+
+    try {
       /// Check Internet Connectivity
       final isConnected = await NetworkManager.instance.isConnected();
-      if(!isConnected) return;
+      if (!isConnected) return;
 
-      /// Form Validation
+      /// Form Validation TODO actually make sure
       if (!postKey.currentState!.validate()) {
         debugPrint("Form is not valid");
         return;
       }
 
-      /// Store in fireabse
-      FirebaseFirestore.instance.collection("User Posts").add({
-        'UserName': user?.email, ///TODO Need to make a User class to fetch their data, simply calling user is not a string it's complex list of letters
-        'Title': title.text,
-        'Description': description.text,
-        'Category': category.text,
-        'TimeStamp': Timestamp.now(),
-      });
+      /// Get image Urls
+      List<String> imageUrls = await _uploadImages();
+
+      /// Store in Firestore
+      final post = InitialPostModel(
+        userId: user.uid,
+        userName: user.email ?? "Anonymous", /// TODO shouldn't have null
+        title: title.text,
+        description: description.text,
+        category: category.text,
+        imageUrls: imageUrls,
+        timestamp: Timestamp.now(),
+        location: GeoPoint(0, 0), // Update this with actual location data
+      );
 
 
-    }
-    catch (e){
-      TLoader.errorSnackBar(title: "Oh Snap!", message: e.toString()); // TODO get rid of context on snack bars and also
-    }finally{
+      /// Add initial post
+      final initialPostsRepository = Get.put(InitialPostsRepository());
+      await initialPostsRepository.addInitialPost(post);
 
+      /// Clear everything from post controller
+      title.clear();
+      description.clear();
+      category.clear();
+
+      debugPrint("Title ${title.text}");
+      debugPrint("description ${description.text}");
+      debugPrint("category ${category.text}");
+
+    } catch (e) {
+      TLoader.errorSnackBar(title: "Oh Snap!", message: e.toString());
     }
   }
 
+  /// Get image urls to upload to Firebase
+  Future<List<String>> _uploadImages() async {
+    List<String> imageUrls = [];
+    for (var image in imageController.images) {
+      if (image != null) {
+        try {
+          String imageUrl = await _uploadImage(image);
+          imageUrls.add(imageUrl);
+        } catch (e) {
+          debugPrint('Error uploading image: $e');
+        }
+      }
+    }
+    return imageUrls;
+  }
 
+  Future<String> _uploadImage(XFile image) async {
+    try {
+      final fileName = basename(image.path);
+      final ref = _storage.ref().child('post_images/$fileName');
+      final uploadTask = ref.putFile(File(image.path));
+      final snapshot = await uploadTask.whenComplete(() => {});
+      return await snapshot.ref.getDownloadURL();
+    } catch (e) {
+      debugPrint('Error uploading image: $e');
+      rethrow;
+    }
+  }
 }

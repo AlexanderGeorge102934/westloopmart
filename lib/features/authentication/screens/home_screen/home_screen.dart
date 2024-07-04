@@ -10,24 +10,16 @@ class HomeScreen extends StatefulWidget {
   @override
   State<HomeScreen> createState() => _pageOneState();
 }
-// we have to create a function that takes what the user inputs
-// the function will take the users name location and
-// in and update the List below to work dynamically.
-// for now in order to make any updates we have to manually include
-// all updates..
 
-final Map<String, String> myMap = {
+final Map<String, String> myMap = {};
 
-};
 //flutter + Dart
 class _pageOneState extends State<HomeScreen> {
   String dropdownValue = 'All Items';
   final _controller = PageController();
 
-
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: TColors.primary,
@@ -39,7 +31,7 @@ class _pageOneState extends State<HomeScreen> {
             children: [
               DropdownButton<String>(
                 elevation: 0,
-                borderRadius:  BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(10),
                 underline: Container(
                   height: 2,
                   color: Colors.transparent, // Underline color
@@ -60,44 +52,43 @@ class _pageOneState extends State<HomeScreen> {
               ),
             ],
           ),
-
           Expanded(
-              child: StreamBuilder(
-                stream: FirebaseFirestore.instance.collection("User Posts").orderBy("TimeStamp", descending: false).snapshots(),
-                builder: (context, snapshot){
-                  if (snapshot.hasData){
-                    return ListView.builder(itemCount: snapshot.data!.docs.length, itemBuilder: (context,index){
+            child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+              stream: FirebaseFirestore.instance.collection("User Posts").orderBy("Timestamp", descending: false).snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                if (snapshot.hasError) {
+                  return const Center(child: Text('Error'));
+                }
+                if (!snapshot.hasData) {
+                  return const Center(child: Text('No data has been found')); /// Todo change with a screen that says no posts made yet
+                }
 
-                      /// Get the message
-                      final post = snapshot.data!.docs[index];
-                      return Offer(user: post['UserName'], description: post['Description'], title: post['Title']);
+                if (snapshot.data!.docs.isEmpty) {
+                  return const Center(child: Text('No posts found')); /// Todo change with a screen that says no posts made yet
+                }
 
-                    },
+                final docs = snapshot.data!.docs;
+                return ListView.builder(
+                  itemCount: docs.length,
+                  itemBuilder: (context, index) {
+                    final post = docs[index];
+                    final imageUrls = List<String>.from(post['ImageUrls']);
+                    return Offer(
+                      user: post['UserName'],
+                      description: post['Description'],
+                      title: post['Title'],
+                      imageUrls: imageUrls,
                     );
-                  }
-                  /// If an error occured
-                  else if(snapshot.hasError){
-                    return Center(child: Text('Error'),);
-                  }
-
-                  /// If there is no data
-                  else if(!snapshot.hasData){
-                    return Center(child: Text("No data"),);
-                  }
-
-                  else{
-                    return const Center(child: CircularProgressIndicator(),);
-                  }
-                },
-              )
+                  },
+                );
+              },
+            ),
           ),
-          // NewWidget(controller: _controller),
         ],
       ),
     );
   }
 }
-
-
-
-

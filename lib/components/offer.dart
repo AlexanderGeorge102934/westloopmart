@@ -1,70 +1,96 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:get/get.dart';
 
-import '../utils/constants/image_strings.dart';
+import '../features/authentication/controllers/image_carousel/image_carousel_controller.dart';
 import '../utils/constants/sizes.dart';
 
 class Offer extends StatelessWidget {
-  const Offer({super.key, required this.user, required this.description, required this.title});
+  const Offer({
+    super.key,
+    required this.user,
+    required this.description,
+    required this.title,
+    required this.imageUrls,
+  });
 
   final String user;
-  // final String time;
   final String description;
   final String title;
+  final List<String> imageUrls;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(11),
+    final tag = UniqueKey().toString(); // Unique tag for each controller instance TODO find best way to make unique keys
+    final ImageCarouselController controller = Get.put(ImageCarouselController(), tag: tag);
 
-      /// Image, Subtitle
-      child: SizedBox(
-        height: MediaQuery.of(context).size.height * 0.5,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-
-          children: [
-
-            /// Image
-            Container(
+    return SizedBox(
+      height: MediaQuery.of(context).size.height * 0.5,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          /// Image Carousel
+          Expanded(
+            child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(TSizes.md(context)),
                 color: Colors.red,
               ),
-              child: Image.asset(
-                TImages.google,
-                height: MediaQuery.of(context).size.height * 0.4,
-                width: double.infinity,
-                fit: BoxFit.cover,
+              child: PageView.builder(
+                controller: controller.pageController,
+                itemCount: imageUrls.length,
+                onPageChanged: controller.onPageChanged,
+                itemBuilder: (context, index) {
+                  return ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: CachedNetworkImage(
+                      imageUrl: imageUrls[index],
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                      height: MediaQuery.of(context).size.height * 0.4,
+                      placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+                      errorWidget: (context, url, error) => const Center(child: Icon(Icons.error)),
+                    ),
+                  );
+                },
               ),
             ),
+          ),
+          SizedBox(height: TSizes.spaceBtwItems(context)),
+          Text(title,
+            style: Theme.of(context).textTheme.bodyLarge,
+          ),
 
-            SizedBox(height: TSizes.spaceBtwItems(context)),
+          ///Name
+          Text("Offered by $user",
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
 
-            ///Subtitle (Offered product and Name
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: TSizes.spaceBtwItems(context)),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-
-                ///Product
-                children: [
-                  Text(title,
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
-
-                  ///Name
-                  Text("Offered by $user",
-                    style: Theme.of(context).textTheme.bodySmall,
-                  )
-                ],
-              ),
-            )
-
-          ],
-        ),
+          SizedBox(height: TSizes.spaceBtwSections(context)),
+          // Obx(() {
+          //   return Row(
+          //     mainAxisAlignment: MainAxisAlignment.center,
+          //     children: List.generate(
+          //       imageUrls.length,
+          //           (index) => buildIndicator(index == controller.currentPage.value),
+          //     ),
+          //   );
+          // }),
+        ],
       ),
+    );
+  }
 
+  Widget buildIndicator(bool isActive) {
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 300),
+      margin: const EdgeInsets.symmetric(horizontal: 4.0),
+      height: 8.0,
+      width: isActive ? 16.0 : 8.0,
+      decoration: BoxDecoration(
+        color: isActive ? Colors.blue : Colors.grey,
+        borderRadius: BorderRadius.circular(4.0),
+      ),
     );
   }
 }

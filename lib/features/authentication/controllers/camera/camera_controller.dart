@@ -5,7 +5,9 @@ import 'package:get/get.dart';
 import 'package:media_scanner/media_scanner.dart';
 
 class CustomCameraController extends GetxController {
-  late CameraController cameraController; //Todo Fix instantiation
+  static CustomCameraController get instance => Get.find(); // TODO not sure if this is necessary
+
+  late CameraController cameraController;
   //static ForgotPasswordController get instance => Get.find();
   late Future<void> cameraValue;
   var imagesList = <File>[].obs;
@@ -41,6 +43,12 @@ class CustomCameraController extends GetxController {
     }
 
     await cameraController.setFlashMode(isFlashOn.value ? FlashMode.torch : FlashMode.off);
+
+    if(imagesList.length == 10){
+      /// TODO add a snack bar or something saying you have 10 images
+      return; /// Can't take pictures if you have more than 10 images
+    }
+
     image = await cameraController.takePicture();
 
     if (isFlashOn.value) {
@@ -49,6 +57,7 @@ class CustomCameraController extends GetxController {
 
     final file = await saveImage(image);
     imagesList.add(file);
+    update();
     MediaScanner.loadMedia(path: file.path);
   }
 

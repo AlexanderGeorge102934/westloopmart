@@ -1,106 +1,41 @@
 import 'dart:io';
-
-import 'package:camera/camera.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
-import 'package:image_picker/image_picker.dart';
-
+import 'package:startup_app/helpers/helpers.dart';
 import '../../../../common/styles/spacing_styles.dart';
+import '../../../../utils/constants/colors.dart';
 import '../../../../utils/constants/sizes.dart';
+import 'Widgets/image_grid.dart';
 import '../../controllers/add_post/add_post_controller.dart';
+import 'package:permission_handler/permission_handler.dart';
+import '../../controllers/camera/camera_controller.dart';
+import '../../controllers/images/image_controller.dart';
+import 'Widgets/add_post_form.dart';
 
 
 class AddPostScreen extends StatelessWidget {
   AddPostScreen({super.key});
   final ImageController imageController = Get.put(ImageController());
 
-
-
-  Widget _buildImageGrid() {
-    return Obx(() {
-      List<Widget> imageWidgets = [];
-
-      for (int i = 0; i < imageController.images.length; i++) {
-        imageWidgets.add(Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: FileImage(File(imageController.images[i]!.path)),
-              fit: BoxFit.cover,
-            ),
-          ),
-        ));
-      }
-
-      if (imageController.images.length < 10) {
-        imageWidgets.add(GestureDetector(
-          onTap: imageController.pickImage,
-          child: Container(
-            color: Colors.grey[300],
-            child: Center(
-              child: Icon(Icons.add, size: 300, color: Colors.black54),
-
-            ),
-          ),
-        ));
-      }
-
-      return Wrap(
-        spacing: 10.0,
-        runSpacing: 4.0,
-        children: imageWidgets,
-      );
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(PostController());
+    final dark = THelperFunctions.isDarkMode(context);
+    final postController = Get.put(PostController());
+
+
     return Scaffold(
-
-      body: Padding(
-        padding: TSpacingStyle.paddingWithAppBarHeight(context),
-        child: Form(
-          key: controller.postKey,
-          child: Column(
-
-            children: [
-              /// Title
-              TextFormField(
-                controller: controller.title,
-                decoration: const InputDecoration(labelText: "Title"),
-              ),
-
-              /// Image Grid
-              // Expanded(
-              //   child: SingleChildScrollView(
-              //     child: _buildImageGrid(),
-              //   ),
-              // ),
-
-              /// Description
-              TextFormField(
-                controller: controller.description,
-                decoration: const InputDecoration(labelText: "Description"),
-              ),
-
-              /// Category
-              TextFormField(
-                controller: controller.category,
-                decoration: const InputDecoration(labelText: "Category"),
-              ),
-
-              SizedBox(width: double.infinity, child: ElevatedButton(onPressed: ()=> controller.postOffer(), child: const Text('Post Offer'))),
-              SizedBox(height: TSizes.spaceBtwItems(context)),
-            ],
-
-
-
-
-          ),
+      appBar: AppBar(
+        leading: IconButton(
+          color: dark ? TColors.white : TColors.black,
+          icon: const Icon(Icons.close),
+          onPressed: (){
+            Get.back();
+          },
         ),
       ),
+
+      /// Adding Post Form
+      body: AddPostForm(postController: postController, imageController: imageController),
     );
   }
 }
@@ -108,17 +43,10 @@ class AddPostScreen extends StatelessWidget {
 
 
 
-class ImageController extends GetxController {
-  final images = <XFile?>[].obs;
-  final ImagePicker _picker = ImagePicker();
 
-  Future<void> pickImage() async {
-    if (images.length < 10) {
-      final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-      if (image != null) {
-        images.add(image);
-      }
-    }
-  }
-}
+
+
+
+
+
 

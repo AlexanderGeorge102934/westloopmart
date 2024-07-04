@@ -50,7 +50,7 @@ class CreateAccountController extends GetxController{
       /// Register user in the Firebase Authentication & Save user data in Firebase
       final userCredential = await AuthenticationRepository.instance.registerWithEmailAndPassword(email.text.trim(), password.text.trim()); 
       
-      /// Save Authenticated user data in the Firebase Firestore
+      /// Save Authenticated user data in the Firebase Fire store
       final newUser = UserModel(
         id: userCredential.user!.uid,
         firstName: firstName.text.trim(),

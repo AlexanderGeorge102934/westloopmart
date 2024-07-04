@@ -36,7 +36,7 @@ class TopOverlay extends StatelessWidget {
                     /// Done button
                     TextButton(
                       onPressed: () {
-                        // Implement your "Done" functionality here
+                        Get.back();
                       },
                       child: Text(
                         'Done',
@@ -59,6 +59,7 @@ class TopOverlay extends StatelessWidget {
                     Gap(MediaQuery.of(context).size.width * 0.05),
 
                     /// Camera switch button
+                    /// TODO Freezes when switching to selfie mode
                     GestureDetector(
                       onTap: controller.toggleCamera,
                       child: Obx(() => Icon(

@@ -28,7 +28,7 @@ class MainScreen extends StatelessWidget {
       body: Obx(() => _screens[bottomNavController.selectedIndex.value]),
       floatingActionButton: FloatingActionButton(
         onPressed: (){
-          bottomNavController.changeIndex(2);
+          Get.to(()=> AddPostScreen());
         },
         backgroundColor: dark ? TColors.white : Colors.black,
         foregroundColor: dark ? Colors.black : TColors.white,
