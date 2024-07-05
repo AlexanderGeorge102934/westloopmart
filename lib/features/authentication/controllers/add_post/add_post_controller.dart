@@ -4,9 +4,11 @@ import 'package:camera/camera.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:firebase_storage/firebase_storage.dart'; // Add this import
 import 'package:startup_app/data/repositories/initial_posts/initial_posts_repository.dart';
+import 'package:startup_app/features/authentication/screens/home_screen/home_screen.dart';
 
 import '../../../../helpers/network_manager.dart';
 import '../../../../utils/ui/loader.dart';
@@ -28,6 +30,33 @@ class PostController extends GetxController {
 
   // Add ImageController instance
   final ImageController imageController = Get.find<ImageController>();
+
+  Future<Position> determinePosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    permission = await Geolocator.requestPermission();
+
+    if (permission == LocationPermission.denied) {
+      return Future.error('Location permissions are denied');
+    }
+
+
+    if (permission == LocationPermission.deniedForever) {
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+
+    return await Geolocator.getCurrentPosition();
+  }
 
 
   /// Todo make it so once you try opening the add button you're prompted to login or sign up
@@ -52,6 +81,9 @@ class PostController extends GetxController {
       /// Get image Urls
       List<String> imageUrls = await _uploadImages();
 
+      final position = await determinePosition();
+
+
       /// Store in Firestore
       final post = InitialPostModel(
         userId: user.uid,
@@ -61,7 +93,7 @@ class PostController extends GetxController {
         category: category.text,
         imageUrls: imageUrls,
         timestamp: Timestamp.now(),
-        location: GeoPoint(0, 0), // Update this with actual location data
+        location: GeoPoint(position.latitude, position.longitude),
       );
 
 
@@ -73,10 +105,6 @@ class PostController extends GetxController {
       title.clear();
       description.clear();
       category.clear();
-
-      debugPrint("Title ${title.text}");
-      debugPrint("description ${description.text}");
-      debugPrint("category ${category.text}");
 
     } catch (e) {
       TLoader.errorSnackBar(title: "Oh Snap!", message: e.toString());
