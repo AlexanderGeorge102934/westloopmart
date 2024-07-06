@@ -31,7 +31,7 @@ class TSizes {
   static double buttonElevation(BuildContext context) => MediaQuery.of(context).size.height * 0.01;
 
   //Image sizes
-  static const double imageThumbSize = 80.0;
+  static const double imageThumbSize = 80.0; // Todo make dynamic
 
   //Default spacing between sections
   static double defaultSpace(BuildContext context) => MediaQuery.of(context).size.height * 0.03;

@@ -51,7 +51,7 @@ class THelperFunctions{
     return R * c; // in meters
   }
 
-  static String formatDistance(double distanceInMeters) { /// Todo figure out if this should be static or not
+  static String formatDistance(double distanceInMeters) {
     double distanceInFeet = distanceInMeters * 3.28084;
     double distanceInMiles = distanceInMeters / 1609.34;
 

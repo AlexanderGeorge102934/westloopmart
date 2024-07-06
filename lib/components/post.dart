@@ -8,8 +8,8 @@ import 'package:startup_app/helpers/helpers.dart';
 import '../features/authentication/controllers/image_carousel/image_carousel_controller.dart';
 import '../utils/constants/sizes.dart';
 
-class Offer extends StatelessWidget {
-  const Offer({
+class TPost extends StatelessWidget {
+  const TPost({
     super.key,
     required this.user,
     required this.description,
@@ -31,7 +31,7 @@ class Offer extends StatelessWidget {
     final tag = UniqueKey().toString(); // TODO find best way to make unique keys
     final ImageCarouselController controller = Get.put(ImageCarouselController(), tag: tag);
     final distance = THelperFunctions.calculateDistance(userPosition.latitude, userPosition.longitude, postPosition.latitude, postPosition.longitude);
-    final distanceString = THelperFunctions.formatDistance(distance);/// todo check if this will change or not
+    final distanceString = THelperFunctions.formatDistance(distance);
 
     //user location and post location
 

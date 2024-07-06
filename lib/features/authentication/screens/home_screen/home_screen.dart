@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:startup_app/components/offer.dart';
+import 'package:startup_app/components/post.dart';
 import '../../../../utils/constants/colors.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -97,7 +97,7 @@ class _pageOneState extends State<HomeScreen> {
                   itemBuilder: (context, index) {
                     final post = docs[index];
                     final imageUrls = List<String>.from(post['ImageUrls']);
-                    return Offer(
+                    return TPost(
                       user: post['UserName'],
                       description: post['Description'],
                       title: post['Title'],
