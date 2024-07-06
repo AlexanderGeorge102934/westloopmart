@@ -28,7 +28,7 @@ class Offer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final tag = UniqueKey().toString(); // Unique tag for each controller instance TODO find best way to make unique keys
+    final tag = UniqueKey().toString(); // TODO find best way to make unique keys
     final ImageCarouselController controller = Get.put(ImageCarouselController(), tag: tag);
     final distance = THelperFunctions.calculateDistance(userPosition.latitude, userPosition.longitude, postPosition.latitude, postPosition.longitude);
     final distanceString = THelperFunctions.formatDistance(distance);/// todo check if this will change or not

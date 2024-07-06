@@ -8,7 +8,6 @@ class CustomCameraController extends GetxController {
   static CustomCameraController get instance => Get.find(); // TODO not sure if this is necessary
 
   late CameraController cameraController;
-  //static ForgotPasswordController get instance => Get.find();
   late Future<void> cameraValue;
   var imagesList = <File>[].obs;
   var isFlashOn = false.obs;

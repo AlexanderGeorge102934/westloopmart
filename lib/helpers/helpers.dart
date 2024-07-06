@@ -7,6 +7,8 @@ import 'package:get/get.dart';
 import 'dart:math' as math;
 class THelperFunctions{
 
+
+
   static double screenWidth(){
     return MediaQuery.of(Get.context!).size.width;
   }

@@ -29,26 +29,19 @@ class LoginController extends GetxController {
       // Check Internet Connectivity
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) {
-        debugPrint('No internet connection.');
         return;
       }
-      debugPrint('Internet connection: $isConnected');
 
-      // Form Validation
+      /// Form Validation
       if (loginFormKey.currentState == null) {
-        debugPrint('FormState is null.');
         return;
       }
-      debugPrint('FormState is not null.');
 
       if (!loginFormKey.currentState!.validate()) {
-        debugPrint('Form validation failed.');
         return;
       }
-      debugPrint('Form validation succeeded.');
 
-      // Register user in the Firebase Authentication & Save user data in Firebase
-
+      /// Register user in the Firebase Authentication & Save user data in Firebase
       final userCredential = await AuthenticationRepository.instance.signInEmailPassword(email.text.trim(), password.text.trim(),);
       debugPrint('UserCredential: $userCredential');
 
@@ -56,7 +49,7 @@ class LoginController extends GetxController {
       // Remove Loader TODO
       // Tfullscreenloader.stoploading();
 
-      // Redirect
+      /// Redirect
       AuthenticationRepository.instance.screenRedirect();
       debugPrint('Screen redirect succeeded.');
 

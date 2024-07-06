@@ -34,6 +34,7 @@ class InitialPostModel {
     };
   }
 
+
   factory InitialPostModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
     final data = document.data()!;
     return InitialPostModel(
@@ -43,8 +44,8 @@ class InitialPostModel {
       description: data['Description'] ?? '',
       category: data['Category'],
       imageUrls: List<String>.from(data['ImageUrls']),
-      timestamp: data['Timestamp'] ?? Timestamp.now(),
-      location: data['Location'] ?? const GeoPoint(0, 0), ///TODO change
+      timestamp: data['Timestamp'],
+      location: data['Location'],
     );
   }
 }
