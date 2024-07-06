@@ -1,11 +1,13 @@
 import 'dart:io';
+
 import 'package:camera/camera.dart';
 import 'package:external_path/external_path.dart';
 import 'package:get/get.dart';
 import 'package:media_scanner/media_scanner.dart';
+import 'package:startup_app/utils/ui/loader.dart';
 
 class CustomCameraController extends GetxController {
-  static CustomCameraController get instance => Get.find(); // TODO not sure if this is necessary
+  static CustomCameraController get instance => Get.find();
 
   late CameraController cameraController;
   late Future<void> cameraValue;
@@ -18,8 +20,23 @@ class CustomCameraController extends GetxController {
 
   @override
   void onInit() {
-    startCamera(0);
     super.onInit();
+    startCamera(0); // Initialize with the rear camera
+  }
+
+  @override
+  void onClose() {
+    cameraController.dispose();
+    super.onClose();
+  }
+
+  void startCamera(int cameraIndex) {
+    cameraController = CameraController(
+      cameras[cameraIndex],
+      ResolutionPreset.high,
+      enableAudio: false,
+    );
+    cameraValue = cameraController.initialize();
   }
 
   Future<File> saveImage(XFile image) async {
@@ -29,44 +46,38 @@ class CustomCameraController extends GetxController {
 
     try {
       await file.writeAsBytes(await image.readAsBytes());
-    } catch (_) {}
+    } catch (e) {
+      TLoader.errorSnackBar(title: 'Save Error', message: 'Failed to save image.');
+    }
 
     return file;
   }
 
-  void takePicture() async {
-    XFile? image;
-
+  Future<void> takePicture() async {
     if (cameraController.value.isTakingPicture || !cameraController.value.isInitialized) {
       return;
     }
 
     await cameraController.setFlashMode(isFlashOn.value ? FlashMode.torch : FlashMode.off);
 
-    if(imagesList.length == 10){
-      /// TODO add a snack bar or something saying you have 10 images
-      return; /// Can't take pictures if you have more than 10 images
+    if (imagesList.length >= 10) {
+      TLoader.errorSnackBar(title: 'Limit Reached', message: 'You can only take up to 10 images.');
+      return;
     }
 
-    image = await cameraController.takePicture();
+    try {
+      final image = await cameraController.takePicture();
 
-    if (isFlashOn.value) {
-      cameraController.setFlashMode(FlashMode.off);
+      if (isFlashOn.value) {
+        await cameraController.setFlashMode(FlashMode.off);
+      }
+
+      final file = await saveImage(image);
+      imagesList.add(file);
+      MediaScanner.loadMedia(path: file.path);
+    } catch (e) {
+      TLoader.errorSnackBar(title: 'Capture Error', message: 'Failed to take picture.');
     }
-
-    final file = await saveImage(image);
-    imagesList.add(file);
-    update();
-    MediaScanner.loadMedia(path: file.path);
-  }
-
-  void startCamera(int camera) {
-    cameraController = CameraController(
-      cameras[camera],
-      ResolutionPreset.high,
-      enableAudio: false,
-    );
-    cameraValue = cameraController.initialize();
   }
 
   void toggleFlash() {
@@ -76,11 +87,5 @@ class CustomCameraController extends GetxController {
   void toggleCamera() {
     isRearCamera.value = !isRearCamera.value;
     startCamera(isRearCamera.value ? 0 : 1);
-  }
-
-  @override
-  void onClose() {
-    cameraController.dispose();
-    super.onClose();
   }
 }
