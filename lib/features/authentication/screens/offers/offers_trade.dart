@@ -7,7 +7,7 @@ import 'package:startup_app/utils/constants/image_strings.dart';
 import '../../../../helpers/helpers.dart';
 import '../../../../utils/constants/sizes.dart';
 
-class OffersScreen extends StatelessWidget {
+class OffersScreen extends StatelessWidget { /// NOT IMPLEMENTED INTO ANYTHING
   const OffersScreen({super.key});
 
   @override

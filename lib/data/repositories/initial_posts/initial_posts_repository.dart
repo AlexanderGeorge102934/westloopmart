@@ -8,14 +8,14 @@ import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:path/path.dart';
-import 'package:startup_app/features/personalization/models/initial_post_model.dart';
+import 'package:startup_app/features/personalization/models/post_model.dart';
 
 import '../../../utils/exceptions/firebase_exception.dart';
 import '../../../utils/exceptions/format_exception.dart';
 import '../../../utils/exceptions/platform_exception.dart';
 
-class InitialPostsRepository extends GetxController {
-  static InitialPostsRepository get instance => Get.find();
+class PostsRepository extends GetxController {
+  static PostsRepository get instance => Get.find();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseStorage _storage = FirebaseStorage.instance;
   // final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -71,7 +71,7 @@ class InitialPostsRepository extends GetxController {
 
 
   /// Function to save user data to Firestore
-  Future<void> addInitialPost(InitialPostModel initialPost) async {
+  Future<void> addPost(PostModel initialPost) async {
     try{
       await FirebaseFirestore.instance.collection("User Posts").add(initialPost.toJson());
     } on FirebaseException catch (e){

@@ -5,8 +5,8 @@ import 'package:get/get.dart';
 
 import '../../../controllers/images/image_controller.dart';
 
-class ImageGrid extends StatelessWidget {
-  const ImageGrid({super.key, required this.imageController});
+class TImageGrid extends StatelessWidget {
+  const TImageGrid({super.key, required this.imageController});
 
   final ImageController imageController;
 

@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class InitialPostModel {
+class PostModel {
   final String userId;
   final String userName;
   final String title;
@@ -10,7 +10,7 @@ class InitialPostModel {
   final Timestamp timestamp;
   final GeoPoint location; // Assuming you need to store location
 
-  InitialPostModel({
+  PostModel({
     required this.userId,
     required this.userName,
     required this.title,
@@ -35,9 +35,9 @@ class InitialPostModel {
   }
 
 
-  factory InitialPostModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
+  factory PostModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
     final data = document.data()!;
-    return InitialPostModel(
+    return PostModel(
       userId: data['UserId'],
       userName: data['UserName'],
       title: data['Title'],

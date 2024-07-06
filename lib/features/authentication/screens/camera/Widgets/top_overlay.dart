@@ -7,8 +7,8 @@ import 'package:get/get_core/src/get_main.dart';
 import '../../../../../utils/constants/sizes.dart';
 import '../../../controllers/camera/camera_controller.dart';
 
-class TopOverlay extends StatelessWidget {
-  const TopOverlay({
+class TTopOverlay extends StatelessWidget {
+  const TTopOverlay({
     super.key,
     required this.controller,
   });

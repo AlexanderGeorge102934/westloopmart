@@ -10,8 +10,8 @@ import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import '../../../controllers/camera/camera_controller.dart';
 import '../edit_camera_screen.dart';
 
-class BottomOverlay extends StatelessWidget {
-  const BottomOverlay({
+class TBottomOverlay extends StatelessWidget {
+  const TBottomOverlay({
     super.key,
     required this.controller,
   });

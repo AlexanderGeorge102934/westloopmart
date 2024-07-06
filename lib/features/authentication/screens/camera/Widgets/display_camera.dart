@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 
 import '../../../controllers/camera/camera_controller.dart';
 
-class DisplayCamera extends StatelessWidget {
-  const DisplayCamera({
+class TDisplayCamera extends StatelessWidget {
+  const TDisplayCamera({
     super.key,
     required this.controller,
     required this.size,

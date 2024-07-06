@@ -30,7 +30,7 @@ class AddPostScreen extends StatelessWidget {
       ),
 
       /// Adding Post Form
-      body: AddPostForm(postController: postController, imageController: imageController),
+      body: TAddPostForm(postController: postController, imageController: imageController),
     );
   }
 }

@@ -6,6 +6,7 @@ import 'package:startup_app/helpers/helpers.dart';
 import 'package:startup_app/utils/constants/colors.dart';
 import '../../controllers/bottom_navigation_controller/bottom_nav_controller.dart';
 import '../home_screen/home_screen.dart';
+import 'Widgets/add_post_button.dart';
 
 
 class MainScreen extends StatelessWidget {
@@ -26,20 +27,7 @@ class MainScreen extends StatelessWidget {
     final dark = THelperFunctions.isDarkMode(context);
     return Scaffold(
       body: Obx(() => _screens[bottomNavController.selectedIndex.value]),
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          Get.to(()=> AddPostScreen());
-        },
-        backgroundColor: dark ? TColors.white : Colors.black,
-        foregroundColor: dark ? Colors.black : TColors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(50.0),
-        ),
-        elevation: 0,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-
-      ),
+      floatingActionButton: TAddPostButton(dark: dark),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
           color: dark ? TColors.black : Colors.white,
@@ -87,5 +75,7 @@ class MainScreen extends StatelessWidget {
     );
   }
 }
+
+
 
 

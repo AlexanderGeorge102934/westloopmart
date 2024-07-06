@@ -6,8 +6,8 @@ import 'image_grid.dart';
 import '../../../controllers/add_post/add_post_controller.dart';
 import '../../../controllers/images/image_controller.dart';
 
-class AddPostForm extends StatelessWidget {
-  const AddPostForm({
+class TAddPostForm extends StatelessWidget {
+  const TAddPostForm({
     super.key,
     required this.postController,
     required this.imageController,
@@ -34,7 +34,7 @@ class AddPostForm extends StatelessWidget {
 
             /// Image Grid
             Expanded(
-              child: ImageGrid(imageController: imageController),
+              child: TImageGrid(imageController: imageController),
             ),
 
             /// Description
