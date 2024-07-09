@@ -1,34 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 
 import '../../../../../common/styles/spacing_styles.dart';
 import '../../../../../utils/constants/sizes.dart';
-import 'image_grid.dart';
-import '../../../controllers/add_post/add_post_controller.dart';
-import '../../../controllers/images/image_controller.dart';
 
-class TAddPostForm extends StatelessWidget {
-  const TAddPostForm({
+import '../../../features/authentication/controllers/add_post_offer/add_post_offer_controller.dart';
+import '../../../features/authentication/controllers/images/image_controller.dart';
+import 'image_grid.dart';
+
+class TAddForm extends StatelessWidget {
+  const TAddForm({
     super.key,
-    required this.postController,
-    required this.imageController,
+
+    required this.imageController, required this.postingController, this.postID,
   });
 
-  final PostController postController;
+  final PostingController postingController;
   final ImageController imageController;
+  final String? postID;
 
   @override
   Widget build(BuildContext context) {
+    debugPrint(postID);
 
     return Padding(
       padding: TSpacingStyle.paddingWithAppBarHeight(context),
       child: Form(
-        key: postController.postKey,
+        key: postingController.postKey,
         child: Column(
 
           children: [
             /// Title
             TextFormField(
-              controller: postController.title,
+              controller: postingController.title,
               decoration: const InputDecoration(labelText: "Title"),
             ),
 
@@ -39,18 +43,25 @@ class TAddPostForm extends StatelessWidget {
 
             /// Description
             TextFormField(
-              controller: postController.description,
+              controller: postingController.description,
               decoration: const InputDecoration(labelText: "Description"),
             ),
 
             /// Category
             TextFormField(
-              controller: postController.category,
+              controller: postingController.category,
               decoration: const InputDecoration(labelText: "Category"),
             ),
 
             /// Post offer button
-            SizedBox(width: double.infinity, child: ElevatedButton(onPressed: ()=> postController.postOffer(), child: const Text('Post Offer'))),
+            SizedBox(width: double.infinity,
+                child: ElevatedButton(onPressed: () {
+                  if (postID == null) {
+                    postingController.addPost();
+                  } else if (postID != null) {
+                    postingController.addOffer(postID!);
+                  }
+                }, child: postID == null ? const Text('Add Post') : const Text('Add Offer'))),
             SizedBox(height: TSizes.spaceBtwItems(context)),
           ],
         ),

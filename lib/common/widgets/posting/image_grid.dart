@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../controllers/images/image_controller.dart';
+import '../../../features/authentication/controllers/images/image_controller.dart';
+
+
 
 class TImageGrid extends StatelessWidget {
   const TImageGrid({super.key, required this.imageController});

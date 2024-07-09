@@ -4,18 +4,21 @@ import 'package:camera/camera.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:path/path.dart';
 import 'package:startup_app/features/personalization/models/post_model.dart';
 
+import '../../../components/post.dart';
+import '../../../features/personalization/models/offer_model.dart';
 import '../../../utils/exceptions/firebase_exception.dart';
 import '../../../utils/exceptions/format_exception.dart';
 import '../../../utils/exceptions/platform_exception.dart';
 
-class PostsRepository extends GetxController {
-  static PostsRepository get instance => Get.find();
+class OffersRepository extends GetxController {
+  static OffersRepository get instance => Get.find();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseStorage _storage = FirebaseStorage.instance;
   // final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -71,9 +74,9 @@ class PostsRepository extends GetxController {
 
 
   /// Function to save user data to Firestore
-  Future<void> addPost(PostModel initialPost) async {
+  Future<void> addOffer(String postId, OfferModel offer) async {
     try{
-      await FirebaseFirestore.instance.collection("User Posts").add(initialPost.toJson());
+      await FirebaseFirestore.instance.collection("User Posts").doc(postId).collection("Offers").add(offer.toJson());
     } on FirebaseException catch (e){
       throw TFirebaseException(e.code).message; //TODO make sure all messages are checked and good (Didn't take time checking)
     } on FormatException catch (_){

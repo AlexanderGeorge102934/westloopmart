@@ -75,7 +75,7 @@ class _pageOneState extends State<HomeScreen> {
           ),
           Expanded(
             child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-              stream: FirebaseFirestore.instance.collection("User Posts").orderBy("Timestamp", descending: false).snapshots(),
+              stream: FirebaseFirestore.instance.collection("User Posts").orderBy("Timestamp", descending: true).snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
@@ -96,6 +96,7 @@ class _pageOneState extends State<HomeScreen> {
                   itemCount: docs.length,
                   itemBuilder: (context, index) {
                     final post = docs[index];
+                    String postId = post.id; // Access the post ID
                     final imageUrls = List<String>.from(post['ImageUrls']);
                     return TPost(
                       user: post['UserName'],
@@ -104,6 +105,7 @@ class _pageOneState extends State<HomeScreen> {
                       imageUrls: imageUrls,
                       userPosition: _currentPosition,
                       postPosition: post['Location'],
+                      postID: postId,
                     );
                   },
                 );

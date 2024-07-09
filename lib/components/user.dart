@@ -19,8 +19,6 @@ class UserResponsePost extends StatelessWidget {
             Text(title),
             Text(description),
             Text(user),
-            // Text(time),
-
           ],
         )
       ],

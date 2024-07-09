@@ -3,20 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:startup_app/features/authentication/screens/add_offer/add_offer.dart';
 import 'package:startup_app/helpers/helpers.dart';
 
 import '../features/authentication/controllers/image_carousel/image_carousel_controller.dart';
 import '../utils/constants/sizes.dart';
 import '../utils/constants/texts.dart';
 
-class TPost extends StatelessWidget {
-  const TPost({
+class TOffer extends StatelessWidget {
+  const TOffer({
     super.key,
     required this.user,
     required this.description,
     required this.title,
-    required this.imageUrls, required this.userPosition, required this.postPosition, required this.postID,
+    required this.imageUrls, required this.userPosition, required this.postPosition,
   });
 
   final String user;
@@ -25,14 +24,11 @@ class TPost extends StatelessWidget {
   final List<String> imageUrls;
   final Position userPosition;
   final GeoPoint postPosition;
-  final String postID;
-
-
 
 
   @override
   Widget build(BuildContext context) {
-    debugPrint(postID);
+
     final tag = UniqueKey().toString(); // TODO find best way to make unique keys
     final ImageCarouselController controller = Get.put(ImageCarouselController(), tag: tag);
     final distance = THelperFunctions.calculateDistance(userPosition.latitude, userPosition.longitude, postPosition.latitude, postPosition.longitude);
@@ -85,7 +81,8 @@ class TPost extends StatelessWidget {
             style: Theme.of(context).textTheme.bodySmall,
           ),
 
-          Center(child: SizedBox(width: THelperFunctions.screenWidth() * 0.7, child: ElevatedButton(onPressed: ()=> Get.to(()=> AddOfferScreen(postID: postID)), child: const Text(TTexts.offerPost)))),
+          //Todo make it only available for whoever is the initial poster looking at offers
+          // Center(child: SizedBox(width: THelperFunctions.screenWidth() * 0.7, child: ElevatedButton(onPressed: (){}, child: const Text(TTexts.offerPost)))),
 
 
           SizedBox(height: TSizes.spaceBtwSections(context)),

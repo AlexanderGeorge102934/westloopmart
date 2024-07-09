@@ -46,6 +46,9 @@ class TTexts {
   static const String passwordEmailSentTitle = "Email Sent";
   static const String passwordEmailSentSubTitle = "An email has been sent to you with instructions on how to reset your password.";
 
+  // Posts
+  static const String offerPost = "Offer";
+
 
   // OnBoarding Texts
   static const String onBoardingTitle1 = "Choose your product";
