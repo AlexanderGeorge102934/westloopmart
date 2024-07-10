@@ -28,9 +28,10 @@ class TOffer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final tag = UniqueKey().toString(); // TODO find best way to make unique keys
     final ImageCarouselController controller = Get.put(ImageCarouselController(), tag: tag);
+
+    /// Calculate and format distance of user from post
     final distance = THelperFunctions.calculateDistance(userPosition.latitude, userPosition.longitude, postPosition.latitude, postPosition.longitude);
     final distanceString = THelperFunctions.formatDistance(distance);
 

@@ -8,7 +8,7 @@ Future<List<DocumentSnapshot>> fetchNearbyPosts() async {
   double userLat = position.latitude;
   double userLon = position.longitude;
 
-  QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('posts').get();
+  QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('User Posts').get();
   List<DocumentSnapshot> nearbyPosts = [];
 
   for (var doc in querySnapshot.docs) {
