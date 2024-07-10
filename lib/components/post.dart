@@ -11,7 +11,7 @@ import '../utils/constants/texts.dart';
 import 'offer.dart';
 
 
-///--- Widget of One Post --- ///
+/// --- Widget of One Post --- ///
 class TPost extends StatelessWidget {
   const TPost({
     super.key,

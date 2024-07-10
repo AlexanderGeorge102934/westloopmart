@@ -6,6 +6,8 @@ import '../../../../utils/constants/sizes.dart';
 import '../../../../utils/constants/texts.dart';
 import '../../controllers/forgot_password/forgot_password_controller.dart';
 
+
+/// Reset Password Screen
 class ResetPasswordScreen extends StatelessWidget {
   const ResetPasswordScreen({super.key, required this.email});
 
@@ -22,16 +24,19 @@ class ResetPasswordScreen extends StatelessWidget {
             padding: EdgeInsets.all(TSizes.defaultSpace(context)),
             child: Column(
               children: [
-                ///Title & SubTitle
+
+                /// Title & SubTitle
                 Text(TTexts.passwordEmailSentTitle, style: Theme.of(context).textTheme.headlineMedium, textAlign: TextAlign.center,),
                 SizedBox(height: TSizes.spaceBtwItems(context)),
                 Text(TTexts.passwordEmailSentSubTitle, style: Theme.of(context).textTheme.labelMedium, textAlign: TextAlign.center,),
                 SizedBox(height: TSizes.spaceBtwSections(context)),
-                ///Buttons
-                ///
+
+                /// Done
                 SizedBox(width: double.infinity, child: ElevatedButton(onPressed: () => Get.offAll(()=> const LoginScreen()), child: const Text(TTexts.done))),
                 SizedBox(height: TSizes.spaceBtwItems(context)),
-                TextButton(onPressed: () =>ForgotPasswordController.instance.resendPasswordResetEmail(email), child: const Text(TTexts.resendEmail),)// TODO Implement on pressed to send an email
+
+                /// Resend Password
+                TextButton(onPressed: () => ForgotPasswordController.instance.resendPasswordResetEmail(email), child: const Text(TTexts.resendEmail),)// TODO Implement on pressed to send an email
 
               ],
             ),

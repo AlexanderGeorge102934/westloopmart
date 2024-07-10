@@ -9,6 +9,7 @@ import '../features/authentication/controllers/image_carousel/image_carousel_con
 import '../utils/constants/sizes.dart';
 import '../utils/constants/texts.dart';
 
+/// --- Widget of One Offer --- ///
 class TOffer extends StatelessWidget {
   const TOffer({
     super.key,
@@ -72,12 +73,12 @@ class TOffer extends StatelessWidget {
             style: Theme.of(context).textTheme.bodyLarge,
           ),
 
-          ///Name
+          /// Name
           Text(user,
             style: Theme.of(context).textTheme.bodySmall,
           ),
 
-          /// distance
+          /// Distance
           Text(distanceString,
             style: Theme.of(context).textTheme.bodySmall,
           ),

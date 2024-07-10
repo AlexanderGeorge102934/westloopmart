@@ -7,8 +7,10 @@ import 'package:startup_app/validators/validation.dart';
 
 import '../../../../utils/constants/sizes.dart';
 
-class ForgetPassword extends StatelessWidget {
-  const ForgetPassword ({super.key});
+
+/// Forget Password Screen
+class ForgetPasswordScreen extends StatelessWidget {
+  const ForgetPasswordScreen ({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,11 +24,13 @@ class ForgetPassword extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ///Heading
+
+              /// Heading
               Text(TTexts.forgotPassword, style: Theme.of(context).textTheme.headlineMedium),
               SizedBox(height: TSizes.spaceBtwItems(context)),
               Text(TTexts.forgotPasswordSubtitle, style: Theme.of(context).textTheme.labelMedium),
               SizedBox(height: TSizes.spaceBtwSections(context)),
+
               /// Email
               Form(
                 key: controller.forgetPasswordFormKey,
@@ -37,7 +41,8 @@ class ForgetPassword extends StatelessWidget {
                 ),
               ),
               SizedBox(height: TSizes.spaceBtwInputFields(context)),
-              ///Submit button
+
+              /// Submit Button
               SizedBox(width: double.infinity, child: ElevatedButton(onPressed: () => controller.sendPasswordResetEmail(), child: const Text(TTexts.submit))), //TODO Have the button send an email
 
             ],

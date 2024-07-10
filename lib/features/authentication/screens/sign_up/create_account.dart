@@ -5,6 +5,8 @@ import 'package:startup_app/utils/constants/sizes.dart';
 
 import 'Widgets/create_account_form.dart';
 
+
+/// Create Account Screen
 class CreateAccountScreen extends StatelessWidget {
   const CreateAccountScreen({super.key});
 
@@ -21,6 +23,7 @@ class CreateAccountScreen extends StatelessWidget {
           padding: EdgeInsets.all(TSizes.defaultSpace(context)),
           child: Column(
             children: [
+
               ///Title
               const TCreateAccountHeader(),
 

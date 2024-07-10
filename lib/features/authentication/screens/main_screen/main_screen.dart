@@ -7,11 +7,13 @@ import 'package:startup_app/utils/constants/colors.dart';
 import '../../controllers/bottom_navigation_controller/bottom_nav_controller.dart';
 import '../home_screen/home_screen.dart';
 import 'Widgets/add_post_button.dart';
+import 'Widgets/bottom_app_bar.dart';
 
-
+/// Main Screen
 class MainScreen extends StatelessWidget {
   final bottomNavController = Get.put(BottomNavController());
 
+  /// List of different screens bottom app bar can switch to
   final List<Widget> _screens = [
     const HomeScreen(),
     Container(color: Colors.red),
@@ -27,54 +29,18 @@ class MainScreen extends StatelessWidget {
     final dark = THelperFunctions.isDarkMode(context);
     return Scaffold(
       body: Obx(() => _screens[bottomNavController.selectedIndex.value]),
-      floatingActionButton: TAddPostButton(dark: dark),
+
+      /// Middle Add Post Button
+      floatingActionButton: TAddPostButton(dark: dark), //Todo make sure the bottom button stays locked in place and can't move
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: BottomAppBar(
-          color: dark ? TColors.black : Colors.white,
 
-          surfaceTintColor: TColors.primary,
-          shape: const CircularNotchedRectangle(),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-
-              /// Home Button
-              IconButton(
-                onPressed: () {
-                  bottomNavController.changeIndex(0);
-                },
-                icon: Icon(Icons.home, color: dark ? TColors.white : Colors.black), iconSize: 30,
-              ),
-
-              /// Trade Button
-              IconButton(
-                onPressed: () {
-                  bottomNavController.changeIndex(1);
-                },
-                icon: Icon(Icons.arrow_downward, color: dark ? TColors.white : Colors.black, ),iconSize: 30,
-              ),
-
-              /// Fire Button
-              IconButton(
-                onPressed: () {
-                  bottomNavController.changeIndex(3);
-                },
-                icon: Icon(Icons.fire_extinguisher, color: dark ? TColors.white : Colors.black), iconSize: 30,
-              ),
-
-              /// Profile Button
-              IconButton(
-                onPressed: () {
-                  bottomNavController.changeIndex(4);
-                },
-                icon: Icon(Icons.person, color: dark ? TColors.white : Colors.black), iconSize: 30,
-              )
-            ],
-          )
-      ),
+      /// Bottom App Bar
+      bottomNavigationBar: TBottomAppBar(dark: dark, bottomNavController: bottomNavController),
     );
   }
 }
+
+
 
 
 

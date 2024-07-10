@@ -6,7 +6,7 @@ import '../../../../utils/constants/colors.dart';
 import '../../controllers/add_post_offer/add_post_offer_controller.dart';
 import '../../controllers/images/image_controller.dart';
 
-
+/// Add Post Screen
 class AddPostScreen extends StatelessWidget {
   AddPostScreen({super.key});
   final ImageController _imageController = Get.put(ImageController());
@@ -15,8 +15,6 @@ class AddPostScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
-
-
 
     return Scaffold(
       appBar: AppBar(

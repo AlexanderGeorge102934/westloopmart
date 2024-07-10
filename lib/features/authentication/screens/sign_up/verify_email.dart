@@ -7,6 +7,8 @@ import 'package:startup_app/features/authentication/screens/login/login.dart';
 import 'package:startup_app/utils/constants/sizes.dart';
 import 'package:startup_app/utils/constants/texts.dart';
 
+
+/// Verify Email Screen
 class VerifyEmailScreen extends StatelessWidget {
   const VerifyEmailScreen({super.key});
 

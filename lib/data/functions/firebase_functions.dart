@@ -3,6 +3,8 @@ import 'package:geolocator/geolocator.dart';
 
 import '../../helpers/helpers.dart';
 
+
+/// Get nearby posts
 Future<List<DocumentSnapshot>> fetchNearbyPosts() async {
   Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
   double userLat = position.latitude;

@@ -11,7 +11,7 @@ class EditPhotoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Photo'),
+        title: const Text('Edit Photo'),
       ),
       body: Center(
         child: Column(
@@ -24,7 +24,7 @@ class EditPhotoScreen extends StatelessWidget {
               onPressed: () {
                 // Implement save or edit functionality
               },
-              child: Text('Save Changes'),
+              child: const Text('Save Changes'),
             ),
           ],
         ),
