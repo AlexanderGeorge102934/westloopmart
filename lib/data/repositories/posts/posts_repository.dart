@@ -26,7 +26,7 @@ class PostsRepository extends GetxController {
   }
 
   Future<String> generatePostId() async {
-    final postId = FirebaseFirestore.instance.collection('User Posts').doc().id;
+    final postId = FirebaseFirestore.instance.collection('UserPosts').doc().id;
     return postId;
   }
 
@@ -78,7 +78,7 @@ class PostsRepository extends GetxController {
   /// Function to save user data to Firestore
   Future<void> addPost(PostModel post) async {
     try{
-      await FirebaseFirestore.instance.collection("User Posts").add(post.toJson());
+      await FirebaseFirestore.instance.collection("UserPosts").add(post.toJson());
     } on FirebaseException catch (e){
       throw TFirebaseException(e.code).message; //TODO make sure all messages are checked and good (Didn't take time checking)
     } on FormatException catch (_){

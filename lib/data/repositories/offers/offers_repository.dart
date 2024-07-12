@@ -76,7 +76,7 @@ class OffersRepository extends GetxController {
   /// Function to save user data to Firestore
   Future<void> addOffer(String postId, OfferModel offer) async {
     try{
-      await FirebaseFirestore.instance.collection("User Posts").doc(postId).collection("Offers").add(offer.toJson());
+      await FirebaseFirestore.instance.collection("UserPosts").doc(postId).collection("Offers").add(offer.toJson());
     } on FirebaseException catch (e){
       throw TFirebaseException(e.code).message; //TODO make sure all messages are checked and good (Didn't take time checking)
     } on FormatException catch (_){

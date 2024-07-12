@@ -40,7 +40,7 @@ class TPost extends StatelessWidget {
           expand: true,
           builder: (context, scrollController) {
             return StreamBuilder(
-              stream: FirebaseFirestore.instance.collection('User Posts').doc(postID).collection('Offers').snapshots(),
+              stream: FirebaseFirestore.instance.collection('UserPosts').doc(postID).collection('Offers').snapshots(),
               builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());

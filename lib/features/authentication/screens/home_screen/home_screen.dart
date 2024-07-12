@@ -75,7 +75,7 @@ class _pageOneState extends State<HomeScreen> {
           ),
           Expanded(
             child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-              stream: FirebaseFirestore.instance.collection("User Posts").orderBy("Timestamp", descending: true).snapshots(),
+              stream: FirebaseFirestore.instance.collection("UserPosts").orderBy("Timestamp", descending: true).snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
