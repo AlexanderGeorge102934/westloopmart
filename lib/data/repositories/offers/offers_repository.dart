@@ -29,18 +29,21 @@ class OffersRepository extends GetxController {
   }
 
   /// Upload images
-  Future<List<String>> uploadImages(List<XFile> images) async {
+  Future<List<String>> uploadImages(List<XFile> images, String userId) async {
     List<String> imageUrls = [];
     for (var image in images) {
       try {
         final fileName = basename(image.path);
-        final ref = _storage.ref().child('post_images/$fileName');
-        final uploadTask = ref.putFile(File(image.path));
+        final ref = _storage.ref().child('offers_images/$userId/$fileName');
+        final uploadTask = ref.putFile(
+          File(image.path),
+          SettableMetadata(customMetadata: {'UserId': userId}),
+        );
         final snapshot = await uploadTask.whenComplete(() => {});
         final imageUrl = await snapshot.ref.getDownloadURL();
         imageUrls.add(imageUrl);
       } catch (e) {
-        throw 'Error uploading image: $e';
+        throw 'Error uploading image: $e'; // Rethrow the original error
       }
     }
     return imageUrls;
