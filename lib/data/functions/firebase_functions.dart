@@ -24,3 +24,5 @@ Future<List<DocumentSnapshot>> fetchNearbyPosts() async {
 
   return nearbyPosts;
 }
+
+

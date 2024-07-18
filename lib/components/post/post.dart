@@ -1,14 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:startup_app/features/authentication/screens/add_offer/add_offer.dart';
+import 'package:startup_app/features/authentication/screens/offers/offers_screen.dart';
 import 'package:startup_app/helpers/helpers.dart';
-import '../features/authentication/controllers/image_carousel/image_carousel_controller.dart';
-import '../utils/constants/sizes.dart';
-import '../utils/constants/texts.dart';
-import 'offer.dart';
+import '../../features/authentication/controllers/image_carousel/image_carousel_controller.dart';
+import '../../utils/constants/sizes.dart';
+import '../../utils/constants/texts.dart';
 
 
 /// --- Widget of One Post --- ///
@@ -18,7 +19,7 @@ class TPost extends StatelessWidget {
     required this.user,
     required this.description,
     required this.title,
-    required this.imageUrls, required this.userPosition, required this.postPosition, required this.postID,
+    required this.imageUrls, required this.userPosition, required this.postPosition, required this.postID, required this.userId,
   });
 
   /// Details of the post
@@ -29,49 +30,7 @@ class TPost extends StatelessWidget {
   final Position userPosition;
   final GeoPoint postPosition;
   final String postID;
-
-  /// Show offers related to the post
-  void _showOffers(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      builder: (context) {
-        return DraggableScrollableSheet(
-          expand: true,
-          builder: (context, scrollController) {
-            return StreamBuilder(
-              stream: FirebaseFirestore.instance.collection('UserPosts').doc(postID).collection('Offers').snapshots(),
-              builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-                if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                  return const Center(child: Text('No comments'));
-                }
-                final docs = snapshot.data!.docs;
-                return ListView.builder(
-                  controller: scrollController,
-                  itemCount: docs.length,
-                  itemBuilder: (context, index) {
-                    final offer = docs[index];
-                    final imageUrls = List<String>.from(offer['ImageUrls']);
-                    return TOffer(
-                      title: offer['Title'],
-                      postPosition: offer['Location'],
-                      description: offer['Description'],
-                      imageUrls: imageUrls,
-                      user: offer['UserName'],
-                      userPosition: userPosition,
-                    );
-                  },
-                );
-              },
-            );
-          },
-        );
-      },
-    );
-  }
+  final String userId;
 
   /// Post Widget
   @override
@@ -79,7 +38,7 @@ class TPost extends StatelessWidget {
     final tag = UniqueKey().toString(); // TODO find best way to make unique keys
     final ImageCarouselController controller = Get.put(ImageCarouselController(), tag: tag);
 
-    /// Calculate and format distance of user from post
+    /// Calculate and format distance of user from post (Not sure if this would be good to put inside or outside the build)
     final distance = THelperFunctions.calculateDistance(userPosition.latitude, userPosition.longitude, postPosition.latitude, postPosition.longitude);
     final distanceString = THelperFunctions.formatDistance(distance);
 
@@ -89,6 +48,7 @@ class TPost extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+
           /// Image Carousel
           Expanded(
             child: Container(
@@ -135,7 +95,7 @@ class TPost extends StatelessWidget {
           SizedBox(height: TSizes.spaceBtwItems(context)),
 
           /// See offers button
-          Center(child: ElevatedButton(onPressed: () => _showOffers(context),child: const Text('Show Offers'))),
+          Center(child: ElevatedButton(onPressed: ()=> Get.to(()=>OffersScreen(postID: postID, userPosition: userPosition, userId: userId)),child: const Text('Show Offers'))),
 
           SizedBox(height: TSizes.spaceBtwSections(context)),
         ],

@@ -18,20 +18,13 @@ class PostsRepository extends GetxController {
   static PostsRepository get instance => Get.find();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseStorage _storage = FirebaseStorage.instance;
-  // final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   /// Get current user
   Future<User?> getCurrentUser() async {
     return _auth.currentUser;
   }
 
-  Future<String> generatePostId() async {
-    final postId = FirebaseFirestore.instance.collection('UserPosts').doc().id;
-    return postId;
-  }
-
   Future<List<String>> uploadImages(List<XFile> images, String userId) async {
-    print('Uploading images');
     List<String> imageUrls = [];
     for (var image in images) {
       try {
@@ -43,13 +36,10 @@ class PostsRepository extends GetxController {
         );
         final snapshot = await uploadTask.whenComplete(() => {});
         final metadata = await snapshot.ref.getMetadata();
-        print('Uploaded image metadata: ${metadata.customMetadata}');
-
         final imageUrl = await snapshot.ref.getDownloadURL();
         imageUrls.add(imageUrl);
       } catch (e) {
-        print('Error uploading image: $e');
-        rethrow; // Rethrow the original error
+        throw 'Error uploading image: $e';
       }
     }
     return imageUrls;
@@ -85,9 +75,7 @@ class PostsRepository extends GetxController {
   /// Function to save user data to Firestore
   Future<void> addPost(PostModel post) async {
     try{
-      print('Attempting to add post: ${post.toJson()}'); // Added for debugging
       await FirebaseFirestore.instance.collection("UserPosts").add(post.toJson());
-      print('Post added successfully.'); // Added for debugging
     } on FirebaseException catch (e){
       throw TFirebaseException(e.code).message; //TODO make sure all messages are checked and good (Didn't take time checking)
     } on FormatException catch (_){

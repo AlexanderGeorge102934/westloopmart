@@ -45,7 +45,7 @@ class PostingController extends GetxController {
       /// Convert RxList<XFile?> to List<XFile>
       List<XFile> images = imageController.images.where((image) => image != null).cast<XFile>().toList();
 
-      /// Get image urls
+
       List<String> imageUrls = await postsRepository.uploadImages(images, user.uid);
 
       /// Get user's position
@@ -101,7 +101,7 @@ class PostingController extends GetxController {
       List<XFile> images = imageController.images.where((image) => image != null).cast<XFile>().toList();
 
       /// Get image urls
-      List<String> imageUrls = await offersRepository.uploadImages(images, user.uid);
+      List<String> imageUrls = await offersRepository.uploadImages(images, user.uid, postID);
 
       /// Get user's position
       final position = await offersRepository.determinePosition();

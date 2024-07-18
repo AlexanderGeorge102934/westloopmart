@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:startup_app/components/post.dart';
+import '../../../../components/post/post.dart';
 import '../../../../utils/constants/colors.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -19,6 +19,7 @@ class _pageOneState extends State<HomeScreen> {
   String dropdownValue = 'All Items';
   final _controller = PageController();
   late Position _currentPosition;
+  bool isInitialized = false;
 
   Future<void> _getCurrentLocation() async {
     try {
@@ -37,10 +38,16 @@ class _pageOneState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _getCurrentLocation();
+    isInitialized = true;
   }
 
   @override
   Widget build(BuildContext context) {
+
+    if (!isInitialized) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: TColors.primary,
@@ -106,6 +113,7 @@ class _pageOneState extends State<HomeScreen> {
                       userPosition: _currentPosition,
                       postPosition: post['Location'],
                       postID: postId,
+                      userId: post['UserId'],
                     );
                   },
                 );

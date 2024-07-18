@@ -11,7 +11,7 @@ import 'package:get/get.dart';
 import 'package:path/path.dart';
 import 'package:startup_app/features/personalization/models/post_model.dart';
 
-import '../../../components/post.dart';
+
 import '../../../features/personalization/models/offer_model.dart';
 import '../../../utils/exceptions/firebase_exception.dart';
 import '../../../utils/exceptions/format_exception.dart';
@@ -29,15 +29,15 @@ class OffersRepository extends GetxController {
   }
 
   /// Upload images
-  Future<List<String>> uploadImages(List<XFile> images, String userId) async {
+  Future<List<String>> uploadImages(List<XFile> images, String userId, String postId) async {
     List<String> imageUrls = [];
     for (var image in images) {
       try {
         final fileName = basename(image.path);
-        final ref = _storage.ref().child('offers_images/$userId/$fileName');
+        final ref = _storage.ref().child('offers_images/$userId/$postId/$fileName');
         final uploadTask = ref.putFile(
           File(image.path),
-          SettableMetadata(customMetadata: {'UserId': userId}),
+          SettableMetadata(customMetadata: {'UserId': userId, 'PostId': postId}),
         );
         final snapshot = await uploadTask.whenComplete(() => {});
         final imageUrl = await snapshot.ref.getDownloadURL();
