@@ -44,7 +44,7 @@ class _pageOneState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
 
-    if (!isInitialized) {
+    if (isInitialized == false) {
       return const Center(child: CircularProgressIndicator());
     }
 

@@ -9,6 +9,7 @@ class OfferModel {
   final String category;
   final List<String> imageUrls;
   final Timestamp timestamp;
+  final String status;
   final GeoPoint location; // Assuming you need to store location
 
   OfferModel({
@@ -21,6 +22,7 @@ class OfferModel {
     required this.imageUrls,
     required this.timestamp,
     required this.location,
+    required this.status,
   });
 
   Map<String, dynamic> toJson() {
@@ -34,6 +36,7 @@ class OfferModel {
       'ImageUrls': imageUrls,
       'Timestamp': timestamp,
       'Location': location,
+      'Status': status,
     };
   }
 
@@ -49,7 +52,8 @@ class OfferModel {
       imageUrls: List<String>.from(data['ImageUrls']),
       timestamp: data['Timestamp'],
       location: data['Location'],
-      postId: data['postId']
+      postId: data['PostId'],
+      status: data['Status']
     );
   }
 }

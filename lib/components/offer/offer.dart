@@ -19,17 +19,25 @@ class TOffer extends StatelessWidget {
     required this.user,
     required this.description,
     required this.title,
-    required this.imageUrls, required this.userPosition, required this.postPosition, required this.userIdOfOffer, required this.ownerOfPost,
+    required this.imageUrls, required this.userPosition, required this.postPosition, required this.userIdOfOffer, required this.ownerOfPost, required this.statusOfOffer, required this.offerId, required this.postId,
   });
 
+  /// General Components
   final String user;
   final String description;
   final String title;
   final List<String> imageUrls;
+  final String statusOfOffer;
+
+  /// Location Components
   final Position userPosition;
   final GeoPoint postPosition;
+
+  /// Backend Components
   final String userIdOfOffer;
-  final bool ownerOfPost;
+  final bool ownerOfPost; // Are they allowed to accept or deny offer?
+  final String offerId;
+  final String postId;
 
 
   @override
@@ -57,7 +65,7 @@ class TOffer extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 10),
             /// Title, User, Distance, and option buttons to accept or decline offer, but ONLY if user is owner of post
             child: ownerOfPost
-                ? TEngagmentBarForOwner(title: title, user: user, distanceString: distanceString)
+                ? TEngagmentBarForOwner(title: title, user: user, distanceString: distanceString, postId: postId, offerId: offerId, userIdOfOffer: userIdOfOffer,)
                 : TEngagementBar(title: title, user: user, distanceString: distanceString),
 
           ),

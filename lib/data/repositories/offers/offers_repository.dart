@@ -90,4 +90,34 @@ class OffersRepository extends GetxController {
       throw 'Something went wrong. Please try again';
     }
   }
+
+  /// Function to retrieve offer from Firestore
+  Future<DocumentSnapshot> retrieveOffer(String postId, String offerId) async {
+    try{
+      return await FirebaseFirestore.instance.collection('UserPosts').doc(postId).collection("Offers").doc(offerId).get();
+    } on FirebaseException catch (e){
+      throw TFirebaseException(e.code).message; //TODO make sure all messages are checked and good (Didn't take time checking)
+    } on FormatException catch (_){
+      throw const TFormatException(); //TODO make sure all messages are checked and good (Didn't take time checking)
+    } on PlatformException catch (e) {
+      throw TPlatformException(e.code).message; //TODO make sure all messages are checked and good (Didn't take time checking)
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
+
+  /// Function to update offer in Firestore
+  Future<void> updateOffer(String postId, String offerId, String status) async {
+    try{
+      await FirebaseFirestore.instance.collection('UserPosts').doc(postId).collection("Offers").doc(offerId).update({'Status': status});
+    } on FirebaseException catch (e){
+      throw TFirebaseException(e.code).message; //TODO make sure all messages are checked and good (Didn't take time checking)
+    } on FormatException catch (_){
+      throw const TFormatException(); //TODO make sure all messages are checked and good (Didn't take time checking)
+    } on PlatformException catch (e) {
+      throw TPlatformException(e.code).message; //TODO make sure all messages are checked and good (Didn't take time checking)
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
 }

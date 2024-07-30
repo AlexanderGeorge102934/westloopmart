@@ -80,52 +80,120 @@ class PostingController extends GetxController {
     final OffersRepository offersRepository = Get.put(OffersRepository());
     final user = await offersRepository.getCurrentUser();
     if (user == null) {
-      TLoader.errorSnackBar(title: "User not logged in", message: "Please log in to post an offer."); // todo change it so once you click the add button you immediantly go to the login
+      TLoader.errorSnackBar(title: "User not logged in",
+          message: "Please log in to post an offer."); // todo change it so once you click the add button you immediantly go to the login
       return;
     }
 
     try {
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) {
-        TLoader.errorSnackBar(title: "No Internet", message: "Please check your internet connection.");
+        TLoader.errorSnackBar(title: "No Internet",
+            message: "Please check your internet connection.");
         return;
       }
 
       if (postKey.currentState == null || !postKey.currentState!.validate()) {
         debugPrint("Form is not valid");
-        TLoader.errorSnackBar(title: "Validation Error", message: "Please fill out all fields correctly.");
+        TLoader.errorSnackBar(title: "Validation Error",
+            message: "Please fill out all fields correctly.");
         return;
       }
 
       /// Convert RxList<XFile?> to List<XFile>
-      List<XFile> images = imageController.images.where((image) => image != null).cast<XFile>().toList();
+      List<XFile> images = imageController.images.where((image) =>
+      image != null).cast<XFile>().toList();
 
       /// Get image urls
-      List<String> imageUrls = await offersRepository.uploadImages(images, user.uid, postID);
+      List<String> imageUrls = await offersRepository.uploadImages(
+          images, user.uid, postID);
 
       /// Get user's position
       final position = await offersRepository.determinePosition();
-      if (position == null) return; // Don't post unless they give their position
+      if (position == null)
+        return; // Don't post unless they give their position
 
       final offer = OfferModel(
-        userId: user.uid,
-        userName: user.email ?? "Anonymous", // todo figure out how to get rid of anonymous
-        title: title.text,
-        description: description.text,
-        category: category.text,
-        imageUrls: imageUrls,
-        timestamp: Timestamp.now(),
-        location: GeoPoint(position.latitude, position.longitude),
-        postId: postID
+          userId: user.uid,
+          userName: user.email ?? "Anonymous",
+          // todo figure out how to get rid of anonymous
+          title: title.text,
+          description: description.text,
+          category: category.text,
+          imageUrls: imageUrls,
+          timestamp: Timestamp.now(),
+          location: GeoPoint(position.latitude, position.longitude),
+          postId: postID,
+          status: "Offered"
       );
 
       /// Add Post
-      await offersRepository.addOffer(postID, offer);   ///Todo get post id from post to add into the
+      await offersRepository.addOffer(postID, offer);
+
+      ///Todo get post id from post to add into the
 
       /// Clear everything (Haven't finished doing the images)
       title.clear();
       description.clear();
       category.clear();
+    } catch (e) {
+      TLoader.errorSnackBar(title: "Oh Snap!", message: e.toString());
+    }
+  }
+
+  /// Function to accept an offer
+  Future<void> acceptOffer (String postId, String offerId, String offerUserId) async { // put in posts or offers repository
+    final OffersRepository offersRepository = Get.put(OffersRepository());
+    try {
+      DocumentSnapshot offerDoc = await offersRepository.retrieveOffer(postId, offerId);
+      if (offerDoc.exists) { //If offer exists
+        Map<String, dynamic> data = offerDoc.data() as Map<String, dynamic>;
+        if (data['UserId'] == offerUserId) {
+          Timestamp timestamp = data['Timestamp'];
+          // DateTime expiryTime = timestamp.toDate().add(const Duration(hours: 24)); //
+          await offersRepository.updateOffer(postId, offerId, 'Accepted');
+
+        //   if (DateTime.now().isBefore(expiryTime)) {
+        //     await offersRepository.updateOffer(postId, offerId);
+        //
+        //     // Notify sender for acceptance
+        //     notifySender(data['UserId']);
+        //   } else {
+        //     print('Gift has expired');
+        //   }
+        // } else {
+        //   print('Receiver ID does not match');
+        }
+      }
+    } catch (e) {
+      TLoader.errorSnackBar(title: "Oh Snap!", message: e.toString());
+    }
+  }
+
+  /// Function to accept an offer
+  Future<void> denyOffer (String postId, String offerId, String offerUserId) async { // put in posts or offers repository
+    final OffersRepository offersRepository = Get.put(OffersRepository());
+    try {
+      DocumentSnapshot offerDoc = await offersRepository.retrieveOffer(postId, offerId);
+      if (offerDoc.exists) { //If offer exists
+        Map<String, dynamic> data = offerDoc.data() as Map<String, dynamic>;
+        if (data['UserId'] == offerUserId) {
+          Timestamp timestamp = data['Timestamp'];
+          // DateTime expiryTime = timestamp.toDate().add(const Duration(hours: 24)); //
+          await offersRepository.updateOffer(postId, offerId, 'Denied');
+
+          //   if (DateTime.now().isBefore(expiryTime)) {
+          //     await offersRepository.updateOffer(postId, offerId);
+          //
+          //     // Notify sender for acceptance
+          //     notifySender(data['UserId']);
+          //   } else {
+          //     print('Gift has expired');
+          //   }
+          // } else {
+          //   print('Receiver ID does not match');
+        }
+      }
     } catch (e) {
       TLoader.errorSnackBar(title: "Oh Snap!", message: e.toString());
     }
