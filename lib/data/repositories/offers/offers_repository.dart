@@ -77,9 +77,17 @@ class OffersRepository extends GetxController {
 
 
   /// Function to save user data to Firestore
-  Future<void> addOffer(String postId, OfferModel offer) async {
+  Future<void> addOffer(String postId, OfferModel offer, String userId) async {
     try{
-      await FirebaseFirestore.instance.collection("UserPosts").doc(postId).collection("Offers").add(offer.toJson());
+      await FirebaseFirestore.instance.runTransaction((transaction) async {
+        DocumentReference offerRef = await FirebaseFirestore.instance.collection("Offers").add(offer.toJson());
+
+        // Get the ID of the newly created offer
+        String offerId = offerRef.id;
+
+        // Add the offer ID to the user's offers subcollection
+        await FirebaseFirestore.instance.collection("Users").doc(userId).collection("Offers").doc(offerId).set({"OfferId": offerId});
+      });
     } on FirebaseException catch (e){
       throw TFirebaseException(e.code).message; //TODO make sure all messages are checked and good (Didn't take time checking)
     } on FormatException catch (_){
@@ -91,10 +99,11 @@ class OffersRepository extends GetxController {
     }
   }
 
-  /// Function to retrieve offer from Firestore
-  Future<DocumentSnapshot> retrieveOffer(String postId, String offerId) async {
+  // /// Function to retrieve offer from Firestore
+  Future<DocumentSnapshot> retrieveOffer(String offerId) async {
+    debugPrint("Offer id: $offerId");
     try{
-      return await FirebaseFirestore.instance.collection('UserPosts').doc(postId).collection("Offers").doc(offerId).get();
+      return await FirebaseFirestore.instance.collection("Offers").doc(offerId).get();
     } on FirebaseException catch (e){
       throw TFirebaseException(e.code).message; //TODO make sure all messages are checked and good (Didn't take time checking)
     } on FormatException catch (_){
@@ -107,9 +116,11 @@ class OffersRepository extends GetxController {
   }
 
   /// Function to update offer in Firestore
-  Future<void> updateOffer(String postId, String offerId, String status) async {
+  Future<void> updateOffer(String offerId, String status) async {
+
     try{
-      await FirebaseFirestore.instance.collection('UserPosts').doc(postId).collection("Offers").doc(offerId).update({'Status': status});
+
+      await FirebaseFirestore.instance.collection("Offers").doc(offerId).update({'Status': status});
     } on FirebaseException catch (e){
       throw TFirebaseException(e.code).message; //TODO make sure all messages are checked and good (Didn't take time checking)
     } on FormatException catch (_){

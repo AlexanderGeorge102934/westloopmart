@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:startup_app/features/authentication/screens/add_post/add_post.dart';
 import 'package:startup_app/features/authentication/screens/profile/test_profile.dart';
+import 'package:startup_app/features/authentication/screens/trades/trades_screen.dart';
 import 'package:startup_app/helpers/helpers.dart';
 import 'package:startup_app/utils/constants/colors.dart';
 import '../../controllers/bottom_navigation_controller/bottom_nav_controller.dart';
@@ -16,7 +17,7 @@ class MainScreen extends StatelessWidget {
   /// List of different screens bottom app bar can switch to
   final List<Widget> _screens = [
     const HomeScreen(),
-    Container(color: Colors.red),
+    TradesScreen(),
     AddPostScreen(),
     Container(color: Colors.green),
     const TestScreen(),

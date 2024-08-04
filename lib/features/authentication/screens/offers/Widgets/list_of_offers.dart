@@ -26,7 +26,7 @@ class TListOfOffers extends StatelessWidget {
       children: [
         Expanded(
             child: StreamBuilder(
-              stream: FirebaseFirestore.instance.collection('UserPosts').doc(postID).collection('Offers').snapshots(),
+              stream: FirebaseFirestore.instance.collection('Offers').where('PostId', isEqualTo: postID).snapshots(),
               builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());

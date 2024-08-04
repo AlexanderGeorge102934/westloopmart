@@ -41,6 +41,7 @@ dependencies:
   iconsax: ^0.0.8
   get: ^4.6.5
   get_storage: ^2.1.1
+  collection: ^1.18.0
 
   #Utility Packages
   http: ^1.2.1

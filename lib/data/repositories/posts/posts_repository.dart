@@ -73,9 +73,19 @@ class PostsRepository extends GetxController {
 
 
   /// Function to save user data to Firestore
-  Future<void> addPost(PostModel post) async {
+  Future<void> addPost(PostModel post, String userId) async {
     try{
-      await FirebaseFirestore.instance.collection("UserPosts").add(post.toJson());
+      await FirebaseFirestore.instance.runTransaction((transaction) async {
+        DocumentReference postRef = await FirebaseFirestore.instance.collection("UserPosts").add(post.toJson());
+
+        // Get the ID of the newly created offer
+        String offerId = postRef.id;
+
+        // Add the offer ID to the user's offers subcollection
+        await FirebaseFirestore.instance.collection("Users").doc(userId).collection("Posts").doc(offerId).set({"PostId": offerId});
+      });
+
+
     } on FirebaseException catch (e){
       throw TFirebaseException(e.code).message; //TODO make sure all messages are checked and good (Didn't take time checking)
     } on FormatException catch (_){

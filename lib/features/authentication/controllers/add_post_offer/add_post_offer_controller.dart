@@ -64,7 +64,7 @@ class PostingController extends GetxController {
       );
 
       /// Add Post
-      await postsRepository.addPost(post);
+      await postsRepository.addPost(post, user.uid);
 
       /// Clear everything (Haven't finished doing the images)
       title.clear();
@@ -124,11 +124,14 @@ class PostingController extends GetxController {
           timestamp: Timestamp.now(),
           location: GeoPoint(position.latitude, position.longitude),
           postId: postID,
-          status: "Offered"
+          status: "Offered",
+
       );
 
+      // todo add trade offer (name of person, title of both products, timestamp?, status)
+
       /// Add Post
-      await offersRepository.addOffer(postID, offer);
+      await offersRepository.addOffer(postID, offer, user.uid);
 
       ///Todo get post id from post to add into the
 
@@ -145,13 +148,13 @@ class PostingController extends GetxController {
   Future<void> acceptOffer (String postId, String offerId, String offerUserId) async { // put in posts or offers repository
     final OffersRepository offersRepository = Get.put(OffersRepository());
     try {
-      DocumentSnapshot offerDoc = await offersRepository.retrieveOffer(postId, offerId);
+      DocumentSnapshot offerDoc = await offersRepository.retrieveOffer(postId);
       if (offerDoc.exists) { //If offer exists
         Map<String, dynamic> data = offerDoc.data() as Map<String, dynamic>;
         if (data['UserId'] == offerUserId) {
           Timestamp timestamp = data['Timestamp'];
           // DateTime expiryTime = timestamp.toDate().add(const Duration(hours: 24)); //
-          await offersRepository.updateOffer(postId, offerId, 'Accepted');
+          await offersRepository.updateOffer(offerId, 'Accepted');
 
         //   if (DateTime.now().isBefore(expiryTime)) {
         //     await offersRepository.updateOffer(postId, offerId);
@@ -174,13 +177,13 @@ class PostingController extends GetxController {
   Future<void> denyOffer (String postId, String offerId, String offerUserId) async { // put in posts or offers repository
     final OffersRepository offersRepository = Get.put(OffersRepository());
     try {
-      DocumentSnapshot offerDoc = await offersRepository.retrieveOffer(postId, offerId);
+      DocumentSnapshot offerDoc = await offersRepository.retrieveOffer(offerId);
       if (offerDoc.exists) { //If offer exists
         Map<String, dynamic> data = offerDoc.data() as Map<String, dynamic>;
         if (data['UserId'] == offerUserId) {
           Timestamp timestamp = data['Timestamp'];
           // DateTime expiryTime = timestamp.toDate().add(const Duration(hours: 24)); //
-          await offersRepository.updateOffer(postId, offerId, 'Denied');
+          await offersRepository.updateOffer(offerId, 'Denied');
 
           //   if (DateTime.now().isBefore(expiryTime)) {
           //     await offersRepository.updateOffer(postId, offerId);
