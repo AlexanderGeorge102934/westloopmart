@@ -76,16 +76,18 @@ class PostingController extends GetxController {
   }
 
   /// Add Offer
-  Future<void> addOffer(String postID) async {
+  Future<void> addOffer(String postID, String titleOfPost, String userOfPost) async {
     final OffersRepository offersRepository = Get.put(OffersRepository());
-    final user = await offersRepository.getCurrentUser();
-    if (user == null) {
-      TLoader.errorSnackBar(title: "User not logged in",
-          message: "Please log in to post an offer."); // todo change it so once you click the add button you immediantly go to the login
-      return;
-    }
-
     try {
+
+      final user = await offersRepository.getCurrentUser();
+
+      if (user == null) {
+        TLoader.errorSnackBar(title: "User not logged in",
+            message: "Please log in to post an offer."); // todo change it so once you click the add button you immediantly go to the login
+        return;
+      }
+
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) {
         TLoader.errorSnackBar(title: "No Internet",
@@ -110,8 +112,9 @@ class PostingController extends GetxController {
 
       /// Get user's position
       final position = await offersRepository.determinePosition();
-      if (position == null)
+      if (position == null) {
         return; // Don't post unless they give their position
+      }
 
       final offer = OfferModel(
           userId: user.uid,
@@ -123,17 +126,15 @@ class PostingController extends GetxController {
           imageUrls: imageUrls,
           timestamp: Timestamp.now(),
           location: GeoPoint(position.latitude, position.longitude),
-          postId: postID,
           status: "Offered",
+          postId: postID,
+          titleOfPost: titleOfPost,
+          userOfPost: userOfPost
 
       );
 
-      // todo add trade offer (name of person, title of both products, timestamp?, status)
-
       /// Add Post
       await offersRepository.addOffer(postID, offer, user.uid);
-
-      ///Todo get post id from post to add into the
 
       /// Clear everything (Haven't finished doing the images)
       title.clear();
@@ -148,24 +149,11 @@ class PostingController extends GetxController {
   Future<void> acceptOffer (String postId, String offerId, String offerUserId) async { // put in posts or offers repository
     final OffersRepository offersRepository = Get.put(OffersRepository());
     try {
-      DocumentSnapshot offerDoc = await offersRepository.retrieveOffer(postId);
+      DocumentSnapshot offerDoc = await offersRepository.retrieveOffer(offerId);
       if (offerDoc.exists) { //If offer exists
         Map<String, dynamic> data = offerDoc.data() as Map<String, dynamic>;
         if (data['UserId'] == offerUserId) {
-          Timestamp timestamp = data['Timestamp'];
-          // DateTime expiryTime = timestamp.toDate().add(const Duration(hours: 24)); //
           await offersRepository.updateOffer(offerId, 'Accepted');
-
-        //   if (DateTime.now().isBefore(expiryTime)) {
-        //     await offersRepository.updateOffer(postId, offerId);
-        //
-        //     // Notify sender for acceptance
-        //     notifySender(data['UserId']);
-        //   } else {
-        //     print('Gift has expired');
-        //   }
-        // } else {
-        //   print('Receiver ID does not match');
         }
       }
     } catch (e) {
@@ -181,20 +169,7 @@ class PostingController extends GetxController {
       if (offerDoc.exists) { //If offer exists
         Map<String, dynamic> data = offerDoc.data() as Map<String, dynamic>;
         if (data['UserId'] == offerUserId) {
-          Timestamp timestamp = data['Timestamp'];
-          // DateTime expiryTime = timestamp.toDate().add(const Duration(hours: 24)); //
           await offersRepository.updateOffer(offerId, 'Denied');
-
-          //   if (DateTime.now().isBefore(expiryTime)) {
-          //     await offersRepository.updateOffer(postId, offerId);
-          //
-          //     // Notify sender for acceptance
-          //     notifySender(data['UserId']);
-          //   } else {
-          //     print('Gift has expired');
-          //   }
-          // } else {
-          //   print('Receiver ID does not match');
         }
       }
     } catch (e) {

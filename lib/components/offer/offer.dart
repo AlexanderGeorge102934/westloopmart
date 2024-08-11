@@ -11,6 +11,7 @@ import '../../utils/constants/texts.dart';
 import 'Widgets/engagement_bar.dart';
 import 'Widgets/engagment_bar_for_owner.dart';
 import 'Widgets/image_carousel.dart';
+import 'Widgets/offer_layout.dart';
 
 /// --- Widget of One Offer --- ///
 class TOffer extends StatelessWidget {
@@ -53,32 +54,12 @@ class TOffer extends StatelessWidget {
 
     return SizedBox(
       height: MediaQuery.of(context).size.height * 0.5,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          /// Image Carousel
-          TImageCarousel(controller: controller, imageUrls: imageUrls),
-
-          SizedBox(height: TSizes.spaceBtwItems(context)),
-
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            /// Title, User, Distance, and option buttons to accept or decline offer, but ONLY if user is owner of post
-            child: ownerOfPost
-                ? TEngagmentBarForOwner(title: title, user: user, distanceString: distanceString, postId: postId, offerId: offerId, userIdOfOffer: userIdOfOffer,)
-                : TEngagementBar(title: title, user: user, distanceString: distanceString),
-
-          ),
-
-
-
-
-          SizedBox(height: TSizes.spaceBtwSections(context)),
-        ],
-      ),
+      child: TOfferLayout(controller: controller, imageUrls: imageUrls, ownerOfPost: ownerOfPost, title: title, user: user, distanceString: distanceString, postId: postId, offerId: offerId, userIdOfOffer: userIdOfOffer),
     );
   }
 }
+
+
 
 
 

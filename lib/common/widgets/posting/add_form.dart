@@ -12,12 +12,14 @@ class TAddForm extends StatelessWidget {
   const TAddForm({
     super.key,
 
-    required this.imageController, required this.postingController, this.postID,
+    required this.imageController, required this.postingController, this.postID, this.titleOfPost, this.userOfPost,
   });
 
   final PostingController postingController;
   final ImageController imageController;
   final String? postID;
+  final String? titleOfPost;
+  final String? userOfPost;
 
   @override
   Widget build(BuildContext context) {
@@ -58,8 +60,8 @@ class TAddForm extends StatelessWidget {
                 child: ElevatedButton(onPressed: () {
                   if (postID == null) {
                     postingController.addPost();
-                  } else if (postID != null) {
-                    postingController.addOffer(postID!);
+                  } else if (postID != null && titleOfPost != null && userOfPost != null) {
+                    postingController.addOffer(postID!, titleOfPost!, userOfPost!);
                   }
                 }, child: postID == null ? const Text('Add Post') : const Text('Add Offer'))),
             SizedBox(height: TSizes.spaceBtwItems(context)),

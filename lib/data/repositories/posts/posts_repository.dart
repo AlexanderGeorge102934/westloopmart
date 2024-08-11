@@ -77,15 +77,26 @@ class PostsRepository extends GetxController {
     try{
       await FirebaseFirestore.instance.runTransaction((transaction) async {
         DocumentReference postRef = await FirebaseFirestore.instance.collection("UserPosts").add(post.toJson());
-
-        // Get the ID of the newly created offer
-        String offerId = postRef.id;
-
-        // Add the offer ID to the user's offers subcollection
-        await FirebaseFirestore.instance.collection("Users").doc(userId).collection("Posts").doc(offerId).set({"PostId": offerId});
+        String postId = postRef.id;
+        await FirebaseFirestore.instance.collection("Users").doc(userId).collection("Posts").doc(postId).set({"PostId": postId});
       });
 
 
+    } on FirebaseException catch (e){
+      throw TFirebaseException(e.code).message; //TODO make sure all messages are checked and good (Didn't take time checking)
+    } on FormatException catch (_){
+      throw const TFormatException(); //TODO make sure all messages are checked and good (Didn't take time checking)
+    } on PlatformException catch (e) {
+      throw TPlatformException(e.code).message; //TODO make sure all messages are checked and good (Didn't take time checking)
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
+
+  /// Function to retrieve post from Firestore
+  Future<DocumentSnapshot> retrievePost(String postId) async {
+    try{
+      return await FirebaseFirestore.instance.collection("UserPosts").doc(postId).get();
     } on FirebaseException catch (e){
       throw TFirebaseException(e.code).message; //TODO make sure all messages are checked and good (Didn't take time checking)
     } on FormatException catch (_){

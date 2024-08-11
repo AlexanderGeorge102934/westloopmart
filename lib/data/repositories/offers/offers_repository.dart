@@ -81,11 +81,7 @@ class OffersRepository extends GetxController {
     try{
       await FirebaseFirestore.instance.runTransaction((transaction) async {
         DocumentReference offerRef = await FirebaseFirestore.instance.collection("Offers").add(offer.toJson());
-
-        // Get the ID of the newly created offer
         String offerId = offerRef.id;
-
-        // Add the offer ID to the user's offers subcollection
         await FirebaseFirestore.instance.collection("Users").doc(userId).collection("Offers").doc(offerId).set({"OfferId": offerId});
       });
     } on FirebaseException catch (e){
@@ -99,9 +95,8 @@ class OffersRepository extends GetxController {
     }
   }
 
-  // /// Function to retrieve offer from Firestore
+  /// Function to retrieve offer from Firestore
   Future<DocumentSnapshot> retrieveOffer(String offerId) async {
-    debugPrint("Offer id: $offerId");
     try{
       return await FirebaseFirestore.instance.collection("Offers").doc(offerId).get();
     } on FirebaseException catch (e){

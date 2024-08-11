@@ -10,6 +10,8 @@ import 'package:startup_app/helpers/helpers.dart';
 import '../../features/authentication/controllers/image_carousel/image_carousel_controller.dart';
 import '../../utils/constants/sizes.dart';
 import '../../utils/constants/texts.dart';
+import '../offer/Widgets/image_carousel.dart';
+import 'Widgets/post_layout.dart';
 
 
 /// --- Widget of One Post --- ///
@@ -45,61 +47,11 @@ class TPost extends StatelessWidget {
 
     return SizedBox(
       height: MediaQuery.of(context).size.height * 0.5,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-
-          /// Image Carousel
-          Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(TSizes.md(context)),
-              ),
-              child: PageView.builder(
-                controller: controller.pageController,
-                itemCount: imageUrls.length,
-                onPageChanged: controller.onPageChanged,
-                itemBuilder: (context, index) {
-                  return CachedNetworkImage(
-                    imageUrl: imageUrls[index],
-                    fit: BoxFit.cover,
-                    width: double.infinity,
-                    height: MediaQuery.of(context).size.height * 0.4,
-                    placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
-                    errorWidget: (context, url, error) => const Center(child: Icon(Icons.error)),
-                  );
-                },
-              ),
-            ),
-          ),
-          SizedBox(height: TSizes.spaceBtwItems(context)),
-
-          /// Title
-          Text(title,
-            style: Theme.of(context).textTheme.bodyLarge,
-          ),
-
-          ///Name
-          Text(user,
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
-
-          /// distance
-          Text(distanceString,
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
-
-          /// Add offer button
-          Center(child: SizedBox(width: THelperFunctions.screenWidth() * 0.7, child: ElevatedButton(onPressed: ()=> Get.to(()=> AddOfferScreen(postID: postID)), child: const Text(TTexts.offerPost)))),
-
-          SizedBox(height: TSizes.spaceBtwItems(context)),
-
-          /// See offers button
-          Center(child: ElevatedButton(onPressed: ()=> Get.to(()=>OffersScreen(postID: postID, userPosition: userPosition, userId: userId)),child: const Text('Show Offers'))),
-
-          SizedBox(height: TSizes.spaceBtwSections(context)),
-        ],
-      ),
+      child: TPostLayout(controller: controller, imageUrls: imageUrls, title: title, user: user, distanceString: distanceString, postID: postID, userPosition: userPosition, userId: userId),
     );
   }
 }
+
+
+
+

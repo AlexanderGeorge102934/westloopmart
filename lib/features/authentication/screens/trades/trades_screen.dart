@@ -74,16 +74,16 @@ class TradesScreen extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       key,
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                   ));
                   items.addAll(groupedDocs[key]!.map((offer) {
                     final imageUrls = List<String>.from(offer['ImageUrls']);
                     return ListTile(
-                      title: Text(offer['Title']),
+
                       subtitle: TTrades(
-                        titleOfPost: 'dafdsaf',
-                        userOfPost: offer['UserName'],
+                        titleOfPost: offer['TitleOfPost'],
+                        userOfPost: offer['UserNameOfPost'],
                         imageUrls: imageUrls,
                         titleOfOffer: offer['Title'],
                         statusOfOffer: offer['Status'],

@@ -11,6 +11,8 @@ class OfferModel {
   final Timestamp timestamp;
   final String status;
   final GeoPoint location; // Assuming you need to store location
+  final String titleOfPost;
+  final String userOfPost;
 
   OfferModel({
     required this.postId,
@@ -23,6 +25,9 @@ class OfferModel {
     required this.timestamp,
     required this.location,
     required this.status,
+    required this.titleOfPost,
+    required this.userOfPost
+
   });
 
   Map<String, dynamic> toJson() {
@@ -37,6 +42,8 @@ class OfferModel {
       'Timestamp': timestamp,
       'Location': location,
       'Status': status,
+      'TitleOfPost': titleOfPost,
+      'UserNameOfPost': userOfPost
     };
   }
 
@@ -44,16 +51,20 @@ class OfferModel {
   factory OfferModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
     final data = document.data()!;
     return OfferModel(
-      userId: data['UserId'],
-      userName: data['UserName'],
-      title: data['Title'],
-      description: data['Description'] ?? '',
-      category: data['Category'],
-      imageUrls: List<String>.from(data['ImageUrls']),
-      timestamp: data['Timestamp'],
-      location: data['Location'],
-      postId: data['PostId'],
-      status: data['Status']
+        userId: data['UserId'],
+        userName: data['UserName'],
+        title: data['Title'],
+        description: data['Description'] ?? '',
+        category: data['Category'],
+        imageUrls: List<String>.from(data['ImageUrls']),
+        timestamp: data['Timestamp'],
+        location: data['Location'],
+        postId: data['PostId'],
+        status: data['Status'],
+        titleOfPost: data['TitleOfPost'],
+        userOfPost: data['UserNameOfPost'],
+
     );
+
   }
 }
