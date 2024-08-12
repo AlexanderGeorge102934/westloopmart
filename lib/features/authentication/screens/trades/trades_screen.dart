@@ -64,7 +64,7 @@ class TradesScreen extends StatelessWidget {
 
               final docs = snapshot.data!;
               final groupedDocs = groupBy(docs, (doc) => doc['Status']);
-              final sortedKeys = ['Accepted', 'Offered', 'On Hold', 'Denied'];
+              final sortedKeys = ['On Going', 'Accepted', 'Offered', 'On Hold', 'Denied'];
 
               final List<Widget> items = [];
 
@@ -79,6 +79,7 @@ class TradesScreen extends StatelessWidget {
                   ));
                   items.addAll(groupedDocs[key]!.map((offer) {
                     final imageUrls = List<String>.from(offer['ImageUrls']);
+                    final offerId = offer.id;
                     return ListTile(
 
                       subtitle: TTrades(
@@ -87,6 +88,10 @@ class TradesScreen extends StatelessWidget {
                         imageUrls: imageUrls,
                         titleOfOffer: offer['Title'],
                         statusOfOffer: offer['Status'],
+                        userId1: offer['UserId'],
+                        userId2: offer['UserOfPostId'],
+                        chatId: offer['ChatId'],
+                        offerId: offerId,
                       ),
                     );
                   }).toList());

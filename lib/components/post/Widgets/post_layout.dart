@@ -60,7 +60,7 @@ class TPostLayout extends StatelessWidget {
         ),
 
         /// Add offer button
-        Center(child: SizedBox(width: THelperFunctions.screenWidth() * 0.7, child: ElevatedButton(onPressed: ()=> Get.to(()=> AddOfferScreen(postID: postID, userOfPost: user, titleOfPost: title,)), child: const Text(TTexts.offerPost)))),
+        Center(child: SizedBox(width: THelperFunctions.screenWidth() * 0.7, child: ElevatedButton(onPressed: ()=> Get.to(()=> AddOfferScreen(postID: postID, userOfPost: user, titleOfPost: title, userOfPostId: userId)), child: const Text(TTexts.offerPost)))),
         SizedBox(height: TSizes.spaceBtwItems(context)),
 
         /// See offers button

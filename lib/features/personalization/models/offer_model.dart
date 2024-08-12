@@ -13,8 +13,11 @@ class OfferModel {
   final GeoPoint location; // Assuming you need to store location
   final String titleOfPost;
   final String userOfPost;
+  final String userOfPostId;
+  final String? chatId;
 
-  OfferModel({
+  OfferModel( {
+    this.chatId, /// Unsure about what to do for something that will become null at first
     required this.postId,
     required this.userId,
     required this.userName,
@@ -26,7 +29,8 @@ class OfferModel {
     required this.location,
     required this.status,
     required this.titleOfPost,
-    required this.userOfPost
+    required this.userOfPost,
+    required this.userOfPostId
 
   });
 
@@ -43,7 +47,9 @@ class OfferModel {
       'Location': location,
       'Status': status,
       'TitleOfPost': titleOfPost,
-      'UserNameOfPost': userOfPost
+      'UserNameOfPost': userOfPost,
+      'UserOfPostId': userOfPostId,
+      'ChatId': ''
     };
   }
 
@@ -63,7 +69,8 @@ class OfferModel {
         status: data['Status'],
         titleOfPost: data['TitleOfPost'],
         userOfPost: data['UserNameOfPost'],
-
+        userOfPostId: data['UserOfPostId'],
+        chatId: data['ChatId']
     );
 
   }

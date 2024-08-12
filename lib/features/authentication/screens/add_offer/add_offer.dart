@@ -8,12 +8,13 @@ import '../../controllers/images/image_controller.dart';
 
 /// Add Offer Screen
 class AddOfferScreen extends StatelessWidget {
-  AddOfferScreen({super.key, required this.postID, required this.titleOfPost, required this.userOfPost});
+  AddOfferScreen({super.key, required this.postID, required this.titleOfPost, required this.userOfPost, required this.userOfPostId});
   final ImageController _imageController = Get.put(ImageController());
   final PostingController _postingController = Get.put(PostingController());
   final String postID;
   final String titleOfPost;
   final String userOfPost;
+  final String userOfPostId;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +35,7 @@ class AddOfferScreen extends StatelessWidget {
       ),
 
       /// Adding Post Form
-      body: TAddForm(postingController: _postingController, imageController: _imageController, postID: postID, titleOfPost: titleOfPost, userOfPost: userOfPost,),
+      body: TAddForm(postingController: _postingController, imageController: _imageController, postID: postID, titleOfPost: titleOfPost, userOfPost: userOfPost, userOfPostId: userOfPostId,),
     );
   }
 }

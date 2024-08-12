@@ -15,6 +15,10 @@ class TTrades extends StatelessWidget {
     required this.statusOfOffer,
     required this.userOfPost,
     required this.titleOfPost,
+    required this.userId1,
+    required this.userId2,
+    required this.chatId,
+    required this.offerId,
   });
 
   final String userOfPost;
@@ -22,20 +26,45 @@ class TTrades extends StatelessWidget {
   final String titleOfOffer;
   final List<String> imageUrls;
   final String statusOfOffer;
+  final String userId1;
+  final String userId2;
+  final String? chatId;  // New parameter to track existing chat ID
+  final String offerId;
 
   @override
   Widget build(BuildContext context) {
-    final tag = UniqueKey().toString(); // TODO find best way to make unique keys
-    final ImageCarouselController controller = Get.put(ImageCarouselController(), tag: tag); //TODO change image carousel location and also post's image carousel
+    final tag = UniqueKey().toString();
+    final ImageCarouselController controller = Get.put(ImageCarouselController(), tag: tag);
 
     final mediaQuery = MediaQuery.of(context);
     final screenHeight = mediaQuery.size.height;
     final screenWidth = mediaQuery.size.width;
 
+    // Define appearance based on the status
+    Color statusColor;
+    String buttonText = '';
+    Color buttonColor = Colors.blue;
+
+    switch (statusOfOffer) {
+      case 'Accepted':
+        statusColor = Colors.green;
+        buttonText = 'Send Message';
+        break;
+      case 'On Going':
+        statusColor = Colors.orange;
+        buttonText = 'Continue Chat';
+        buttonColor = Colors.orangeAccent;
+        break;
+      case 'Offered':
+      default:
+        statusColor = Colors.yellow;
+        break;
+    }
+
     return Padding(
       padding: EdgeInsets.symmetric(vertical: screenHeight * 0.01),
       child: SizedBox(
-        height: screenHeight * 0.23,  // Adjusted height to accommodate the button
+        height: screenHeight * 0.23,
         child: Row(
           children: [
             /// Image Carousel
@@ -99,32 +128,36 @@ class TTrades extends StatelessWidget {
                   Text(
                     statusOfOffer,
                     style: TextStyle(
-                      color: statusOfOffer == 'Accepted'
-                          ? Colors.green
-                          : statusOfOffer == 'Offered'
-                          ? Colors.yellow
-                          : Colors.red,
+                      color: statusColor,
                       fontWeight: FontWeight.bold,
                       fontSize: screenWidth * 0.045,
                     ),
                   ),
-                  SizedBox(height: screenHeight * 0.02),  // Add some space before the button
+                  SizedBox(height: screenHeight * 0.02),
 
-                  // Conditional rendering of the button
-                  if (statusOfOffer == 'Accepted')
+                  // Conditional rendering of the button based on the status
+                  if (statusOfOffer == 'Accepted' || statusOfOffer == 'On Going')
                     ElevatedButton(
                       onPressed: () async {
                         final MessagesController messagesController = Get.put(MessagesController());
-                        /// TOdo get user id's from trade
-                        // await messagesController.createChat(userId1, userId2); // Todo make create chat a seperate function
-                        //
-                        // // Add your button functionality here
-                        // Get.to(()=>ChatScreen(chatId: chatId, userId: userId, otherUserId: '',))
+
+                        if (statusOfOffer == 'On Going' && chatId != null) {
+                          // If the status is 'On Going' and a chatId exists, navigate to the existing chat
+                          Get.to(() => ChatScreen(chatId: chatId!, userId: userId1, otherUserId: userId2));
+                        } else if (statusOfOffer == 'Accepted') {
+                          // If the status is 'Accepted', create a new chat
+                          final String? newChatId = await messagesController.createChat(userId1, userId2, offerId);
+
+                          if (newChatId != null) {
+                            Get.to(() => ChatScreen(chatId: newChatId, userId: userId1, otherUserId: userId2));
+                          }
+                        }
                       },
-                      child: Text('Send Message'),
                       style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.white, backgroundColor: Colors.blue,  // Text color
+                        foregroundColor: Colors.white,
+                        backgroundColor: buttonColor,
                       ),
+                      child: Text(buttonText),
                     ),
                 ],
               ),

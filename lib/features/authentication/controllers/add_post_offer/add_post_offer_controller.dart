@@ -76,7 +76,7 @@ class PostingController extends GetxController {
   }
 
   /// Add Offer
-  Future<void> addOffer(String postID, String titleOfPost, String userOfPost) async {
+  Future<void> addOffer(String postID, String titleOfPost, String userOfPost, String userOfPostId) async {
     final OffersRepository offersRepository = Get.put(OffersRepository());
     try {
 
@@ -129,7 +129,8 @@ class PostingController extends GetxController {
           status: "Offered",
           postId: postID,
           titleOfPost: titleOfPost,
-          userOfPost: userOfPost
+          userOfPost: userOfPost,
+          userOfPostId: userOfPostId
 
       );
 

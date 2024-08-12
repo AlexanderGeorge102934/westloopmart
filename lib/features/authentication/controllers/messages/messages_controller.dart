@@ -17,13 +17,17 @@ class MessagesController extends GetxController {
   static MessagesController get instance => Get.find();
   final message = TextEditingController();
 
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-
-  Future<String?> createChat(String userId1, String userId2) async {
+  Future<String?> createChat(String userId1, String userId2, String offerId) async {
     final MessagesRepository messagesRepository = Get.put(MessagesRepository());
     try {
       final chatId = await messagesRepository.createChat(userId1, userId2);
+
+      // Update the offer document with the chat ID
+      await FirebaseFirestore.instance
+          .collection("Offers")
+          .doc(offerId)
+          .update({'ChatId': chatId, 'Status': 'On Going'});
+
       return chatId;
     } catch (e){
       TLoader.errorSnackBar(title: "Oh Snap!", message: e.toString());

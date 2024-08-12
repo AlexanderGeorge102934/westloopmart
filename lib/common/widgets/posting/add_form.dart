@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 
 import '../../../../../common/styles/spacing_styles.dart';
 import '../../../../../utils/constants/sizes.dart';
@@ -12,7 +11,7 @@ class TAddForm extends StatelessWidget {
   const TAddForm({
     super.key,
 
-    required this.imageController, required this.postingController, this.postID, this.titleOfPost, this.userOfPost,
+    required this.imageController, required this.postingController, this.postID, this.titleOfPost, this.userOfPost, this.userOfPostId
   });
 
   final PostingController postingController;
@@ -20,6 +19,7 @@ class TAddForm extends StatelessWidget {
   final String? postID;
   final String? titleOfPost;
   final String? userOfPost;
+  final String? userOfPostId;
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +61,7 @@ class TAddForm extends StatelessWidget {
                   if (postID == null) {
                     postingController.addPost();
                   } else if (postID != null && titleOfPost != null && userOfPost != null) {
-                    postingController.addOffer(postID!, titleOfPost!, userOfPost!);
+                    postingController.addOffer(postID!, titleOfPost!, userOfPost!, userOfPostId!);
                   }
                 }, child: postID == null ? const Text('Add Post') : const Text('Add Offer'))),
             SizedBox(height: TSizes.spaceBtwItems(context)),
