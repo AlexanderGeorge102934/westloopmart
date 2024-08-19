@@ -7,6 +7,7 @@ import 'package:startup_app/helpers/helpers.dart';
 import 'package:startup_app/utils/constants/colors.dart';
 import '../../controllers/bottom_navigation_controller/bottom_nav_controller.dart';
 import '../home_screen/home_screen.dart';
+import '../user_profile/user_profile_screen.dart';
 import 'Widgets/add_post_button.dart';
 import 'Widgets/bottom_app_bar.dart';
 
@@ -19,7 +20,7 @@ class MainScreen extends StatelessWidget {
     const HomeScreen(),
     TradesScreen(),
     AddPostScreen(),
-    Container(color: Colors.green),
+    UserProfileScreen(),
     const TestScreen(),
   ];
 

@@ -9,7 +9,7 @@ class TEngagmentBarForOwner extends StatelessWidget {
     super.key,
     required this.title,
     required this.user,
-    required this.distanceString, required this.postId, required this.offerId, required this.userIdOfOffer,
+    required this.distanceString, required this.postId, required this.offerId, required this.userIdOfOffer, required this.userIdOfPost,
   });
 
   final String title;
@@ -18,6 +18,7 @@ class TEngagmentBarForOwner extends StatelessWidget {
   final String postId;
   final String offerId;
   final String userIdOfOffer;
+  final String userIdOfPost;
 
 
 
@@ -54,7 +55,7 @@ class TEngagmentBarForOwner extends StatelessWidget {
               /// Todo make spacing dynamic
               CircleAvatar(radius: 30,child: IconButton(onPressed: () => postingController.denyOffer(postId, offerId, userIdOfOffer), icon: const Icon(Icons.close)),),
               const SizedBox(width: 8.0),
-              CircleAvatar(radius: 30,child: IconButton(onPressed: () => postingController.acceptOffer(postId, offerId, userIdOfOffer), icon: const Icon(Icons.check)))
+              CircleAvatar(radius: 30,child: IconButton(onPressed: () => postingController.acceptOffer(postId, offerId, userIdOfOffer, userIdOfPost), icon: const Icon(Icons.check)))
             ],
           )
         ],

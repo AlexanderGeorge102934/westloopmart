@@ -9,9 +9,12 @@ class PostModel {
   final List<String> imageUrls;
   final Timestamp timestamp;
   final GeoPoint location; // Assuming you need to store location
+  final String status;
+  final String chatId;
 
   PostModel({
     required this.userId,
+    required this.status,
     required this.userName,
     required this.title,
     required this.description,
@@ -19,6 +22,7 @@ class PostModel {
     required this.imageUrls,
     required this.timestamp,
     required this.location,
+    required this.chatId,
   });
 
   Map<String, dynamic> toJson() {
@@ -31,6 +35,8 @@ class PostModel {
       'ImageUrls': imageUrls,
       'Timestamp': timestamp,
       'Location': location,
+      'Status': status,
+      'ChatId': chatId
     };
   }
 
@@ -46,6 +52,8 @@ class PostModel {
       imageUrls: List<String>.from(data['ImageUrls']),
       timestamp: data['Timestamp'],
       location: data['Location'],
+      status: data['Status'],
+      chatId: data['ChatId']
     );
   }
 }

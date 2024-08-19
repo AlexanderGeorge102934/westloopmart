@@ -107,4 +107,22 @@ class PostsRepository extends GetxController {
       throw 'Something went wrong. Please try again';
     }
   }
+
+
+  /// Function to update offer in Firestore
+  Future<void> updatePost(String postId, String status) async {
+
+    try{
+
+      await FirebaseFirestore.instance.collection("UserPosts").doc(postId).update({'Status': status});
+    } on FirebaseException catch (e){
+      throw TFirebaseException(e.code).message; //TODO make sure all messages are checked and good (Didn't take time checking)
+    } on FormatException catch (_){
+      throw const TFormatException(); //TODO make sure all messages are checked and good (Didn't take time checking)
+    } on PlatformException catch (e) {
+      throw TPlatformException(e.code).message; //TODO make sure all messages are checked and good (Didn't take time checking)
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
 }

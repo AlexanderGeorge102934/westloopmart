@@ -59,6 +59,7 @@ class TListOfOffers extends StatelessWidget {
                       statusOfOffer: offer['Status'],
                       offerId: offer.id,
                       postId: offer['PostId'],
+                      userId: userId,
                     );
                   },
                 );

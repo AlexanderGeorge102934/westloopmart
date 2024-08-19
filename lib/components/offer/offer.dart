@@ -20,7 +20,15 @@ class TOffer extends StatelessWidget {
     required this.user,
     required this.description,
     required this.title,
-    required this.imageUrls, required this.userPosition, required this.postPosition, required this.userIdOfOffer, required this.ownerOfPost, required this.statusOfOffer, required this.offerId, required this.postId,
+    required this.imageUrls,
+    required this.userPosition,
+    required this.postPosition,
+    required this.userIdOfOffer,
+    required this.ownerOfPost,
+    required this.statusOfOffer,
+    required this.offerId,
+    required this.postId,
+    required this.userId,
   });
 
   /// General Components
@@ -39,6 +47,7 @@ class TOffer extends StatelessWidget {
   final bool ownerOfPost; // Are they allowed to accept or deny offer?
   final String offerId;
   final String postId;
+  final String userId;
 
 
   @override
@@ -54,7 +63,7 @@ class TOffer extends StatelessWidget {
 
     return SizedBox(
       height: MediaQuery.of(context).size.height * 0.5,
-      child: TOfferLayout(controller: controller, imageUrls: imageUrls, ownerOfPost: ownerOfPost, title: title, user: user, distanceString: distanceString, postId: postId, offerId: offerId, userIdOfOffer: userIdOfOffer),
+      child: TOfferLayout(controller: controller, imageUrls: imageUrls, ownerOfPost: ownerOfPost, title: title, user: user, distanceString: distanceString, postId: postId, offerId: offerId, userIdOfOffer: userIdOfOffer, userId: userId,),
     );
   }
 }

@@ -17,16 +17,32 @@ class MessagesController extends GetxController {
   static MessagesController get instance => Get.find();
   final message = TextEditingController();
 
-  Future<String?> createChat(String userId1, String userId2, String offerId) async {
+  Future<String?> createChat(String userId1, String userId2, String offerId, String postId) async {
     final MessagesRepository messagesRepository = Get.put(MessagesRepository());
     try {
       final chatId = await messagesRepository.createChat(userId1, userId2);
+      // Ensure both Offer and Post documents are updated atomically
+      final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-      // Update the offer document with the chat ID
-      await FirebaseFirestore.instance
-          .collection("Offers")
-          .doc(offerId)
-          .update({'ChatId': chatId, 'Status': 'On Going'});
+      await firestore.runTransaction((transaction) async {
+        // Reference to the Offer document
+        final offerDocRef = firestore.collection("Offers").doc(offerId);
+
+        // Reference to the Post document
+        final postDocRef = firestore.collection("UserPosts").doc(postId);
+
+        // Update Offer document
+        transaction.update(offerDocRef, {
+          'ChatId': chatId,
+          'Status': 'On Going',
+        });
+
+        // Update Post document
+        transaction.update(postDocRef, {
+          'ChatId': chatId,
+          'Status': 'On Going',
+        });
+      });
 
       return chatId;
     } catch (e){

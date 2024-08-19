@@ -2,36 +2,31 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:startup_app/features/authentication/screens/chat/chat_screen.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import '../../features/authentication/controllers/image_carousel/image_carousel_controller.dart';
 import '../../features/authentication/controllers/messages/messages_controller.dart';
+import '../../features/authentication/screens/chat/chat_screen.dart';
 
-class TTrades extends StatelessWidget {
-  const TTrades({
+class TMyPost extends StatelessWidget {
+  const TMyPost({
     super.key,
-    required this.titleOfOffer,
+    required this.user,
+    required this.title ,
     required this.imageUrls,
-    required this.statusOfOffer,
-    required this.userOfPost,
-    required this.titleOfPost,
-    required this.userId1,
-    required this.userId2,
-    required this.chatId,
-    required this.offerId,
+    required this.status,
+    required this.userId,
     required this.postId,
+    required this.chatId,
   });
 
-  final String userOfPost;
-  final String titleOfPost;
-  final String titleOfOffer;
+  final String user;
+  final String title;
   final List<String> imageUrls;
-  final String statusOfOffer;
-  final String userId1;
-  final String userId2;
-  final String? chatId;  // New parameter to track existing chat ID
-  final String offerId;
+  final String status;
+  final String userId;
   final String postId;
+  final String chatId;
 
   @override
   Widget build(BuildContext context) {
@@ -42,12 +37,11 @@ class TTrades extends StatelessWidget {
     final screenHeight = mediaQuery.size.height;
     final screenWidth = mediaQuery.size.width;
 
-    // Define appearance based on the status
     Color statusColor;
     String buttonText = '';
     Color buttonColor = Colors.blue;
 
-    switch (statusOfOffer) {
+    switch (status) {
       case 'Accepted':
         statusColor = Colors.green;
         buttonText = 'Send Message';
@@ -69,7 +63,6 @@ class TTrades extends StatelessWidget {
         height: screenHeight * 0.23,
         child: Row(
           children: [
-            /// Image Carousel
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
@@ -110,7 +103,7 @@ class TTrades extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    "$titleOfPost by $userOfPost",
+                    "$title by $user",
                     softWrap: true,
                     overflow: TextOverflow.visible,
                     style: TextStyle(
@@ -120,46 +113,24 @@ class TTrades extends StatelessWidget {
                   ),
                   SizedBox(height: screenHeight * 0.01),
                   Text(
-                    "You offered a $titleOfOffer",
-                    style: TextStyle(
-                      color: Colors.grey[600],
-                      fontSize: screenWidth * 0.04,
-                    ),
-                  ),
-                  SizedBox(height: screenHeight * 0.01),
-                  Text(
-                    statusOfOffer,
+                    status,
                     style: TextStyle(
                       color: statusColor,
                       fontWeight: FontWeight.bold,
                       fontSize: screenWidth * 0.045,
                     ),
                   ),
-                  SizedBox(height: screenHeight * 0.001),
-
-                  // Conditional rendering of the button based on the status
-                  if (statusOfOffer == 'Accepted' || statusOfOffer == 'On Going')
+                  SizedBox(height: screenHeight * 0.02),
+                  if (status == 'On Going')
                     ElevatedButton(
                       onPressed: () async {
                         final MessagesController messagesController = Get.put(MessagesController());
+                        // If the status is 'On Going', navigate to the existing chat
+                        Get.to(() => ChatScreen(chatId: chatId, userId: userId, otherUserId: userId));
 
-                        if (statusOfOffer == 'On Going' && chatId != null) {
-                          // If the status is 'On Going' and a chatId exists, navigate to the existing chat
-                          Get.to(() => ChatScreen(chatId: chatId!, userId: userId1, otherUserId: userId2));
-                        } else if (statusOfOffer == 'Accepted') {
-                          // If the status is 'Accepted', create a new chat
-                          final String? newChatId = await messagesController.createChat(userId1, userId2, offerId, postId); ///Fix security rule to change chat id only of post
-
-                          if (newChatId != null) {
-                            Get.to(() => ChatScreen(chatId: newChatId, userId: userId1, otherUserId: userId2));
-                          }
-                        }
                       },
-                      style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        backgroundColor: buttonColor,
-                      ),
                       child: Text(buttonText),
+                      style: ElevatedButton.styleFrom(backgroundColor: buttonColor),
                     ),
                 ],
               ),

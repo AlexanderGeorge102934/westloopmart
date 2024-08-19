@@ -61,6 +61,8 @@ class PostingController extends GetxController {
         imageUrls: imageUrls,
         timestamp: Timestamp.now(),
         location: GeoPoint(position.latitude, position.longitude),
+        status: 'Posted',
+        chatId: ''
       );
 
       /// Add Post
@@ -147,14 +149,28 @@ class PostingController extends GetxController {
   }
 
   /// Function to accept an offer
-  Future<void> acceptOffer (String postId, String offerId, String offerUserId) async { // put in posts or offers repository
+  Future<void> acceptOffer (String postId, String offerId, String offerUserId, String postUserId) async { // put in posts or offers repository
     final OffersRepository offersRepository = Get.put(OffersRepository());
+    final PostsRepository postsRepository = Get.put(PostsRepository());
     try {
-      DocumentSnapshot offerDoc = await offersRepository.retrieveOffer(offerId);
-      if (offerDoc.exists) { //If offer exists
-        Map<String, dynamic> data = offerDoc.data() as Map<String, dynamic>;
-        if (data['UserId'] == offerUserId) {
-          await offersRepository.updateOffer(offerId, 'Accepted');
+      List<Future<DocumentSnapshot>> futures = [
+        offersRepository.retrieveOffer(offerId),
+        postsRepository.retrievePost(postId),
+      ];
+
+      List<DocumentSnapshot> results = await Future.wait(futures);
+
+      DocumentSnapshot offerDoc = results[0];
+      DocumentSnapshot postDoc = results[1];
+      if (offerDoc.exists && postDoc.exists) { //If offer and post exists
+        Map<String, dynamic> dataOffer = offerDoc.data() as Map<String, dynamic>;
+        Map<String, dynamic> dataPost = postDoc.data() as Map<String, dynamic>;
+        if (dataOffer['UserId'] == offerUserId && dataPost['UserId'] == postUserId) {
+          List<Future<void>> futures = [
+            offersRepository.updateOffer(offerId, 'Accepted'),
+            postsRepository.updatePost(postId, 'Accepted'),
+          ];
+          await Future.wait(futures);
         }
       }
     } catch (e) {

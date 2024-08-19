@@ -21,7 +21,11 @@ class TPost extends StatelessWidget {
     required this.user,
     required this.description,
     required this.title,
-    required this.imageUrls, required this.userPosition, required this.postPosition, required this.postID, required this.userId,
+    required this.imageUrls,
+    required this.userPosition,
+    required this.postPosition,
+    required this.postID,
+    required this.userId,
   });
 
   /// Details of the post
