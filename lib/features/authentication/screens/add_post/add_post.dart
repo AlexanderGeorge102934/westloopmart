@@ -16,19 +16,29 @@ class AddPostScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
 
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          color: dark ? TColors.white : TColors.black,
-          icon: const Icon(Icons.close),
-          onPressed: (){
-            Get.back();
-          },
+    return WillPopScope(
+      onWillPop: () async {
+        // Clear the form when the user navigates back
+        _postingController.clearForm();
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            color: dark ? TColors.white : TColors.black,
+            icon: const Icon(Icons.close),
+            onPressed: (){
+              _postingController.clearForm();
+              Get.back();
+            },
+          ),
+          title: const Text('Add Post'),
+          centerTitle: true,
         ),
-      ),
 
-      /// Adding Post Form
-      body: TAddForm(postingController: _postingController, imageController: _imageController),
+        /// Adding Post Form
+        body: TAddForm(postingController: _postingController, imageController: _imageController),
+      ),
     );
   }
 }

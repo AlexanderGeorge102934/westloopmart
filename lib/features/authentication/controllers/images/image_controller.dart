@@ -38,4 +38,9 @@ class ImageController extends GetxController {
       }
     }
   }
+
+
+  void clearImages() {
+    images.clear(); // This will clear all the images in the list
+  }
 }

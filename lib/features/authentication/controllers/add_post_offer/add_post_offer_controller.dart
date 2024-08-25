@@ -15,7 +15,7 @@ class PostingController extends GetxController {
 
   final title = TextEditingController();
   final description = TextEditingController();
-  final category = TextEditingController();
+  final category = ''.obs;
   GlobalKey<FormState> postKey = GlobalKey<FormState>();
 
   final ImageController imageController = Get.find<ImageController>();
@@ -57,7 +57,7 @@ class PostingController extends GetxController {
         userName: user.email ?? "Anonymous", // todo figure out how to get rid of anonymous
         title: title.text,
         description: description.text,
-        category: category.text,
+        category: category.value,
         imageUrls: imageUrls,
         timestamp: Timestamp.now(),
         location: GeoPoint(position.latitude, position.longitude),
@@ -71,7 +71,7 @@ class PostingController extends GetxController {
       /// Clear everything (Haven't finished doing the images)
       title.clear();
       description.clear();
-      category.clear();
+      category.value = '';
     } catch (e) {
       TLoader.errorSnackBar(title: "Oh Snap!", message: e.toString());
     }
@@ -124,7 +124,7 @@ class PostingController extends GetxController {
           // todo figure out how to get rid of anonymous
           title: title.text,
           description: description.text,
-          category: category.text,
+          category: category.value,
           imageUrls: imageUrls,
           timestamp: Timestamp.now(),
           location: GeoPoint(position.latitude, position.longitude),
@@ -142,7 +142,7 @@ class PostingController extends GetxController {
       /// Clear everything (Haven't finished doing the images)
       title.clear();
       description.clear();
-      category.clear();
+      category.value = '';
     } catch (e) {
       TLoader.errorSnackBar(title: "Oh Snap!", message: e.toString());
     }
@@ -192,6 +192,20 @@ class PostingController extends GetxController {
     } catch (e) {
       TLoader.errorSnackBar(title: "Oh Snap!", message: e.toString());
     }
+  }
+
+  void clearForm() {
+    title.clear();
+    description.clear();
+    category.value = '';
+    imageController.clearImages();
+    // imageController.clearImages(); // Ensure ImageController has this method to clear images
+  }
+
+  @override
+  void onClose() {
+    clearForm(); // Clear everything when the controller is closed
+    super.onClose();
   }
 
 

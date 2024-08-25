@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:startup_app/features/authentication/screens/add_post/add_post.dart';
@@ -20,7 +21,7 @@ class MainScreen extends StatelessWidget {
     const HomeScreen(),
     TradesScreen(),
     AddPostScreen(),
-    UserProfileScreen(),
+    UserProfileScreen(user: FirebaseAuth.instance.currentUser,),
     const TestScreen(),
   ];
 

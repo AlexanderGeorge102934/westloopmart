@@ -17,20 +17,6 @@ class TImageGrid extends StatelessWidget {
     return Obx(() {
       List<Widget> imageWidgets = [];
 
-      // Add the "add image" icon first
-      imageWidgets.add(GestureDetector(
-        onTap: () => _showPickImageModal(context, imageController),
-        child: Container(
-          width: 100, // TODo make dynamic
-          height: 100,
-          margin: const EdgeInsets.all(4.0),
-          color: Colors.grey[300],
-          child: const Center(
-            child: Icon(Icons.add, size: 50, color: Colors.black54),
-          ),
-        ),
-      ));
-
       // Add the existing images
       for (int i = 0; i < imageController.images.length; i++) {
         if (imageController.images[i] != null) {
@@ -39,10 +25,11 @@ class TImageGrid extends StatelessWidget {
               // be able to edit when you tap one of the images
             },
             child: Container(
-              width: 100,
-              height: 100,
+              width: MediaQuery.of(context).size.width * 0.92,
+              height: MediaQuery.of(context).size.width * 0.92,
               margin: const EdgeInsets.all(4.0),
               decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.05),
                 image: DecorationImage(
                   image: FileImage(File(imageController.images[i]!.path)),
                   fit: BoxFit.cover,
@@ -52,6 +39,26 @@ class TImageGrid extends StatelessWidget {
           ));
         }
       }
+
+      // Add the "add image" icon first
+      imageWidgets.add(GestureDetector(
+        onTap: () => _showPickImageModal(context, imageController),
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.92, // TODo make dynamic
+          height: MediaQuery.of(context).size.width * 0.92,
+          margin: const EdgeInsets.all(4.0),
+          // color: Colors.grey[300],
+          decoration: BoxDecoration(
+            color: Colors.grey[300],
+            borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.05), // Dynamic rounded corners
+          ),
+          child: const Center(
+            child: Icon(Icons.add, size: 80, color: Colors.black54),
+          ),
+        ),
+      ));
+
+
 
       return SingleChildScrollView(
         scrollDirection: Axis.horizontal,

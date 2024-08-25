@@ -8,7 +8,14 @@ import '../../controllers/images/image_controller.dart';
 
 /// Add Offer Screen
 class AddOfferScreen extends StatelessWidget {
-  AddOfferScreen({super.key, required this.postID, required this.titleOfPost, required this.userOfPost, required this.userOfPostId});
+  AddOfferScreen({
+    super.key,
+    required this.postID,
+    required this.titleOfPost,
+    required this.userOfPost,
+    required this.userOfPostId,
+  });
+
   final ImageController _imageController = Get.put(ImageController());
   final PostingController _postingController = Get.put(PostingController());
   final String postID;
@@ -20,31 +27,37 @@ class AddOfferScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
 
-
-
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          color: dark ? TColors.white : TColors.black,
-          icon: const Icon(Icons.close),
-          onPressed: (){
-            Get.back();
-          },
+    return WillPopScope(
+      onWillPop: () async {
+        // Clear the form when the user navigates back
+        _postingController.clearForm();
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            color: dark ? TColors.white : TColors.black,
+            icon: const Icon(Icons.close),
+            onPressed: () {
+              _postingController.clearForm(); // Ensure clearing when the close button is pressed
+              Get.back();
+            },
+          ),
+          title: const Text('Add Offer'),
+          centerTitle: true,
         ),
-        title: const Text('Add Offer'),
+        body: TAddForm(
+          postingController: _postingController,
+          imageController: _imageController,
+          postID: postID,
+          titleOfPost: titleOfPost,
+          userOfPost: userOfPost,
+          userOfPostId: userOfPostId,
+        ),
       ),
-
-      /// Adding Post Form
-      body: TAddForm(postingController: _postingController, imageController: _imageController, postID: postID, titleOfPost: titleOfPost, userOfPost: userOfPost, userOfPostId: userOfPostId,),
     );
   }
 }
-
-
-
-
-
-
 
 
 
