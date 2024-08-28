@@ -4,8 +4,6 @@ import 'package:get/get.dart';
 
 import 'package:startup_app/features/authentication/screens/trades/trades_screen.dart';
 import 'package:startup_app/helpers/helpers.dart';
-import 'package:startup_app/utils/constants/colors.dart';
-import '../../../../utils/constants/sizes.dart';
 import '../../controllers/bottom_navigation_controller/bottom_nav_controller.dart';
 import '../add_post/add_post_screen.dart';
 import '../home_screen/home_screen.dart';

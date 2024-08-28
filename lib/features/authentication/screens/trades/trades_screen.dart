@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:startup_app/features/authentication/screens/trades/my_offers_screen.dart';
 import 'package:startup_app/features/authentication/screens/trades/my_posts_screen.dart';

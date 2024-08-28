@@ -1,12 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collection/collection.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../components/my_post/my_post.dart';
-import '../../../../components/post/post.dart';
-import '../../../../components/trades/trades.dart';
 import '../../../../helpers/helpers.dart';
 
 class MyPostsScreen extends StatelessWidget {

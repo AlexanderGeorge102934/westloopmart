@@ -1,16 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:startup_app/helpers/helpers.dart';
 
 import '../../features/authentication/controllers/image_carousel/image_carousel_controller.dart';
-import '../../utils/constants/sizes.dart';
-import '../../utils/constants/texts.dart';
-import 'Widgets/engagement_bar.dart';
-import 'Widgets/engagment_bar_for_owner.dart';
-import 'Widgets/image_carousel.dart';
 import 'Widgets/offer_layout.dart';
 
 /// --- Widget of One Offer --- ///
