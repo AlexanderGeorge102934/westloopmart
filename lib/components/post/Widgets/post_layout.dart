@@ -4,7 +4,8 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
 import '../../../features/authentication/controllers/image_carousel/image_carousel_controller.dart';
-import '../../../features/authentication/screens/add_offer/add_offer.dart';
+
+import '../../../features/authentication/screens/add_offer/add_offer_screen.dart';
 import '../../../features/authentication/screens/offers/offers_screen.dart';
 import '../../../utils/constants/sizes.dart';
 import '../../../utils/constants/texts.dart';

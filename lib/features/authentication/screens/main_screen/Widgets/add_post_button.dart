@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
 import '../../../../../utils/constants/colors.dart';
-import '../../add_post/add_post.dart';
+import '../../add_post/add_post_screen.dart';
 
 class TAddPostButton extends StatelessWidget {
   const TAddPostButton({

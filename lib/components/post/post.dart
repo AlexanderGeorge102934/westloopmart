@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:startup_app/features/authentication/screens/add_offer/add_offer.dart';
+
 import 'package:startup_app/features/authentication/screens/offers/offers_screen.dart';
 import 'package:startup_app/helpers/helpers.dart';
 import '../../features/authentication/controllers/image_carousel/image_carousel_controller.dart';
