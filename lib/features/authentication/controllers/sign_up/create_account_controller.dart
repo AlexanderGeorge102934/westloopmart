@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:startup_app/data/repositories/user/user_repository.dart';
-import 'package:startup_app/features/authentication/screens/profile/test_profile.dart';
+
 import 'package:startup_app/utils/ui/loader.dart';
 
 import '../../../../data/repositories/authentication/authentication_repository.dart';
 import '../../../../helpers/network_manager.dart';
 import '../../../personalization/models/user_model.dart';
+import '../../screens/home_screen/home_screen.dart';
 
 class CreateAccountController extends GetxController{
   static CreateAccountController get instance => Get.find(); //Saves memory when creating instances
@@ -65,7 +66,7 @@ class CreateAccountController extends GetxController{
       await userRepository.saveUserRecord(newUser);
 
       /// Navigate to offers screen
-      Get.offAll(() => const TestScreen());
+      Get.offAll(() => const HomeScreen());
 
 
     }

@@ -8,119 +8,130 @@ import '../../../../utils/constants/colors.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
   @override
   State<HomeScreen> createState() => _pageOneState();
 }
 
-
-
-//flutter + Dart
 class _pageOneState extends State<HomeScreen> {
   String dropdownValue = 'All Items';
-  final _controller = PageController();
-  late Position _currentPosition;
+  late Future<Position> _getCurrentLocationFuture;
   bool isInitialized = false;
 
-  Future<void> _getCurrentLocation() async {
+  Future<Position> _getCurrentLocation() async {
     try {
-      Position position = await Geolocator.getCurrentPosition(
+      return await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high,
       );
-      setState(() {
-        _currentPosition = position;
-      });
     } catch (e) {
       print("Failed to get location: $e");
+      return Future.error(e);
     }
   }
 
   @override
   void initState() {
     super.initState();
-    _getCurrentLocation();
+    _getCurrentLocationFuture = _getCurrentLocation();
     isInitialized = true;
   }
 
   @override
+  @override
   Widget build(BuildContext context) {
-
-    if (isInitialized == false) {
-      return const Center(child: CircularProgressIndicator());
-    }
-
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: TColors.primary,
-      ),
-      body: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              DropdownButton<String>(
-                elevation: 0,
-                borderRadius: BorderRadius.circular(10),
-                underline: Container(
-                  height: 2,
-                  color: Colors.transparent, // Underline color
+      body: FutureBuilder<Position>(
+        future: _getCurrentLocationFuture,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            Position currentPosition = snapshot.data!;
+            return Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    DropdownButton<String>(
+                      elevation: 0,
+                      borderRadius: BorderRadius.circular(10),
+                      underline: Container(
+                        height: 2,
+                        color: Colors.transparent,
+                      ),
+                      value: dropdownValue,
+                      onChanged: (newValue) {
+                        setState(() {
+                          dropdownValue = newValue!;
+                        });
+                      },
+                      items: <String>[
+                        'All Items',
+                        'Clothing',
+                        'Electronics',
+                        'Furniture',
+                        'Services',
+                        'Personal Items',
+                        'Other'
+                      ].map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ),
+                  ],
                 ),
-                value: dropdownValue,
-                onChanged: (newValue) {
-                  setState(() {
-                    dropdownValue = newValue!;
-                  });
-                },
-                items: <String>['All Items', 'Clothes', 'Shoes', 'Gadgets']
-                    .map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-              ),
-            ],
-          ),
-          Expanded(
-            child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-              stream: FirebaseFirestore.instance.collection("UserPosts").orderBy("Timestamp", descending: true).snapshots(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-                if (snapshot.hasError) {
-                  return const Center(child: Text('Error'));
-                }
-                if (!snapshot.hasData) {
-                  return const Center(child: Text('No data has been found')); /// Todo change with a screen that says no posts made yet
-                }
+                Expanded(
+                  child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                    stream: (dropdownValue == 'All Items')
+                        ? FirebaseFirestore.instance
+                        .collection("UserPosts")
+                        .orderBy("Timestamp", descending: true)
+                        .snapshots()
+                        : FirebaseFirestore.instance
+                        .collection("UserPosts")
+                        .where("Category", isEqualTo: dropdownValue)
+                        .snapshots(), // No orderBy here
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+                      if (snapshot.hasError) {
+                        return const Center(child: Text('Error'));
+                      }
+                      if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                        return const Center(child: Text('No posts found'));
+                      }
 
-                if (snapshot.data!.docs.isEmpty) {
-                  return const Center(child: Text('No posts found')); /// Todo change with a screen that says no posts made yet
-                }
-
-                final docs = snapshot.data!.docs;
-                return ListView.builder(
-                  itemCount: docs.length,
-                  itemBuilder: (context, index) {
-                    final post = docs[index];
-                    String postId = post.id; // Access the post ID
-                    final imageUrls = List<String>.from(post['ImageUrls']);
-                    return TPost(
-                      user: post['UserName'],
-                      description: post['Description'],
-                      title: post['Title'],
-                      imageUrls: imageUrls,
-                      userPosition: _currentPosition,
-                      postPosition: post['Location'],
-                      postID: postId,
-                      userId: post['UserId'],
-                    );
-                  },
-                );
-              },
-            ),
-          ),
-        ],
+                      final docs = snapshot.data!.docs;
+                      return ListView.builder(
+                        itemCount: docs.length,
+                        itemBuilder: (context, index) {
+                          final post = docs[index];
+                          String postId = post.id;
+                          final imageUrls = List<String>.from(post['ImageUrls']);
+                          return TPost(
+                            user: post['UserName'],
+                            description: post['Description'],
+                            title: post['Title'],
+                            imageUrls: imageUrls,
+                            userPosition: currentPosition,
+                            postPosition: post['Location'],
+                            postID: postId,
+                            userId: post['UserId'],
+                          );
+                        },
+                      );
+                    },
+                  ),
+                ),
+              ],
+            );
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+        },
       ),
     );
   }

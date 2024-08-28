@@ -38,7 +38,7 @@ class TBottomAppBar extends StatelessWidget {
               onPressed: () {
                 bottomNavController.changeIndex(1);
               },
-              icon: Icon(Icons.arrow_downward, color: dark ? TColors.white : Colors.black, ),iconSize: 30,
+              icon: Icon(Icons.call_split_sharp, color: dark ? TColors.white : Colors.black, ),iconSize: 30,
             ),
 
             /// Fire Button
@@ -46,7 +46,7 @@ class TBottomAppBar extends StatelessWidget {
               onPressed: () {
                 bottomNavController.changeIndex(3);
               },
-              icon: Icon(Icons.fire_extinguisher, color: dark ? TColors.white : Colors.black), iconSize: 30,
+              icon: Icon(Icons.notifications_active, color: dark ? TColors.white : Colors.black), iconSize: 30,
             ),
 
             /// Profile Button

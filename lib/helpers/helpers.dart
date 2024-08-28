@@ -56,7 +56,7 @@ class THelperFunctions{
     double distanceInMiles = distanceInMeters / 1609.34;
 
     if (distanceInMiles < 1) {
-      return '${distanceInFeet.toStringAsFixed(0)} feet away';
+      return '<0.1 miles away';
     } else {
       return '${distanceInMiles.toStringAsFixed(2)} miles away';
     }

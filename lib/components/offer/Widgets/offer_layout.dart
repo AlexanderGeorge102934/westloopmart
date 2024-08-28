@@ -17,7 +17,7 @@ class TOfferLayout extends StatelessWidget {
     required this.distanceString,
     required this.postId,
     required this.offerId,
-    required this.userIdOfOffer, required this.userId,
+    required this.userIdOfOffer, required this.userId, required this.statusOfOffer,
   });
 
   final ImageCarouselController controller;
@@ -30,6 +30,7 @@ class TOfferLayout extends StatelessWidget {
   final String offerId;
   final String userIdOfOffer;
   final String userId;
+  final String statusOfOffer;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +46,7 @@ class TOfferLayout extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 10),
           /// Title, User, Distance, and option buttons to accept or decline offer, but ONLY if user is owner of post
           child: ownerOfPost
-              ? TEngagmentBarForOwner(title: title, user: user, distanceString: distanceString, postId: postId, offerId: offerId, userIdOfOffer: userIdOfOffer, userIdOfPost: userId,)
+              ? TEngagementBarForOwner(title: title, user: user, distanceString: distanceString, postId: postId, offerId: offerId, userIdOfOffer: userIdOfOffer, userIdOfPost: userId, statusOfOffer: statusOfOffer,)
               : TEngagementBar(title: title, user: user, distanceString: distanceString),
 
         ),

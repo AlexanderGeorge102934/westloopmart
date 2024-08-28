@@ -1,6 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:geolocator/geolocator.dart';
+
+import '../../../../components/post/post.dart';
+import '../login/login.dart';
 
 class UserProfileScreen extends StatelessWidget {
   final User? user;
@@ -11,7 +16,20 @@ class UserProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(user?.displayName ?? 'Profile'),
+        actions: [
+          TextButton(
+            onPressed: () async {
+              await FirebaseAuth.instance.signOut();
+              Get.offAll(() => const LoginScreen());
+            },
+            child: const Text(
+              "Sign Out",
+              style: TextStyle(
+                color: Colors.blue,
+              ),
+            ),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -95,8 +113,29 @@ class UserProfileScreen extends StatelessWidget {
             final imageUrls = List<String>.from(post['ImageUrls']);
 
             return GestureDetector(
-              onTap: () {
-                // Handle post tap if needed, e.g., navigate to post details
+              onTap: () async {
+                // Get the current position asynchronously
+                final userPosition = await _getCurrentPosition();
+
+                // Show the TPost widget in a modal bottom sheet
+                showModalBottomSheet(
+
+                  context: context,
+                  isScrollControlled: true,
+                  builder: (context) => Container(
+                    height: MediaQuery.of(context).size.height,
+                    child: TPost(
+                      user: post['UserName'],
+                      description: post['Description'],
+                      title: post['Title'],
+                      imageUrls: imageUrls,
+                      userPosition: userPosition,
+                      postPosition: post['Location'],
+                      postID: post.id,
+                      userId: user?.uid ?? '',
+                    ),
+                  ),
+                );
               },
               child: Image.network(
                 imageUrls.isNotEmpty ? imageUrls[0] : 'https://via.placeholder.com/150',
@@ -107,5 +146,10 @@ class UserProfileScreen extends StatelessWidget {
         );
       },
     );
+  }
+
+  Future<Position> _getCurrentPosition() async {
+    return await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
   }
 }

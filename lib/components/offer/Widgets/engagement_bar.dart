@@ -24,7 +24,7 @@ class TEngagementBar extends StatelessWidget {
         ),
 
         /// Name
-        Text(user,
+        Text('by $user',
           style: Theme.of(context).textTheme.bodySmall,
         ),
 

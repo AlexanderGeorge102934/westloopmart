@@ -120,7 +120,7 @@ class TTrades extends StatelessWidget {
                   ),
                   SizedBox(height: screenHeight * 0.01),
                   Text(
-                    "You offered a $titleOfOffer",
+                    "You offered $titleOfOffer",
                     style: TextStyle(
                       color: Colors.grey[600],
                       fontSize: screenWidth * 0.04,

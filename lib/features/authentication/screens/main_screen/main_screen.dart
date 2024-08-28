@@ -2,10 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:startup_app/features/authentication/screens/add_post/add_post.dart';
-import 'package:startup_app/features/authentication/screens/profile/test_profile.dart';
 import 'package:startup_app/features/authentication/screens/trades/trades_screen.dart';
 import 'package:startup_app/helpers/helpers.dart';
 import 'package:startup_app/utils/constants/colors.dart';
+import '../../../../utils/constants/sizes.dart';
 import '../../controllers/bottom_navigation_controller/bottom_nav_controller.dart';
 import '../home_screen/home_screen.dart';
 import '../user_profile/user_profile_screen.dart';
@@ -21,8 +21,9 @@ class MainScreen extends StatelessWidget {
     const HomeScreen(),
     TradesScreen(),
     AddPostScreen(),
+    Container(color: Colors.green),
     UserProfileScreen(user: FirebaseAuth.instance.currentUser,),
-    const TestScreen(),
+
   ];
 
   MainScreen({super.key});
@@ -31,6 +32,21 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
     return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(60.0), // Set the height of the app bar
+        child: AppBar(
+          title: Text(
+            'WEST LOOP MART',
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 24, // Adjust the font size as needed
+
+
+            ),
+          ),
+          centerTitle: true,
+        ),
+      ),
       body: Obx(() => _screens[bottomNavController.selectedIndex.value]),
 
       /// Middle Add Post Button

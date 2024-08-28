@@ -68,10 +68,10 @@ class PostingController extends GetxController {
       /// Add Post
       await postsRepository.addPost(post, user.uid);
 
+      Get.back();
+
       /// Clear everything (Haven't finished doing the images)
-      title.clear();
-      description.clear();
-      category.value = '';
+      clearForm();
     } catch (e) {
       TLoader.errorSnackBar(title: "Oh Snap!", message: e.toString());
     }
@@ -139,10 +139,10 @@ class PostingController extends GetxController {
       /// Add Post
       await offersRepository.addOffer(postID, offer, user.uid);
 
+      Get.back();
+
       /// Clear everything (Haven't finished doing the images)
-      title.clear();
-      description.clear();
-      category.value = '';
+      clearForm();
     } catch (e) {
       TLoader.errorSnackBar(title: "Oh Snap!", message: e.toString());
     }
