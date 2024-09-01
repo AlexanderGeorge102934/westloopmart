@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
@@ -26,6 +27,30 @@ class UserRepository extends GetxController{
       throw TPlatformException(e.code).message; //TODO make sure all messages are checked and good (Didn't take time checking)
     } catch (e) {
       throw 'Something went wrong. Please try again';
+    }
+  }
+
+  /// Get current user
+  Future<User?> getCurrentUser() async {
+    return FirebaseAuth.instance.currentUser;
+  }
+
+  /// Get current user as UserModel
+  Future<UserModel?> getCurrentUserModel() async {
+    try {
+      User? firebaseUser = FirebaseAuth.instance.currentUser;
+      if (firebaseUser == null) {
+        throw 'No user is currently logged in.';
+      }
+
+      DocumentSnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore.instance.collection("Users").doc(firebaseUser.uid).get();
+      if (snapshot.exists) {
+        return UserModel.fromSnapshot(snapshot);
+      } else {
+        throw 'User record not found.';
+      }
+    } catch (e) {
+      throw 'Error retrieving user: $e';
     }
   }
 

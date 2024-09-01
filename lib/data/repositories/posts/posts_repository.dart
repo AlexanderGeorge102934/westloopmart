@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:path/path.dart';
 import 'package:startup_app/features/personalization/models/post_model.dart';
 
+import '../../../features/personalization/models/user_model.dart';
 import '../../../utils/exceptions/firebase_exception.dart';
 import '../../../utils/exceptions/format_exception.dart';
 import '../../../utils/exceptions/platform_exception.dart';
@@ -18,11 +19,6 @@ class PostsRepository extends GetxController {
   static PostsRepository get instance => Get.find();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseStorage _storage = FirebaseStorage.instance;
-
-  /// Get current user
-  Future<User?> getCurrentUser() async {
-    return _auth.currentUser;
-  }
 
   Future<List<String>> uploadImages(List<XFile> images, String userId) async {
     List<String> imageUrls = [];

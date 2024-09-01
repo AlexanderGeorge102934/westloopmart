@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:startup_app/features/authentication/screens/chat/chat_screen.dart';
-
+import 'package:startup_app/utils/constants/sizes.dart';
 import '../../features/authentication/controllers/image_carousel/image_carousel_controller.dart';
 import '../../features/authentication/controllers/messages/messages_controller.dart';
 
@@ -65,76 +65,87 @@ class TTrades extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: screenHeight * 0.01),
       child: SizedBox(
-        height: screenHeight * 0.23,
+        height: screenHeight * 0.2,
         child: Row(
           children: [
             /// Image Carousel
-            Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(screenWidth * 0.03),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: screenWidth * 0.005,
-                      blurRadius: screenWidth * 0.0125,
-                      offset: const Offset(0, 3),
+            Flexible(
+              child: AspectRatio(
+                aspectRatio: 2 / 3, // Maintain a consistent aspect ratio
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(screenWidth * 0.03),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(screenWidth * 0.03),
+                    child: PageView.builder(
+                      itemCount: imageUrls.length,
+                      itemBuilder: (context, index) {
+                        return CachedNetworkImage(
+                          imageUrl: imageUrls[index],
+                          fit: BoxFit.cover,
+                          placeholder: (context, url) => Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                          errorWidget: (context, url, error) => Center(
+                            child: Icon(Icons.error),
+                          ),
+                        );
+                      },
                     ),
-                  ],
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(screenWidth * 0.03),
-                  child: PageView.builder(
-                    itemCount: imageUrls.length,
-                    itemBuilder: (context, index) {
-                      return CachedNetworkImage(
-                        imageUrl: imageUrls[index],
-                        fit: BoxFit.cover,
-                        placeholder: (context, url) => Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                        errorWidget: (context, url, error) => Center(
-                          child: Icon(Icons.error),
-                        ),
-                      );
-                    },
                   ),
                 ),
               ),
             ),
             SizedBox(width: screenWidth * 0.04),
-            Expanded(
+            Flexible(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text(
-                    "$titleOfPost by $userOfPost",
-                    softWrap: true,
-                    overflow: TextOverflow.visible,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: screenWidth * 0.045,
+                  Flexible(
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "$titleOfPost by $userOfPost",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: TSizes.fontSizeXl(context),
+                        ),
+                      ),
                     ),
                   ),
                   SizedBox(height: screenHeight * 0.01),
-                  Text(
-                    "You offered $titleOfOffer",
-                    style: TextStyle(
-                      color: Colors.grey[600],
-                      fontSize: screenWidth * 0.04,
+                  Flexible(
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "You offered $titleOfOffer",
+                        style: TextStyle(
+                          color: Colors.grey[600],
+                          fontSize: screenWidth * 0.04,
+                        ),
+                      ),
                     ),
                   ),
                   SizedBox(height: screenHeight * 0.01),
-                  Text(
-                    statusOfOffer,
-                    style: TextStyle(
-                      color: statusColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: screenWidth * 0.045,
+                  Flexible(
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        statusOfOffer,
+                        style: TextStyle(
+                          color: statusColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: screenWidth * 0.045,
+                        ),
+                      ),
                     ),
                   ),
-                  SizedBox(height: screenHeight * 0.001),
+                  SizedBox(height: screenHeight * 0.01),
 
                   // Conditional rendering of the button based on the status
                   if (statusOfOffer == 'Accepted' || statusOfOffer == 'On Going')
@@ -158,7 +169,10 @@ class TTrades extends StatelessWidget {
                         foregroundColor: Colors.white,
                         backgroundColor: buttonColor,
                       ),
-                      child: Text(buttonText),
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(buttonText),
+                      ),
                     ),
                 ],
               ),

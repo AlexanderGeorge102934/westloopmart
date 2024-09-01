@@ -36,6 +36,8 @@ class TPostLayout extends StatelessWidget {
     return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+
+          /// Circle Avatar and User Name
           Padding(
             padding: EdgeInsets.symmetric(vertical: TSizes.spaceBtwItems(context), horizontal: TSizes.spaceBtwItems(context) ),
             child: Row(
@@ -52,10 +54,11 @@ class TPostLayout extends StatelessWidget {
             ),
           ),
 
+          /// Image Carousel
           TImageCarousel(controller: controller, imageUrls: imageUrls),
-
-
           SizedBox(height: TSizes.spaceBtwItems(context)),
+
+
           Padding(
             padding: EdgeInsets.symmetric(horizontal: TSizes.spaceBtwItems(context)),
             child: Row(

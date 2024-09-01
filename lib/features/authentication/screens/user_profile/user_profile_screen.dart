@@ -3,9 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:geolocator/geolocator.dart';
-
+import 'package:startup_app/features/authentication/screens/menu/menu_screen.dart';
 import '../../../../components/post/post.dart';
+import '../../../../utils/constants/sizes.dart';
 import '../login/login.dart';
+import 'Widgets/profile_header.dart';
 
 class UserProfileScreen extends StatelessWidget {
   final User? user;
@@ -15,67 +17,35 @@ class UserProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
+      /// App bar title and setting icon
       appBar: AppBar(
-        actions: [
-          TextButton(
-            onPressed: () async {
-              await FirebaseAuth.instance.signOut();
-              Get.offAll(() => const LoginScreen());
-            },
-            child: const Text(
-              "Sign Out",
-              style: TextStyle(
-                color: Colors.blue,
-              ),
-            ),
+        title: Text(
+          "Profile",
+          style: TextStyle(
+            fontSize: TSizes.fontSizeXXXl(context),
+            fontWeight: FontWeight.normal,
           ),
+
+        ),
+
+        actions: [
+          IconButton(onPressed: () => Get.to(() => const MenuScreen()), icon: const Icon(Icons.menu, size: TSizes.imageThumbSize * 0.4, ))
         ],
       ),
+
+
       body: SingleChildScrollView(
         child: Column(
           children: [
-            _buildProfileHeader(context),
+
+            /// Profile Header
+            TProfileHeader(user: user),
+
+            /// Post grid
             _buildPostsGrid(context),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildProfileHeader(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Row(
-        children: [
-          CircleAvatar(
-            radius: 40,
-            backgroundImage: NetworkImage(
-              user?.photoURL ??
-                  'https://via.placeholder.com/150', // Placeholder if no profile image
-            ),
-          ),
-          SizedBox(width: 20),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                user?.displayName ?? 'Username',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 5),
-              Text(
-                user?.email ?? 'Email not available',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.grey,
-                ),
-              ),
-            ],
-          ),
-        ],
       ),
     );
   }
@@ -138,7 +108,7 @@ class UserProfileScreen extends StatelessWidget {
                 );
               },
               child: Image.network(
-                imageUrls.isNotEmpty ? imageUrls[0] : 'https://via.placeholder.com/150',
+                imageUrls.isNotEmpty ? imageUrls[0] : 'https://via.placeholder.com/150', //Todo get rid of placeholder
                 fit: BoxFit.cover,
               ),
             );
@@ -153,3 +123,4 @@ class UserProfileScreen extends StatelessWidget {
         desiredAccuracy: LocationAccuracy.high);
   }
 }
+

@@ -2,6 +2,7 @@ import 'package:camera/camera.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:startup_app/data/repositories/user/user_repository.dart';
 import 'package:startup_app/utils/ui/loader.dart';
 import '../../../../data/repositories/offers/offers_repository.dart';
 import '../../../../data/repositories/posts/posts_repository.dart';
@@ -23,19 +24,26 @@ class PostingController extends GetxController {
   /// Add Post
   Future<void> addPost() async {
     final PostsRepository postsRepository = Get.put(PostsRepository());
-    final user = await postsRepository.getCurrentUser();
-    if (user == null) {
+    final UserRepository userRepository = Get.put(UserRepository());
+
+    final user = await userRepository.getCurrentUser();
+    final userModel = await userRepository.getCurrentUserModel();
+    if (user == null || userModel ==null ) {
       TLoader.errorSnackBar(title: "User not logged in", message: "Please log in to post an offer."); // todo change it so once you click the add button you immediantly go to the login
       return;
     }
 
+
     try {
+
+      /// Check if internet is connected
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) {
         TLoader.errorSnackBar(title: "No Internet", message: "Please check your internet connection.");
         return;
       }
 
+      /// Check if form is valid (Not sure how to implement fully)
       if (postKey.currentState == null || !postKey.currentState!.validate()) {
         debugPrint("Form is not valid");
         TLoader.errorSnackBar(title: "Validation Error", message: "Please fill out all fields correctly.");
@@ -45,16 +53,17 @@ class PostingController extends GetxController {
       /// Convert RxList<XFile?> to List<XFile>
       List<XFile> images = imageController.images.where((image) => image != null).cast<XFile>().toList();
 
-
+      /// Get image urls after uploading
       List<String> imageUrls = await postsRepository.uploadImages(images, user.uid);
 
       /// Get user's position
       final position = await postsRepository.determinePosition();
       if (position == null) return; // Don't post unless they give their position
 
+      /// Create post model
       final post = PostModel(
         userId: user.uid,
-        userName: user.email ?? "Anonymous", // todo figure out how to get rid of anonymous
+        userName: userModel.username,
         title: title.text,
         description: description.text,
         category: category.value,
@@ -80,16 +89,19 @@ class PostingController extends GetxController {
   /// Add Offer
   Future<void> addOffer(String postID, String titleOfPost, String userOfPost, String userOfPostId) async {
     final OffersRepository offersRepository = Get.put(OffersRepository());
+    final UserRepository userRepository = Get.put(UserRepository());
     try {
 
-      final user = await offersRepository.getCurrentUser();
+      final user = await userRepository.getCurrentUser();
+      final userModel = await userRepository.getCurrentUserModel(); // TODO make get current user model to be in a more dedicated repository
 
-      if (user == null) {
+      if (user == null || userModel == null) {
         TLoader.errorSnackBar(title: "User not logged in",
             message: "Please log in to post an offer."); // todo change it so once you click the add button you immediantly go to the login
         return;
       }
 
+      ///Check if internet is connected
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) {
         TLoader.errorSnackBar(title: "No Internet",
@@ -97,6 +109,7 @@ class PostingController extends GetxController {
         return;
       }
 
+      /// Check if form is valid (Not sure how to correctly implement it)
       if (postKey.currentState == null || !postKey.currentState!.validate()) {
         debugPrint("Form is not valid");
         TLoader.errorSnackBar(title: "Validation Error",
@@ -118,10 +131,10 @@ class PostingController extends GetxController {
         return; // Don't post unless they give their position
       }
 
+      /// Create offer model
       final offer = OfferModel(
           userId: user.uid,
-          userName: user.email ?? "Anonymous",
-          // todo figure out how to get rid of anonymous
+          userName: userModel.username,
           title: title.text,
           description: description.text,
           category: category.value,
@@ -136,12 +149,12 @@ class PostingController extends GetxController {
 
       );
 
-      /// Add Post
+      /// Add Offer
       await offersRepository.addOffer(postID, offer, user.uid);
 
       Get.back();
 
-      /// Clear everything (Haven't finished doing the images)
+      /// Clear everything
       clearForm();
     } catch (e) {
       TLoader.errorSnackBar(title: "Oh Snap!", message: e.toString());
@@ -152,17 +165,22 @@ class PostingController extends GetxController {
   Future<void> acceptOffer (String postId, String offerId, String offerUserId, String postUserId) async { // put in posts or offers repository
     final OffersRepository offersRepository = Get.put(OffersRepository());
     final PostsRepository postsRepository = Get.put(PostsRepository());
+
     try {
+      /// Retrieve the offer and post for accepting the offer
       List<Future<DocumentSnapshot>> futures = [
         offersRepository.retrieveOffer(offerId),
         postsRepository.retrievePost(postId),
       ];
 
+      /// Retrieve the document snapshots
       List<DocumentSnapshot> results = await Future.wait(futures);
 
       DocumentSnapshot offerDoc = results[0];
       DocumentSnapshot postDoc = results[1];
-      if (offerDoc.exists && postDoc.exists) { //If offer and post exists
+
+      /// If offer and post exists
+      if (offerDoc.exists && postDoc.exists) {
         Map<String, dynamic> dataOffer = offerDoc.data() as Map<String, dynamic>;
         Map<String, dynamic> dataPost = postDoc.data() as Map<String, dynamic>;
         if (dataOffer['UserId'] == offerUserId && dataPost['UserId'] == postUserId) {
@@ -183,7 +201,7 @@ class PostingController extends GetxController {
     final OffersRepository offersRepository = Get.put(OffersRepository());
     try {
       DocumentSnapshot offerDoc = await offersRepository.retrieveOffer(offerId);
-      if (offerDoc.exists) { //If offer exists
+      if (offerDoc.exists) { // If offer exists
         Map<String, dynamic> data = offerDoc.data() as Map<String, dynamic>;
         if (data['UserId'] == offerUserId) {
           await offersRepository.updateOffer(offerId, 'Denied');

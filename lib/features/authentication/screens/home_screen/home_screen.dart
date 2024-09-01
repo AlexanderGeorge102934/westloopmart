@@ -2,7 +2,10 @@ import 'dart:core';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import '../../../../components/post/post.dart';
+import '../../../../data/repositories/user/user_repository.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

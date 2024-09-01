@@ -11,6 +11,7 @@ import 'package:path/path.dart';
 
 
 import '../../../features/personalization/models/offer_model.dart';
+import '../../../features/personalization/models/user_model.dart';
 import '../../../utils/exceptions/firebase_exception.dart';
 import '../../../utils/exceptions/format_exception.dart';
 import '../../../utils/exceptions/platform_exception.dart';
@@ -20,11 +21,6 @@ class OffersRepository extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseStorage _storage = FirebaseStorage.instance;
   // final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
-  /// Get current user
-  Future<User?> getCurrentUser() async {
-    return _auth.currentUser;
-  }
 
   /// Upload images
   Future<List<String>> uploadImages(List<XFile> images, String userId, String postId) async {

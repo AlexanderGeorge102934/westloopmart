@@ -1,9 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-
 import '../../features/authentication/controllers/image_carousel/image_carousel_controller.dart';
 import '../../features/authentication/controllers/messages/messages_controller.dart';
 import '../../features/authentication/screens/chat/chat_screen.dart';
@@ -12,7 +9,7 @@ class TMyPost extends StatelessWidget {
   const TMyPost({
     super.key,
     required this.user,
-    required this.title ,
+    required this.title,
     required this.imageUrls,
     required this.status,
     required this.userId,
@@ -60,64 +57,69 @@ class TMyPost extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: screenHeight * 0.01),
       child: SizedBox(
-        height: screenHeight * 0.23,
+        height: screenHeight * 0.2,
         child: Row(
           children: [
-            Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(screenWidth * 0.03),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: screenWidth * 0.005,
-                      blurRadius: screenWidth * 0.0125,
-                      offset: const Offset(0, 3),
+            Flexible(
+              child: AspectRatio(
+                aspectRatio: 2 / 3, // Maintain a consistent aspect ratio
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(screenWidth * 0.03),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(screenWidth * 0.03),
+                    child: PageView.builder(
+                      itemCount: imageUrls.length,
+                      itemBuilder: (context, index) {
+                        return CachedNetworkImage(
+                          imageUrl: imageUrls[index],
+                          fit: BoxFit.cover,
+                          placeholder: (context, url) => const Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                          errorWidget: (context, url, error) => const Center(
+                            child: Icon(Icons.error),
+                          ),
+                        );
+                      },
                     ),
-                  ],
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(screenWidth * 0.03),
-                  child: PageView.builder(
-                    itemCount: imageUrls.length,
-                    itemBuilder: (context, index) {
-                      return CachedNetworkImage(
-                        imageUrl: imageUrls[index],
-                        fit: BoxFit.cover,
-                        placeholder: (context, url) => Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                        errorWidget: (context, url, error) => Center(
-                          child: Icon(Icons.error),
-                        ),
-                      );
-                    },
                   ),
                 ),
               ),
             ),
             SizedBox(width: screenWidth * 0.04),
-            Expanded(
+            Flexible(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text(
-                    "$title by $user",
-                    softWrap: true,
-                    overflow: TextOverflow.visible,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: screenWidth * 0.045,
+                  Flexible(
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "$title by $user",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: screenWidth * 0.045,
+                        ),
+                      ),
                     ),
                   ),
                   SizedBox(height: screenHeight * 0.01),
-                  Text(
-                    status,
-                    style: TextStyle(
-                      color: statusColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: screenWidth * 0.045,
+                  Flexible(
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        status,
+                        style: TextStyle(
+                          color: statusColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: screenWidth * 0.045,
+                        ),
+                      ),
                     ),
                   ),
                   SizedBox(height: screenHeight * 0.02),
@@ -127,10 +129,12 @@ class TMyPost extends StatelessWidget {
                         final MessagesController messagesController = Get.put(MessagesController());
                         // If the status is 'On Going', navigate to the existing chat
                         Get.to(() => ChatScreen(chatId: chatId, userId: userId, otherUserId: userId));
-
                       },
-                      child: Text(buttonText),
                       style: ElevatedButton.styleFrom(backgroundColor: buttonColor),
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(buttonText),
+                      ),
                     ),
                 ],
               ),
