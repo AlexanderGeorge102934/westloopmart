@@ -30,7 +30,7 @@ class MainScreen extends StatelessWidget {
     final dark = THelperFunctions.isDarkMode(context);
     return Scaffold(
       appBar: PreferredSize(
-          preferredSize: Size.fromHeight(TSizes.spaceBtwSections(context) * 1.2 ),
+          preferredSize: Size.fromHeight(TSizes.spaceBtwSections(context) * 1.2),
           child: TMainAppBar(bottomNavController: bottomNavController)
       ),
       body: Obx(() => _screens[bottomNavController.selectedIndex.value]),

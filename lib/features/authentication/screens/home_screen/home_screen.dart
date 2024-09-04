@@ -2,10 +2,8 @@ import 'dart:core';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
+import 'package:startup_app/utils/constants/sizes.dart';
 import '../../../../components/post/post.dart';
-import '../../../../data/repositories/user/user_repository.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -15,9 +13,19 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _pageOneState extends State<HomeScreen> {
-  String dropdownValue = 'All Items';
+  String selectedCategory = 'All Items';
   late Future<Position> _getCurrentLocationFuture;
   bool isInitialized = false;
+
+  final List<Map<String, dynamic>> categories = [
+    {'name': 'All Items', 'icon': Icons.category},
+    {'name': 'Clothing', 'icon': Icons.checkroom},
+    {'name': 'Electronics', 'icon': Icons.devices},
+    {'name': 'Furniture', 'icon': Icons.chair},
+    {'name': 'Services', 'icon': Icons.miscellaneous_services},
+    {'name': 'Personal Items', 'icon': Icons.person},
+    {'name': 'Other', 'icon': Icons.more_horiz},
+  ];
 
   Future<Position> _getCurrentLocation() async {
     try {
@@ -38,8 +46,12 @@ class _pageOneState extends State<HomeScreen> {
   }
 
   @override
-  @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
+    final iconSize = screenHeight * 0.05;
+
     return Scaffold(
       body: FutureBuilder<Position>(
         future: _getCurrentLocationFuture,
@@ -48,50 +60,72 @@ class _pageOneState extends State<HomeScreen> {
             Position currentPosition = snapshot.data!;
             return Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    DropdownButton<String>(
-                      elevation: 0,
-                      borderRadius: BorderRadius.circular(10),
-                      underline: Container(
-                        height: 2,
-                        color: Colors.transparent,
-                      ),
-                      value: dropdownValue,
-                      onChanged: (newValue) {
-                        setState(() {
-                          dropdownValue = newValue!;
-                        });
-                      },
-                      items: <String>[
-                        'All Items',
-                        'Clothing',
-                        'Electronics',
-                        'Furniture',
-                        'Services',
-                        'Personal Items',
-                        'Other'
-                      ].map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: TSizes.spaceBtwItems(context),
+                  ),
+                  child: SizedBox(
+                    height: screenHeight * 0.1,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: categories.length,
+                      itemBuilder: (context, index) {
+                        final category = categories[index];
+                        return GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              selectedCategory = category['name'];
+                            });
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
+                            child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    category['icon'],
+                                    color: selectedCategory == category['name']
+                                        ? Colors.blue
+                                        : Colors.black,
+                                    size: iconSize,
+                                  ),
+                                  SizedBox(height: screenHeight * 0.01), // Space between icon and text
+                                  Text(
+                                    textAlign: TextAlign.center,
+                                      category['name'],
+                                      maxLines: 2,
+                                      overflow: TextOverflow.clip,
+                                      softWrap: true,
+                                      style: TextStyle(
+                                        fontSize: TSizes.fontSizeSm(context), // fixed font size
+                                        color: selectedCategory == category['name']
+                                            ? Colors.blue
+                                            : Colors.black,
+                                        fontWeight: selectedCategory == category['name']
+                                            ? FontWeight.bold
+                                            : FontWeight.normal,
+
+                                    ),
+                                  ),
+                                ],
+                              ),
+                          ),
                         );
-                      }).toList(),
+                      },
                     ),
-                  ],
+                  ),
                 ),
                 Expanded(
                   child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                    stream: (dropdownValue == 'All Items')
+                    stream: (selectedCategory == 'All Items')
                         ? FirebaseFirestore.instance
                         .collection("UserPosts")
                         .orderBy("Timestamp", descending: true)
                         .snapshots()
                         : FirebaseFirestore.instance
                         .collection("UserPosts")
-                        .where("Category", isEqualTo: dropdownValue)
-                        .snapshots(), // No orderBy here
+                        .where("Category", isEqualTo: selectedCategory)
+                        .snapshots(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const Center(child: CircularProgressIndicator());
