@@ -5,7 +5,11 @@ import 'package:startup_app/features/authentication/screens/chat/chat_screen.dar
 import 'package:startup_app/utils/constants/sizes.dart';
 import '../../features/authentication/controllers/image_carousel/image_carousel_controller.dart';
 import '../../features/authentication/controllers/messages/messages_controller.dart';
+import 'Widgets/description.dart';
+import 'Widgets/image_carousel.dart';
 
+
+/// --- Trades --- ///
 class TTrades extends StatelessWidget {
   const TTrades({
     super.key,
@@ -68,118 +72,18 @@ class TTrades extends StatelessWidget {
         height: screenHeight * 0.2,
         child: Row(
           children: [
+
             /// Image Carousel
-            Flexible(
-              child: AspectRatio(
-                aspectRatio: 2 / 3, // Maintain a consistent aspect ratio
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(screenWidth * 0.03),
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(screenWidth * 0.03),
-                    child: PageView.builder(
-                      itemCount: imageUrls.length,
-                      itemBuilder: (context, index) {
-                        return CachedNetworkImage(
-                          imageUrl: imageUrls[index],
-                          fit: BoxFit.cover,
-                          placeholder: (context, url) => Center(
-                            child: CircularProgressIndicator(),
-                          ),
-                          errorWidget: (context, url, error) => Center(
-                            child: Icon(Icons.error),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(width: screenWidth * 0.04),
-            Flexible(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Flexible(
-                    child: FittedBox(
-                      fit: BoxFit.scaleDown,
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "$titleOfPost by $userOfPost",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: TSizes.fontSizeXl(context),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: screenHeight * 0.01),
-                  Flexible(
-                    child: FittedBox(
-                      fit: BoxFit.scaleDown,
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "You offered $titleOfOffer",
-                        style: TextStyle(
-                          color: Colors.grey[600],
-                          fontSize: screenWidth * 0.04,
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: screenHeight * 0.01),
-                  Flexible(
-                    child: FittedBox(
-                      fit: BoxFit.scaleDown,
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        statusOfOffer,
-                        style: TextStyle(
-                          color: statusColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: screenWidth * 0.045,
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: screenHeight * 0.01),
+            TImageCarouselOfTrade(screenWidth: screenWidth, imageUrls: imageUrls),
 
-                  // Conditional rendering of the button based on the status
-                  if (statusOfOffer == 'Accepted' || statusOfOffer == 'On Going')
-                    ElevatedButton(
-                      onPressed: () async {
-                        final MessagesController messagesController = Get.put(MessagesController());
+            SizedBox(width: screenWidth * 0.04), /// Spacing
 
-                        if (statusOfOffer == 'On Going' && chatId != null) {
-                          // If the status is 'On Going' and a chatId exists, navigate to the existing chat
-                          Get.to(() => ChatScreen(chatId: chatId!, userId: userId1, otherUserId: userId2));
-                        } else if (statusOfOffer == 'Accepted') {
-                          // If the status is 'Accepted', create a new chat
-                          final String? newChatId = await messagesController.createChat(userId1, userId2, offerId, postId); ///Fix security rule to change chat id only of post
-
-                          if (newChatId != null) {
-                            Get.to(() => ChatScreen(chatId: newChatId, userId: userId1, otherUserId: userId2));
-                          }
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        backgroundColor: buttonColor,
-                      ),
-                      child: FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: Text(buttonText),
-                      ),
-                    ),
-                ],
-              ),
-            ),
+            /// Description
+            TDescriptionOfTrade(titleOfPost: titleOfPost, userOfPost: userOfPost, screenHeight: screenHeight, titleOfOffer: titleOfOffer, screenWidth: screenWidth, statusOfOffer: statusOfOffer, statusColor: statusColor, chatId: chatId, userId1: userId1, userId2: userId2, offerId: offerId, postId: postId, buttonColor: buttonColor, buttonText: buttonText),
           ],
         ),
       ),
     );
   }
 }
+

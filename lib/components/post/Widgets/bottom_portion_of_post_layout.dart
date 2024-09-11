@@ -1,13 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 import '../../../features/authentication/screens/add_offer/add_offer_screen.dart';
 import '../../../features/authentication/screens/offers/offers_screen.dart';
 import '../../../utils/constants/sizes.dart';
 
+/// --- Bottom Portion of Post --- ///
 class TBottomPortionOfPostLayout extends StatelessWidget {
   const TBottomPortionOfPostLayout({
     super.key,

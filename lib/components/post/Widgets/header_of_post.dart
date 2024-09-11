@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../../../utils/constants/sizes.dart';
 
+/// --- Header of Post --- ///
 class THeaderOfPost extends StatelessWidget {
   const THeaderOfPost({
     super.key,

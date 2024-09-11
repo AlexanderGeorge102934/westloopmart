@@ -6,6 +6,7 @@ import '../../offer/Widgets/image_carousel.dart';
 import 'bottom_portion_of_post_layout.dart';
 import 'header_of_post.dart';
 
+/// --- Post Layout --- ///
 class TPostLayout extends StatelessWidget {
   const TPostLayout({
     super.key,

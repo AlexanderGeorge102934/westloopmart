@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-
 import '../../../features/authentication/controllers/image_carousel/image_carousel_controller.dart';
 import '../../../utils/constants/sizes.dart';
 
+/// --- Image Carousel --- ///
 class TImageCarousel extends StatelessWidget {
   const TImageCarousel({
     super.key,
