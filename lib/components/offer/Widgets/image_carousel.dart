@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../features/authentication/controllers/image_carousel/image_carousel_controller.dart';
 import '../../../utils/constants/sizes.dart';
 
+/// --- Image Carousel of Offer --- ///
 class TImageCarousel extends StatelessWidget {
   const TImageCarousel({
     super.key,

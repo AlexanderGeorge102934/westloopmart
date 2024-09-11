@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../../features/authentication/controllers/add_post_offer/add_post_offer_controller.dart';
 
+/// --- Engagement Bar For Owner --- ///
 class TEngagementBarForOwner extends StatelessWidget {
   const TEngagementBarForOwner({
     super.key,

@@ -6,6 +6,7 @@ import '../../post/Widgets/image_carousel.dart';
 import 'engagement_bar.dart';
 import 'engagment_bar_for_owner.dart';
 
+/// --- Offer Layout --- ///
 class TOfferLayout extends StatelessWidget {
   const TOfferLayout({
     super.key,
@@ -43,7 +44,8 @@ class TOfferLayout extends StatelessWidget {
         SizedBox(height: TSizes.spaceBtwItems(context)),
 
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 10), // TODO make dynamic
+
           /// Title, User, Distance, and option buttons to accept or decline offer, but ONLY if user is owner of post
           child: ownerOfPost
               ? TEngagementBarForOwner(title: title, user: user, distanceString: distanceString, postId: postId, offerId: offerId, userIdOfOffer: userIdOfOffer, userIdOfPost: userId, statusOfOffer: statusOfOffer,)

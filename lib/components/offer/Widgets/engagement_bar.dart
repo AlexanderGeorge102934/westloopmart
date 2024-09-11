@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+/// --- Engagement Bar --- ///
 class TEngagementBar extends StatelessWidget {
   const TEngagementBar({
     super.key,
