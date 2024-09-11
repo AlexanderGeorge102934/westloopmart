@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
+/// --- Image Carousel Controller --- ///
 class ImageCarouselController extends GetxController {
   static ImageCarouselController get instance => Get.find();
 

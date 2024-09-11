@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 
+/// --- Bottom Navigation Controller --- ///
 class BottomNavController extends GetxController {
   static BottomNavController get instance => Get.find();
 

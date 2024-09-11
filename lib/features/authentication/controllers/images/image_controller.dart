@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import '../../screens/camera/camera_screen.dart';
 import '../camera/camera_controller.dart';
 
+/// --- Image Controller --- ///
 class ImageController extends GetxController {
   static ImageController get instance => Get.find();
   final images = <XFile?>[].obs; // Consider if this should be allowed to be nullable or not

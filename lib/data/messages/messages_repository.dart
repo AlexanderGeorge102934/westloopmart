@@ -8,6 +8,7 @@ import '../../utils/exceptions/firebase_exception.dart';
 import '../../utils/exceptions/format_exception.dart';
 import '../../utils/exceptions/platform_exception.dart';
 
+/// --- Messages Repository --- ///
 class MessagesRepository extends GetxController{
   static MessagesRepository get instance => Get.find();
   final FirebaseAuth _auth = FirebaseAuth.instance;

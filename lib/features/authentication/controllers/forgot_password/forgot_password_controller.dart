@@ -5,6 +5,7 @@ import 'package:startup_app/features/authentication/screens/password_configurati
 import 'package:startup_app/helpers/network_manager.dart';
 import 'package:startup_app/utils/ui/loader.dart';
 
+/// --- Forgot Password Controller --- ///
 class ForgotPasswordController extends GetxController{
   static ForgotPasswordController get instance => Get.find();
 

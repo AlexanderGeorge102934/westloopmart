@@ -1,11 +1,12 @@
 import 'dart:io';
-
 import 'package:camera/camera.dart';
 import 'package:external_path/external_path.dart';
 import 'package:get/get.dart';
 import 'package:media_scanner/media_scanner.dart';
 import 'package:startup_app/utils/ui/loader.dart';
 
+
+/// --- Camera Controller --- ///
 class CustomCameraController extends GetxController {
   static CustomCameraController get instance => Get.find();
 
@@ -30,6 +31,7 @@ class CustomCameraController extends GetxController {
     super.onClose();
   }
 
+  /// Start Camera
   void startCamera(int cameraIndex) {
     cameraController = CameraController(
       cameras[cameraIndex],
@@ -39,6 +41,7 @@ class CustomCameraController extends GetxController {
     cameraValue = cameraController.initialize();
   }
 
+  /// Save Image
   Future<File> saveImage(XFile image) async {
     final downloadPath = await ExternalPath.getExternalStoragePublicDirectory(ExternalPath.DIRECTORY_DOWNLOADS);
     final fileName = '${DateTime.now().millisecondsSinceEpoch}.png';
@@ -53,6 +56,7 @@ class CustomCameraController extends GetxController {
     return file;
   }
 
+  /// Take Picture
   Future<void> takePicture() async {
     if (cameraController.value.isTakingPicture || !cameraController.value.isInitialized) {
       return;
@@ -80,10 +84,12 @@ class CustomCameraController extends GetxController {
     }
   }
 
+  /// Toggle Flash
   void toggleFlash() {
     isFlashOn.value = !isFlashOn.value;
   }
 
+  /// Toggle Camera
   void toggleCamera() {
     isRearCamera.value = !isRearCamera.value;
     startCamera(isRearCamera.value ? 0 : 1);

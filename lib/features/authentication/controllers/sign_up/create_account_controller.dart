@@ -9,6 +9,7 @@ import '../../../../helpers/network_manager.dart';
 import '../../../personalization/models/user_model.dart';
 import '../../screens/home_screen/home_screen.dart';
 
+/// --- Create Account Controller --- ///
 class CreateAccountController extends GetxController{
   static CreateAccountController get instance => Get.find(); //Saves memory when creating instances
 
@@ -23,9 +24,8 @@ class CreateAccountController extends GetxController{
   final phoneNumber = TextEditingController();
   GlobalKey<FormState> signupFormKey = GlobalKey<FormState>();
 
-
+  /// Create Account
   void createAccount() async{
-
     try{
 
       // TODO load splash screen
@@ -40,7 +40,6 @@ class CreateAccountController extends GetxController{
         signupFormKey.currentState!.save();
         return;
       }
-
 
       /// Privacy Policy Check
       if(!checkBox.value){
@@ -67,8 +66,6 @@ class CreateAccountController extends GetxController{
 
       /// Navigate to offers screen
       Get.offAll(() => const HomeScreen());
-
-
     }
     catch (e){
       TLoader.errorSnackBar(title: "Oh Snap!", message: e.toString()); // TODO get rid of context on snack bars and also

@@ -2,6 +2,8 @@ import 'package:camera/camera.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:startup_app/data/images/images_repository.dart';
+import 'package:startup_app/data/repositories/location/location_repository.dart';
 import 'package:startup_app/data/repositories/user/user_repository.dart';
 import 'package:startup_app/utils/ui/loader.dart';
 import '../../../../data/repositories/offers/offers_repository.dart';
@@ -11,6 +13,8 @@ import '../../../personalization/models/offer_model.dart';
 import '../../../personalization/models/post_model.dart';
 import '../images/image_controller.dart';
 
+
+/// --- Posting Controller --- ///
 class PostingController extends GetxController {
   static PostingController get instance => Get.find();
 
@@ -24,10 +28,13 @@ class PostingController extends GetxController {
   /// Add Post
   Future<void> addPost() async {
     final PostsRepository postsRepository = Get.put(PostsRepository());
+    final ImagesRepository imagesRepository = Get.put(ImagesRepository());
+    final LocationRepository locationRepository = Get.put(LocationRepository());
     final UserRepository userRepository = Get.put(UserRepository());
-
     final user = await userRepository.getCurrentUser();
-    final userModel = await userRepository.getCurrentUserModel();
+    final userModel = await userRepository.getCurrentUserModel(); // Get all info of user including username
+
+    /// Check for user
     if (user == null || userModel ==null ) {
       TLoader.errorSnackBar(title: "User not logged in", message: "Please log in to post an offer."); // todo change it so once you click the add button you immediantly go to the login
       return;
@@ -35,7 +42,6 @@ class PostingController extends GetxController {
 
 
     try {
-
       /// Check if internet is connected
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) {
@@ -54,10 +60,10 @@ class PostingController extends GetxController {
       List<XFile> images = imageController.images.where((image) => image != null).cast<XFile>().toList();
 
       /// Get image urls after uploading
-      List<String> imageUrls = await postsRepository.uploadImages(images, user.uid);
+      List<String> imageUrls = await imagesRepository.uploadPostImages(images, user.uid);
 
       /// Get user's position
-      final position = await postsRepository.determinePosition();
+      final position = await locationRepository.determinePosition();
       if (position == null) return; // Don't post unless they give their position
 
       /// Create post model
@@ -90,11 +96,15 @@ class PostingController extends GetxController {
   Future<void> addOffer(String postID, String titleOfPost, String userOfPost, String userOfPostId) async {
     final OffersRepository offersRepository = Get.put(OffersRepository());
     final UserRepository userRepository = Get.put(UserRepository());
+    final ImagesRepository imagesRepository = Get.put(ImagesRepository());
+    final LocationRepository locationRepository = Get.put(LocationRepository());
+
     try {
 
       final user = await userRepository.getCurrentUser();
       final userModel = await userRepository.getCurrentUserModel(); // TODO make get current user model to be in a more dedicated repository
 
+      /// Check for user
       if (user == null || userModel == null) {
         TLoader.errorSnackBar(title: "User not logged in",
             message: "Please log in to post an offer."); // todo change it so once you click the add button you immediantly go to the login
@@ -122,11 +132,11 @@ class PostingController extends GetxController {
       image != null).cast<XFile>().toList();
 
       /// Get image urls
-      List<String> imageUrls = await offersRepository.uploadImages(
+      List<String> imageUrls = await imagesRepository.uploadOfferImages(
           images, user.uid, postID);
 
       /// Get user's position
-      final position = await offersRepository.determinePosition();
+      final position = await locationRepository.determinePosition();
       if (position == null) {
         return; // Don't post unless they give their position
       }
@@ -212,6 +222,7 @@ class PostingController extends GetxController {
     }
   }
 
+  /// Clear form
   void clearForm() {
     title.clear();
     description.clear();

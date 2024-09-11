@@ -7,6 +7,7 @@ import '../../../../helpers/network_manager.dart';
 import '../../../../utils/ui/loader.dart';
 import '../../../personalization/models/message_model.dart';
 
+/// --- Messages Controller --- ///
 class MessagesController extends GetxController {
 
   static MessagesController get instance => Get.find();
@@ -16,29 +17,28 @@ class MessagesController extends GetxController {
     final MessagesRepository messagesRepository = Get.put(MessagesRepository());
     try {
       final chatId = await messagesRepository.createChat(userId1, userId2);
-      // Ensure both Offer and Post documents are updated atomically
+      /// Ensure both Offer and Post documents are updated atomically
       final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
       await firestore.runTransaction((transaction) async {
-        // Reference to the Offer document
+        /// Reference to the Offer document
         final offerDocRef = firestore.collection("Offers").doc(offerId);
 
-        // Reference to the Post document
+        /// Reference to the Post document
         final postDocRef = firestore.collection("UserPosts").doc(postId);
 
-        // Update Offer document
+        /// Update Offer document
         transaction.update(offerDocRef, {
           'ChatId': chatId,
           'Status': 'On Going',
         });
 
-        // Update Post document
+        /// Update Post document
         transaction.update(postDocRef, {
           'ChatId': chatId,
           'Status': 'On Going',
         });
       });
-
       return chatId;
     } catch (e){
       TLoader.errorSnackBar(title: "Oh Snap!", message: e.toString());

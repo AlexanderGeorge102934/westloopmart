@@ -2,16 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-
-
 import '../../../features/personalization/models/user_model.dart';
 import '../../../utils/exceptions/firebase_exception.dart';
 import '../../../utils/exceptions/format_exception.dart';
 import '../../../utils/exceptions/platform_exception.dart';
 
+/// --- User Repository --- ///
 class UserRepository extends GetxController{
   static UserRepository get instance => Get.find();
-
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
 
@@ -32,7 +30,13 @@ class UserRepository extends GetxController{
 
   /// Get current user
   Future<User?> getCurrentUser() async {
-    return FirebaseAuth.instance.currentUser;
+    try {
+      return FirebaseAuth.instance.currentUser;
+    }
+    catch (e) {
+      throw 'Error retrieving current user: $e';
+    }
+
   }
 
   /// Get current user as UserModel

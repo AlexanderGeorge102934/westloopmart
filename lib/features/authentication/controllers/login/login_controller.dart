@@ -6,6 +6,7 @@ import 'package:startup_app/utils/ui/loader.dart';
 import '../../../../data/repositories/authentication/authentication_repository.dart';
 import '../../../../helpers/network_manager.dart';
 
+/// --- Login Controller --- ///
 class LoginController extends GetxController {
 
   static LoginController get instance => Get.find();
