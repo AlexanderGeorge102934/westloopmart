@@ -5,7 +5,7 @@ import 'Widgets/description.dart';
 import 'Widgets/image_carousel.dart';
 
 
-/// My Post Widget
+/// --- My Post Widget --- ///
 class TMyPost extends StatelessWidget {
   const TMyPost({
     super.key,

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../../features/authentication/controllers/add_post_offer/add_post_offer_controller.dart';
 import '../../../../utils/constants/sizes.dart';
 
-/// Title of Add Form
+/// --- Title of Add Form --- ///
 class TAddFormTitle extends StatelessWidget {
   const TAddFormTitle({
     super.key,

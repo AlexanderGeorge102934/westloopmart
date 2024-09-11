@@ -9,7 +9,7 @@ import 'Widgets/add_button.dart';
 import 'Widgets/drop_down_menu.dart';
 import 'Widgets/title.dart';
 
-/// Form to Add a Post/Offer
+/// --- Form to Add a Post/Offer --- ///
 class TAddForm extends StatelessWidget {
   const TAddForm({
     super.key,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../features/authentication/screens/chat/chat_screen.dart';
 
-/// Description of My Post
+/// --- Description of My Post --- ///
 class TMyPostDescription extends StatelessWidget {
   const TMyPostDescription({
     super.key,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../../features/authentication/controllers/add_post_offer/add_post_offer_controller.dart';
 import '../../../../utils/constants/sizes.dart';
 
-/// Description of Add Form
+/// --- Description of Add Form --- ///
 class TAddFormDescription extends StatelessWidget {
   const TAddFormDescription({
     super.key,

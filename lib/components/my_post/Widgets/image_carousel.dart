@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-/// Image Carousel of My Post
+/// --- Image Carousel of My Post --- ///
 class TMyPostImageCarousel extends StatelessWidget {
   const TMyPostImageCarousel({
     super.key,
