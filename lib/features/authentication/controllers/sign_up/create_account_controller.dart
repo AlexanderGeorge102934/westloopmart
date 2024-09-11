@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:startup_app/data/repositories/user/user_repository.dart';
-
 import 'package:startup_app/utils/ui/loader.dart';
-
 import '../../../../data/repositories/authentication/authentication_repository.dart';
 import '../../../../helpers/network_manager.dart';
 import '../../../personalization/models/user_model.dart';

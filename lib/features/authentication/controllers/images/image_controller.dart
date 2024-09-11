@@ -1,7 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-
 import '../../screens/camera/camera_screen.dart';
 import '../camera/camera_controller.dart';
 

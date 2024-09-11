@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:startup_app/data/messages/messages_repository.dart';
-
 import '../../../../helpers/network_manager.dart';
 import '../../../../utils/ui/loader.dart';
 import '../../../personalization/models/message_model.dart';
