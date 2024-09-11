@@ -85,8 +85,8 @@ class _pageOneState extends State<HomeScreen> {
                                   Icon(
                                     category['icon'],
                                     color: selectedCategory == category['name']
-                                        ? Colors.blue
-                                        : Colors.black,
+                                        ? Colors.black
+                                        : Colors.grey,
                                     size: iconSize,
                                   ),
                                   SizedBox(height: screenHeight * 0.01), // Space between icon and text
@@ -99,8 +99,8 @@ class _pageOneState extends State<HomeScreen> {
                                       style: TextStyle(
                                         fontSize: TSizes.fontSizeSm(context), // fixed font size
                                         color: selectedCategory == category['name']
-                                            ? Colors.blue
-                                            : Colors.black,
+                                            ? Colors.black
+                                            : Colors.grey,
                                         fontWeight: selectedCategory == category['name']
                                             ? FontWeight.bold
                                             : FontWeight.normal,
