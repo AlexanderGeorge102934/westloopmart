@@ -1,10 +1,11 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../features/authentication/controllers/image_carousel/image_carousel_controller.dart';
-import '../../features/authentication/controllers/messages/messages_controller.dart';
-import '../../features/authentication/screens/chat/chat_screen.dart';
+import 'Widgets/description.dart';
+import 'Widgets/image_carousel.dart';
 
+
+/// My Post Widget
 class TMyPost extends StatelessWidget {
   const TMyPost({
     super.key,
@@ -60,85 +61,14 @@ class TMyPost extends StatelessWidget {
         height: screenHeight * 0.2,
         child: Row(
           children: [
-            Flexible(
-              child: AspectRatio(
-                aspectRatio: 2 / 3, // Maintain a consistent aspect ratio
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(screenWidth * 0.03),
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(screenWidth * 0.03),
-                    child: PageView.builder(
-                      itemCount: imageUrls.length,
-                      itemBuilder: (context, index) {
-                        return CachedNetworkImage(
-                          imageUrl: imageUrls[index],
-                          fit: BoxFit.cover,
-                          placeholder: (context, url) => const Center(
-                            child: CircularProgressIndicator(),
-                          ),
-                          errorWidget: (context, url, error) => const Center(
-                            child: Icon(Icons.error),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(width: screenWidth * 0.04),
-            Flexible(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Flexible(
-                    child: FittedBox(
-                      fit: BoxFit.scaleDown,
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "$title by $user",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: screenWidth * 0.045,
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: screenHeight * 0.01),
-                  Flexible(
-                    child: FittedBox(
-                      fit: BoxFit.scaleDown,
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        status,
-                        style: TextStyle(
-                          color: statusColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: screenWidth * 0.045,
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: screenHeight * 0.02),
-                  if (status == 'On Going')
-                    ElevatedButton(
-                      onPressed: () async {
-                        final MessagesController messagesController = Get.put(MessagesController());
-                        // If the status is 'On Going', navigate to the existing chat
-                        Get.to(() => ChatScreen(chatId: chatId, userId: userId, otherUserId: userId));
-                      },
-                      style: ElevatedButton.styleFrom(backgroundColor: buttonColor),
-                      child: FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: Text(buttonText),
-                      ),
-                    ),
-                ],
-              ),
-            ),
+
+            /// Image Carousel
+            TMyPostImageCarousel(screenWidth: screenWidth, imageUrls: imageUrls),
+
+            SizedBox(width: screenWidth * 0.04), /// Spacing
+
+            /// Description
+            TMyPostDescription(title: title, user: user, screenWidth: screenWidth, screenHeight: screenHeight, status: status, statusColor: statusColor, chatId: chatId, userId: userId, buttonColor: buttonColor, buttonText: buttonText),
           ],
         ),
       ),

@@ -3,11 +3,11 @@ import '../../../../../common/styles/spacing_styles.dart';
 import '../../../../../utils/constants/sizes.dart';
 import '../../../features/authentication/controllers/add_post_offer/add_post_offer_controller.dart';
 import '../../../features/authentication/controllers/images/image_controller.dart';
-import 'add_form/description.dart';
-import 'add_form/image_grid.dart';
-import 'add_form/add_button.dart';
-import 'add_form/drop_down_menu.dart';
-import 'add_form/title.dart';
+import 'Widgets/description.dart';
+import 'Widgets/image_grid.dart';
+import 'Widgets/add_button.dart';
+import 'Widgets/drop_down_menu.dart';
+import 'Widgets/title.dart';
 
 /// Form to Add a Post/Offer
 class TAddForm extends StatelessWidget {
