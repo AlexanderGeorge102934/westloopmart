@@ -6,7 +6,7 @@ import '../../../../utils/constants/colors.dart';
 import '../../controllers/add_post_offer/add_post_offer_controller.dart';
 import '../../controllers/images/image_controller.dart';
 
-/// Add Offer Screen
+/// --- Add Offer Screen --- ///
 class AddOfferScreen extends StatelessWidget {
   AddOfferScreen({
     super.key,
