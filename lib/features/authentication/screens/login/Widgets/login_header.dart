@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-
 import '../../../../../utils/constants/sizes.dart';
 import '../../../../../utils/constants/texts.dart';
 
+/// --- Login Header --- ///
 class TLoginHeader extends StatelessWidget {
   const TLoginHeader({
     super.key,

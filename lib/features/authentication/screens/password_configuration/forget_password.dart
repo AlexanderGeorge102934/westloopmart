@@ -8,7 +8,7 @@ import 'package:startup_app/validators/validation.dart';
 import '../../../../utils/constants/sizes.dart';
 
 
-/// Forget Password Screen
+/// --- Forget Password Screen --- ///
 class ForgetPasswordScreen extends StatelessWidget {
   const ForgetPasswordScreen ({super.key});
 

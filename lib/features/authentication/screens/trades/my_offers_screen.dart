@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:startup_app/components/trades/trades.dart';
 import 'package:startup_app/helpers/helpers.dart';
 
+/// --- My Offers Screen --- ///
 class MyOffersScreen extends StatelessWidget {
   const MyOffersScreen({super.key, required this.user});
 

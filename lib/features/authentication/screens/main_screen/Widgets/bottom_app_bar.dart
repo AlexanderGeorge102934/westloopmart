@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../../utils/constants/colors.dart';
 import '../../../controllers/bottom_navigation_controller/bottom_nav_controller.dart';
 
+/// --- Bottom App Bar Main Screen --- ///
 class TBottomAppBar extends StatelessWidget {
   const TBottomAppBar({
     super.key,

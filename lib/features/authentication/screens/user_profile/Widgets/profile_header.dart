@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:startup_app/utils/constants/sizes.dart';
 
+/// --- Profile Header --- ///
 class TProfileHeader extends StatelessWidget {
   const TProfileHeader({
     super.key,

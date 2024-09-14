@@ -6,9 +6,9 @@ import 'package:geolocator/geolocator.dart';
 import 'package:startup_app/features/authentication/screens/menu/menu_screen.dart';
 import '../../../../components/post/post.dart';
 import '../../../../utils/constants/sizes.dart';
-import '../login/login.dart';
 import 'Widgets/profile_header.dart';
 
+/// --- User Profile Screen --- ///
 class UserProfileScreen extends StatelessWidget {
   final User? user;
 

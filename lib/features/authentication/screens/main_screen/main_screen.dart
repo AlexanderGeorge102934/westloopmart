@@ -13,7 +13,7 @@ import 'Widgets/add_post_button.dart';
 import 'Widgets/app_bar.dart';
 import 'Widgets/bottom_app_bar.dart';
 
-/// Main Screen
+/// --- Main Screen --- ///
 class MainScreen extends StatelessWidget {
   final bottomNavController = Get.put(BottomNavController());
 

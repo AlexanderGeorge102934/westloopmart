@@ -3,6 +3,7 @@ import 'dart:core';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:startup_app/utils/formatters/formatter.dart';
 
+/// --- User Model --- ///
 class UserModel {
 
   // Keep values final which you do not want to update

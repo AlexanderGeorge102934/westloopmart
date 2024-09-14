@@ -5,6 +5,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:startup_app/utils/constants/sizes.dart';
 import '../../../../components/post/post.dart';
 
+/// --- Home Screen --- ///
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 

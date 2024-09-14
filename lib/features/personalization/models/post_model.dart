@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+/// --- Post Model --- ///
 class PostModel {
   final String userId;
   final String userName;

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import '../../../../utils/constants/sizes.dart';
 import '../login/login.dart';
 
+/// --- Menu Screen --- ///
 class MenuScreen extends StatelessWidget {
   const MenuScreen({super.key});
 

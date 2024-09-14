@@ -7,7 +7,7 @@ import '../../../../utils/constants/texts.dart';
 import '../../controllers/forgot_password/forgot_password_controller.dart';
 
 
-/// Reset Password Screen
+/// --- Reset Password Screen --- ///
 class ResetPasswordScreen extends StatelessWidget {
   const ResetPasswordScreen({super.key, required this.email});
 

@@ -4,6 +4,7 @@ import 'package:startup_app/common/styles/spacing_styles.dart';
 import 'Widgets/login_form.dart';
 import 'Widgets/login_header.dart';
 
+/// --- Login Screen --- ///
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 

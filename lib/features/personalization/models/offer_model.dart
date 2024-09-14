@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+/// --- Offer Model --- ///
 class OfferModel {
   final String userId;
   final String postId;

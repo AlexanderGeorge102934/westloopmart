@@ -5,6 +5,8 @@ import 'package:geolocator/geolocator.dart';
 import '../../../../helpers/helpers.dart';
 import 'Widgets/list_of_offers.dart';
 
+
+/// --- Offers Screen --- ///
 class OffersScreen extends StatelessWidget {
   const OffersScreen({super.key, required this.postID, required this.userPosition, required this.userId});
 

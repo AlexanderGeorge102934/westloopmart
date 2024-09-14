@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import '../../../../components/my_post/my_post.dart';
 import '../../../../helpers/helpers.dart';
 
+/// --- Posts Screen --- ///
 class MyPostsScreen extends StatelessWidget {
   const MyPostsScreen({super.key, required this.user});
 
