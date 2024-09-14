@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import '../../../controllers/camera/camera_controller.dart';
 import '../edit_camera_screen.dart';
 
+/// --- Bottom Overlay of Camera --- ///
 class TBottomOverlay extends StatelessWidget {
   const TBottomOverlay({
     super.key,
@@ -28,7 +29,7 @@ class TBottomOverlay extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             // Take picture button
-            GestureDetector(
+            GestureDetector( // TODO make dynamic
               onTap: controller.takePicture,
               child: Container(
                 width: 70,

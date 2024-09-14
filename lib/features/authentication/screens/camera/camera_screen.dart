@@ -7,6 +7,7 @@ import 'Widgets/display_camera.dart';
 import 'Widgets/top_overlay.dart';
 
 
+/// --- Camera Screen --- ///
 class CameraView extends StatelessWidget {
   final List<CameraDescription> cameras;
 

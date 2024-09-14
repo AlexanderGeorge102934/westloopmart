@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../controllers/camera/camera_controller.dart';
 
+/// --- Display the Camera --- ///
 class TDisplayCamera extends StatelessWidget {
   const TDisplayCamera({
     super.key,
@@ -13,6 +14,7 @@ class TDisplayCamera extends StatelessWidget {
   final CustomCameraController controller;
   final Size size;
 
+  // TODO fix this up
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(

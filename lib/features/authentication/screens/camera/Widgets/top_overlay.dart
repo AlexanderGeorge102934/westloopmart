@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import '../../../../../utils/constants/sizes.dart';
 import '../../../controllers/camera/camera_controller.dart';
 
+/// --- Top Overlay of Camera --- ///
 class TTopOverlay extends StatelessWidget {
   const TTopOverlay({
     super.key,
