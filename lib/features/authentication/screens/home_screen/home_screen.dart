@@ -2,6 +2,8 @@ import 'dart:core';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:startup_app/components/shimmer/shimmer_category_list.dart';
+import 'package:startup_app/components/shimmer/shimmer_post_list.dart';
 import 'package:startup_app/utils/constants/sizes.dart';
 import '../../../../components/post/post.dart';
 
@@ -50,7 +52,6 @@ class _pageOneState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
-
     final iconSize = screenHeight * 0.05;
 
     return Scaffold(
@@ -81,35 +82,35 @@ class _pageOneState extends State<HomeScreen> {
                           child: Padding(
                             padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
                             child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    category['icon'],
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  category['icon'],
+                                  color: selectedCategory == category['name']
+                                      ? Colors.black
+                                      : Colors.grey,
+                                  size: iconSize,
+                                ),
+                                SizedBox(height: screenHeight * 0.01), // Space between icon and text
+                                Text(
+                                  textAlign: TextAlign.center,
+                                  category['name'],
+                                  maxLines: 2,
+                                  overflow: TextOverflow.clip,
+                                  softWrap: true,
+                                  style: TextStyle(
+                                    fontSize: TSizes.fontSizeSm(context), // fixed font size
                                     color: selectedCategory == category['name']
                                         ? Colors.black
                                         : Colors.grey,
-                                    size: iconSize,
-                                  ),
-                                  SizedBox(height: screenHeight * 0.01), // Space between icon and text
-                                  Text(
-                                    textAlign: TextAlign.center,
-                                      category['name'],
-                                      maxLines: 2,
-                                      overflow: TextOverflow.clip,
-                                      softWrap: true,
-                                      style: TextStyle(
-                                        fontSize: TSizes.fontSizeSm(context), // fixed font size
-                                        color: selectedCategory == category['name']
-                                            ? Colors.black
-                                            : Colors.grey,
-                                        fontWeight: selectedCategory == category['name']
-                                            ? FontWeight.bold
-                                            : FontWeight.normal,
+                                    fontWeight: selectedCategory == category['name']
+                                        ? FontWeight.bold
+                                        : FontWeight.normal,
 
-                                    ),
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
+                            ),
                           ),
                         );
                       },
@@ -129,7 +130,9 @@ class _pageOneState extends State<HomeScreen> {
                         .snapshots(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(child: CircularProgressIndicator());
+                        // return const TShimmerPosts();
+                        //TODO can't have multiple expanded widgets fight for parent
+                        return const CircularProgressIndicator();
                       }
                       if (snapshot.hasError) {
                         return const Center(child: Text('Error'));
@@ -165,7 +168,15 @@ class _pageOneState extends State<HomeScreen> {
           } else if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
           } else {
-            return Center(child: CircularProgressIndicator());
+            return const CircularProgressIndicator();
+            // return const Scaffold(
+            //   body: Column(
+            //     children: [
+            //       TShimmerCategoryList(),
+            //       TShimmerPosts()
+            //     ],
+            //   ),
+            // ); //TODO can't have multiple expanded widgets fight for parent
           }
         },
       ),

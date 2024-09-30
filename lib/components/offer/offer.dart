@@ -56,8 +56,11 @@ class TOffer extends StatelessWidget {
     //user location and post location
 
     return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.5,
-      child: TOfferLayout(controller: controller, imageUrls: imageUrls, ownerOfPost: ownerOfPost, title: title, user: user, distanceString: distanceString, postId: postId, offerId: offerId, userIdOfOffer: userIdOfOffer, userId: userId, statusOfOffer: statusOfOffer,),
+      height: MediaQuery.of(context).size.height * 0.6,
+      child: Padding(
+        padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.05),
+        child: TOfferLayout(controller: controller, imageUrls: imageUrls, ownerOfPost: ownerOfPost, title: title, user: user, distanceString: distanceString, postId: postId, offerId: offerId, userIdOfOffer: userIdOfOffer, userId: userId, statusOfOffer: statusOfOffer,),
+      ),
     );
   }
 }

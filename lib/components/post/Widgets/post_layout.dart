@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import '../../../common/widgets/image_carousel/image_carousel.dart';
 import '../../../features/authentication/controllers/image_carousel/image_carousel_controller.dart';
 import '../../../utils/constants/sizes.dart';
-import '../../offer/Widgets/image_carousel.dart';
 import 'bottom_portion_of_post_layout.dart';
 import 'header_of_post.dart';
 

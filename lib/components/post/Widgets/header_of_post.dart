@@ -13,11 +13,11 @@ class THeaderOfPost extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: TSizes.spaceBtwItems(context), horizontal: TSizes.spaceBtwItems(context) ),
+      padding: EdgeInsets.symmetric(vertical: TSizes.spaceBtwItems(context), horizontal: MediaQuery.of(context).size.width * 0.005 ),
       child: Row(
         children: [
           const CircleAvatar(),
-          const SizedBox(width: 10),
+          SizedBox(width: MediaQuery.of(context).size.width * 0.03),
           Text(
             user,
             style: Theme.of(context).textTheme.titleLarge!.copyWith(

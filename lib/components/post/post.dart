@@ -44,8 +44,11 @@ class TPost extends StatelessWidget {
 
 
     return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.6,
-      child: TPostLayout(controller: controller, imageUrls: imageUrls, title: title, user: user, distanceString: distanceString, postID: postID, userPosition: userPosition, userId: userId),
+      height: MediaQuery.of(context).size.height * 0.7,
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.05, vertical: MediaQuery.of(context).size.width * 0.03),
+        child: TPostLayout(controller: controller, imageUrls: imageUrls, title: title, user: user, distanceString: distanceString, postID: postID, userPosition: userPosition, userId: userId),
+      ),
     );
   }
 }

@@ -28,7 +28,7 @@ class TBottomPortionOfPostLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: TSizes.spaceBtwItems(context)),
+      padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.005),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center, // Center the content vertically
         children: [
@@ -46,7 +46,7 @@ class TBottomPortionOfPostLayout extends StatelessWidget {
                     'Show Offers',
                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                       color: Colors.blueAccent,
-                      fontSize: 16,
+                      fontSize: TSizes.fontSizeMd(context),
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -55,7 +55,7 @@ class TBottomPortionOfPostLayout extends StatelessWidget {
                   title,
                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                     fontWeight: FontWeight.bold,
-                    fontSize: 18,
+                    fontSize: TSizes.fontSizeLg(context),
                   ),
                 ),
                 Text(
@@ -71,8 +71,8 @@ class TBottomPortionOfPostLayout extends StatelessWidget {
             alignment: Alignment.center,  // Center the button vertically
             child: ClipOval(
               child: SizedBox(
-                width: 55.0,  // Custom width
-                height: 55.0, // Custom height
+                width: MediaQuery.of(context).size.width * 0.15,  // Width is 15% of screen width
+                height: MediaQuery.of(context).size.height * 0.07, // Custom height
                 child: FloatingActionButton(
                   onPressed: () => Get.to(() => AddOfferScreen(
                     postID: postID,
@@ -81,8 +81,8 @@ class TBottomPortionOfPostLayout extends StatelessWidget {
                     userOfPostId: userId,
                   )),
                   backgroundColor: Colors.blueAccent,
-                  child: const Icon(Icons.add, color: Colors.white),
                   heroTag: null,
+                  child: const Icon(Icons.add, color: Colors.white),
                 ),
               ),
             ),

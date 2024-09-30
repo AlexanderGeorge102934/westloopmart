@@ -21,8 +21,8 @@ class MainScreen extends StatelessWidget {
     const HomeScreen(),
     TradesScreen(),
     AddPostScreen(),
-    Container(color: Colors.green),
-    UserProfileScreen(user: FirebaseAuth.instance.currentUser,),
+    Container(color: Colors.green), // This is just a placeholder
+    UserProfileScreen(user: FirebaseAuth.instance.currentUser),
   ];
 
   @override
@@ -30,14 +30,16 @@ class MainScreen extends StatelessWidget {
     final dark = THelperFunctions.isDarkMode(context);
     return Scaffold(
       appBar: PreferredSize(
-          preferredSize: Size.fromHeight(TSizes.spaceBtwSections(context) * 1.2),
-          child: TMainAppBar(bottomNavController: bottomNavController)
+        preferredSize: Size.fromHeight(TSizes.spaceBtwSections(context) * 1.2),
+        child: TMainAppBar(bottomNavController: bottomNavController),
       ),
-      body: Obx(() => _screens[bottomNavController.selectedIndex.value]),
+      body: Obx(() => IndexedStack(
+        index: bottomNavController.selectedIndex.value,
+        children: _screens,
+      )),
       floatingActionButton: TAddPostButton(dark: dark),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: TBottomAppBar(dark: dark, bottomNavController: bottomNavController),
     );
   }
 }
-

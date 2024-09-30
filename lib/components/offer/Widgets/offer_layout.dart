@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 
+import '../../../common/widgets/image_carousel/image_carousel.dart';
 import '../../../features/authentication/controllers/image_carousel/image_carousel_controller.dart';
 import '../../../utils/constants/sizes.dart';
-import '../../post/Widgets/image_carousel.dart';
 import 'engagement_bar.dart';
 import 'engagment_bar_for_owner.dart';
 
@@ -44,7 +44,7 @@ class TOfferLayout extends StatelessWidget {
         SizedBox(height: TSizes.spaceBtwItems(context)),
 
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10), // TODO make dynamic
+          padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.005,), // TODO make dynamic
 
           /// Title, User, Distance, and option buttons to accept or decline offer, but ONLY if user is owner of post
           child: ownerOfPost

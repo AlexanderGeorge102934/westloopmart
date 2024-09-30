@@ -17,10 +17,9 @@ class TImageCarousel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(TSizes.md(context)),
-        ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(TSizes.md(context)),
+        clipBehavior: Clip.antiAlias,
         child: PageView.builder(
           controller: controller.pageController,
           itemCount: imageUrls.length,
@@ -30,7 +29,7 @@ class TImageCarousel extends StatelessWidget {
               imageUrl: imageUrls[index],
               fit: BoxFit.cover,
               width: double.infinity,
-              height: MediaQuery.of(context).size.height * 0.4,
+              height: MediaQuery.of(context).size.height * 0.7,
               placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
               errorWidget: (context, url, error) => const Center(child: Icon(Icons.error)),
             );
