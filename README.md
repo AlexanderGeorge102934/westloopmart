@@ -1,16 +1,12 @@
-# startup_app
+# 🚧 **West Loop Mart MVP** 🚧  
 
-A new Flutter project.
+This project is a **Minimum Viable Product (MVP) for a bartering app West Loop Mart** built to explore the idea of bartering and trading with people within your local area - demonstrating core functionalities.  
 
-## Getting Started
+👉 [**Watch the MVP Demo Video Here**](https://drive.google.com/file/d/1fdDRQ6bLxvveDR4NbVcLU8qu8ru7DASc/preview)
 
-This project is a starting point for a Flutter application.
+### 📝 **Project Status**  
+- This project was built as an MVP.  
+- There are **no plans for further development** or updates.  
 
-A few resources to get you started if this is your first Flutter project:
+Feel free to explore the code or watch the demo video to get a sense of the project.  
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
