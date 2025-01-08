@@ -10,16 +10,16 @@
 .svn/
 migrate_working_dir/
 
-# IntelliJ related
+# IntelliJ / Android Studio
 *.iml
 *.ipr
 *.iws
 .idea/
+.gradle/
+captures/
 
-# The .vscode folder contains launch configuration and tasks you configure in
-# VS Code which you may wish to be included in version control, so this line
-# is commented out by default.
-#.vscode/
+# VS Code (Optional: Uncomment if needed)
+# .vscode/
 
 # Flutter/Dart/Pub related
 **/doc/api/
@@ -30,6 +30,18 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
+/ios/Flutter/
+/android/.gradle/
+/android/app/build/
+/web/.dart_tool/
+/linux/flutter/
+/windows/flutter/
+
+# Firebase & Secrets
+google-services.json
+GoogleService-Info.plist
+lib/firebase_options.dart
+.env
 
 # Symbolication related
 app.*.symbols
@@ -37,7 +49,28 @@ app.*.symbols
 # Obfuscation related
 app.*.map.json
 
-# Android Studio will place build artifacts here
+# Key Properties and Keystore Files
+key.properties
+**/*.keystore
+**/*.jks
+
+# System-specific Files
+*.tmp
+*.swp
+*.swo
+*.lock
+
+# macOS Specific
+.DS_Store
+
+# Generated Files
+GeneratedPluginRegistrant.java
+
+# Logs and Crash Reports
+*.log
+crashlytics/
+
+# Android specific folders
 /android/app/debug
 /android/app/profile
 /android/app/release
